@@ -49,9 +49,30 @@ a, a:visited { color : #0050e7; }
 .code { clear : left; padding-bottom : 10px; vertical-align :middle;}
 .code .download a { display : block; margin : 0 15px; float : left;}
 .code strong a { color : #000; }
-.external a { margin : 0 10px; }
-.external img { vertical-align: middle; } /* Align icons vertically */
-.external a.first { margin : 0 10px 0 0; }
+.external {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0 22px;
+  text-align: center;
+}
+
+.external a {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.external img {
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.external a.first {
+  margin: 0;
+}
 ul, ol { padding-left: 40px; /* Consistent list indent */ }
 li { margin-bottom: 10px; /* Spacing for list items */ }
 	</style>
