@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DefLab | Symmetry Defect Generator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a1020;
+      --bg-2: #0f1730;
+      --panel: rgba(16, 24, 46, 0.84);
+      --panel-2: rgba(23, 33, 60, 0.82);
+      --panel-3: rgba(11, 18, 37, 0.9);
+      --text: #eef3ff;
+      --muted: #a7b5d9;
+      --accent: #7aa2ff;
+      --accent-2: #89e5bf;
+      --accent-3: #c8b2ff;
+      --danger: #ff8b95;
+      --border: rgba(132, 160, 236, 0.18);
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(122,162,255,0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(137,229,191,0.12), transparent 24%),
+        linear-gradient(180deg, #08101f 0%, #0b1224 48%, #09111f 100%);
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0));
+      opacity: 0.28;
+    }
+    .wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 26px;
+      position: relative;
+      z-index: 1;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(122,162,255,0.28), rgba(137,229,191,0.18));
+      border: 1px solid rgba(132,160,236,0.24);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .brand-name {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .brand-tag {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+    .lang-toggle {
+      border: 1px solid rgba(132,160,236,0.25);
+      background: rgba(16, 24, 46, 0.74);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+    .hero {
+      border: 1px solid rgba(132,160,236,0.2);
+      background:
+        linear-gradient(135deg, rgba(20,31,59,0.92), rgba(14,22,43,0.92)),
+        radial-gradient(circle at 20% 20%, rgba(122,162,255,0.24), transparent 34%);
+      border-radius: 28px;
+      padding: 26px 26px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -50px;
+      top: -56px;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(200,178,255,0.18), transparent 68%);
+      pointer-events: none;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      max-width: 860px;
+    }
+    .lead {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.65;
+      max-width: 980px;
+      font-size: 15px;
+    }
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: #dfe9ff;
+      background: rgba(122,162,255,0.08);
+      border: 1px solid rgba(122,162,255,0.18);
+      font-size: 13px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .panel h2 {
+      margin: 0 0 14px;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+    .stack { display: grid; gap: 18px; }
+    label {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .label-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 18px;
+    }
+    input, select, textarea, button {
+      font: inherit;
+    }
+    input[type="file"], input[type="text"], input[type="number"], select, textarea {
+      width: 100%;
+      background: rgba(7, 12, 28, 0.72);
+      color: var(--text);
+      border: 1px solid rgba(132,160,236,0.18);
+      border-radius: 14px;
+      padding: 11px 13px;
+      outline: none;
+      transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+    }
+    input[type="file"]::file-selector-button {
+      border: 1px solid rgba(132,160,236,0.22);
+      background: linear-gradient(180deg, rgba(31,48,90,0.98), rgba(21,34,67,0.98));
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(122,162,255,0.5);
+      box-shadow: 0 0 0 4px rgba(122,162,255,0.12);
+    }
+    textarea {
+      min-height: 220px;
+      resize: vertical;
+      line-height: 1.5;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12.5px;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .row > * { flex: 1 1 0; }
+    button {
+      border: 1px solid rgba(132,160,236,0.2);
+      background: linear-gradient(180deg, rgba(28,45,88,0.96), rgba(21,34,67,0.96));
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease, border-color .15s ease, box-shadow .15s ease;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+      font-weight: 700;
+    }
+    button:hover { transform: translateY(-1px); border-color: rgba(122,162,255,0.55); box-shadow: 0 12px 28px rgba(0,0,0,0.18); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-primary {
+      background: linear-gradient(180deg, #2c60ea, #2146b2);
+      border-color: #5982f6;
+    }
+    .btn-success {
+      background: linear-gradient(180deg, #11a27a, #0b7456);
+      border-color: #35c69b;
+    }
+    .btn-danger {
+      background: linear-gradient(180deg, #89303a, #6d2530);
+      border-color: #d96b76;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .stat {
+      background: var(--panel-2);
+      border: 1px solid rgba(132,160,236,0.12);
+      border-radius: 16px;
+      padding: 13px;
+    }
+    .stat .k { color: var(--muted); font-size: 12px; margin-bottom: 7px; }
+    .stat .v { font-size: 16px; font-weight: 800; word-break: break-word; }
+    .muted { color: var(--muted); }
+    .tiny { font-size: 12px; color: var(--muted); line-height: 1.45; }
+    .status {
+      min-height: 46px;
+      border-radius: 15px;
+      border: 1px solid rgba(132,160,236,0.14);
+      padding: 11px 13px;
+      background: rgba(7,12,28,0.58);
+      line-height: 1.55;
+    }
+    .status.error { border-color: rgba(210,90,108,0.55); color: #ffd5d9; background: rgba(75,20,28,0.24); }
+    .status.ok { border-color: rgba(46,189,147,0.4); color: #d5ffef; background: rgba(8,56,40,0.22); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    th, td {
+      text-align: left;
+      padding: 11px 12px;
+      border-bottom: 1px solid rgba(132,160,236,0.12);
+      vertical-align: top;
+      font-size: 13px;
+    }
+    thead th {
+      background: rgba(19,32,63,0.92);
+      color: #d9e5ff;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      backdrop-filter: blur(12px);
+    }
+    tbody tr:hover { background: rgba(255,255,255,0.03); }
+    .table-wrap {
+      max-height: 450px;
+      overflow: auto;
+      border: 1px solid rgba(132,160,236,0.12);
+      border-radius: 18px;
+      background: rgba(8,13,28,0.46);
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(122,162,255,0.12);
+      border: 1px solid rgba(122,162,255,0.24);
+      color: #dbe6ff;
+      font-size: 12px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+    .preview {
+      background: rgba(7,12,28,0.64);
+      border: 1px solid rgba(132,160,236,0.14);
+      border-radius: 18px;
+      padding: 16px;
+      min-height: 340px;
+      overflow: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12.5px;
+      white-space: pre-wrap;
+      line-height: 1.48;
+    }
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 13px;
+      padding-top: 4px;
+      border-top: 1px dashed rgba(132,160,236,0.12);
+    }
+    .soft-divider {
+      height: 1px;
+      border: 0;
+      background: linear-gradient(90deg, transparent, rgba(132,160,236,0.22), transparent);
+      margin: 6px 0 2px;
+    }
+    @media (max-width: 980px) {
+      .grid { grid-template-columns: 1fr; }
+      .info-grid { grid-template-columns: 1fr 1fr; }
+      .hero { padding: 22px 20px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 16px; }
+      .info-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 26px; }
+      .topbar { align-items: flex-start; }
+      .brand { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">DL</div>
+        <div>
+          <div class="brand-name" id="brandName">DefLab</div>
+          <div class="brand-tag" id="brandTag">Pure front-end symmetry defect builder</div>
+        </div>
+      </div>
+      <button id="langToggle" class="lang-toggle" type="button">中文</button>
+    </div>
+
+    <div class="hero">
+      <h1 id="appTitle">Symmetry Defect Generator</h1>
+      <p class="lead" id="appLead">
+        Pure front-end local tool for CIF files. It expands the structure using symmetry operations found in the CIF,
+        groups symmetry-equivalent sites for a chosen element, and generates vacancy or substitution defect structures,
+        with optional supercell expansion and CIF/POSCAR export, entirely in your browser.
+      </p>
+      <div class="hero-pills">
+        <span class="hero-pill" id="pill1">No Python</span>
+        <span class="hero-pill" id="pill2">No backend</span>
+        <span class="hero-pill" id="pill3">Runs locally in your browser</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="panel stack">
+        <h2 id="inputsTitle">Inputs</h2>
+
+        <label>
+          <span class="label-text" id="lblFile">CIF file</span>
+          <input id="fileInput" type="file" accept=".cif,.txt" />
+        </label>
+
+        <label>
+          <span class="label-text" id="lblPaste">Or paste CIF text</span>
+          <textarea id="cifText" placeholder="Paste a CIF file here..."></textarea>
+        </label>
+
+        <div class="row">
+          <label>
+            <span class="label-text" id="lblTarget">Target element</span>
+            <select id="elementSelect"></select>
+          </label>
+          <label>
+            <span class="label-text" id="lblTol">Position tolerance</span>
+            <input id="tolInput" type="number" min="1e-8" step="0.0001" value="0.001" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            <span class="label-text" id="lblDefectType">Defect type</span>
+            <select id="defectTypeSelect">
+              <option id="optVacancy" value="vacancy" selected>Vacancy</option>
+              <option id="optSubstitution" value="substitution">Substitution</option>
+            </select>
+          </label>
+          <label>
+            <span class="label-text" id="lblReplacement">Replacement element</span>
+            <input id="replacementInput" type="text" placeholder="e.g. F, N, Co" />
+          </label>
+        </div>
+
+        <div>
+          <div class="tiny" id="supercellTitle" style="margin-bottom:6px;">Supercell size</div>
+          <div class="row">
+            <label>
+              a
+              <input id="superAInput" type="number" min="1" step="1" value="1" />
+            </label>
+            <label>
+              b
+              <input id="superBInput" type="number" min="1" step="1" value="1" />
+            </label>
+            <label>
+              c
+              <input id="superCInput" type="number" min="1" step="1" value="1" />
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>
+            <span class="label-text" id="lblExport">Export format</span>
+            <select id="exportFormatSelect">
+              <option value="cif" selected>CIF</option>
+              <option value="poscar">POSCAR</option>
+              <option id="optBoth" value="both">Both (zip when downloading)</option>
+            </select>
+          </label>
+          <label>
+            <span class="label-text" id="lblNaming">File naming</span>
+            <input id="namingInput" type="text" value="base_scAxBxC_siteN_multM_repR_Element_defect" disabled />
+          </label>
+        </div>
+
+        <div class="row">
+          <button id="analyzeBtn" class="btn-primary">Analyze CIF</button>
+          <button id="clearBtn">Clear</button>
+        </div>
+
+        <div class="status" id="statusBox">Load a CIF to begin.</div>
+
+        <div class="info-grid" id="summaryGrid">
+          <div class="stat"><div class="k" id="statFormula">Formula</div><div class="v" id="formulaVal">—</div></div>
+          <div class="stat"><div class="k" id="statSymOps">Symmetry ops used</div><div class="v" id="symOpsVal">—</div></div>
+          <div class="stat"><div class="k" id="statAtoms">Atoms in full cell</div><div class="v" id="atomCountVal">—</div></div>
+          <div class="stat"><div class="k" id="statIneq">Inequivalent target sites</div><div class="v" id="ineqVal">—</div></div>
+        </div>
+
+        <div>
+          <div class="tiny" id="elementsFoundTitle">Elements found</div>
+          <div id="elementChips"></div>
+        </div>
+
+        <div class="footer-note" id="footerNote">
+          Notes: this single-file version first uses symmetry operations explicitly present in the CIF. If the CIF only provides identity/P1 symmetry,
+          it will additionally try to infer symmetry from the lattice metric and exact atomic coordinates. This fallback works well for many orthogonal cells,
+          but it is still not as general or as robust as a full crystallographic symmetry engine. Defect structures are exported as P1 CIF and/or POSCAR; when a supercell is requested,
+          the defect is placed in the first translational image of the chosen inequivalent site.
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+          <div class="section-title">
+            <h2 style="margin:0;" id="sitesTitle">Symmetry-inequivalent target sites</h2>
+            <div class="row" style="flex:0 0 auto;">
+              <button id="downloadAllBtn" class="btn-success" disabled>Download all generated CIFs</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th id="thIndex">#</th>
+                  <th id="thElement">Element</th>
+                  <th id="thRep">Representative atom index</th>
+                  <th id="thFrac">Fractional coordinates</th>
+                  <th id="thMult">Multiplicity</th>
+                  <th id="thEquiv">Equivalent atom indices</th>
+                  <th id="thActions">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="siteTableBody">
+                <tr><td colspan="7" class="muted" id="noDataText">No data yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="section-title">
+            <h2 style="margin:0;" id="previewTitle">Selected generated CIF preview</h2>
+            <button id="downloadSelectedBtn" disabled>Download selected CIF</button>
+          </div>
+          <div class="preview" id="previewBox">Select a generated structure from the table to preview the exported structure text.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const state = {
+      cifText: '',
+      parsed: null,
+      fullAtoms: [],
+      groups: [],
+      selectedGroupIndex: null,
+      basename: 'structure',
+      tol: 1e-3,
+      defectType: 'vacancy',
+      replacementElement: '',
+      supercell: [1, 1, 1],
+      exportFormat: 'cif',
+      previewTitleEl: null,
+      lang: 'en',
+    };
+
+    const fileInput = document.getElementById('fileInput');
+    const cifTextArea = document.getElementById('cifText');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const statusBox = document.getElementById('statusBox');
+    const elementSelect = document.getElementById('elementSelect');
+    const tolInput = document.getElementById('tolInput');
+    const defectTypeSelect = document.getElementById('defectTypeSelect');
+    const replacementInput = document.getElementById('replacementInput');
+    const superAInput = document.getElementById('superAInput');
+    const superBInput = document.getElementById('superBInput');
+    const superCInput = document.getElementById('superCInput');
+    const exportFormatSelect = document.getElementById('exportFormatSelect');
+    const previewTitle = document.getElementById('previewTitle');
+    const langToggle = document.getElementById('langToggle');
+    const siteTableBody = document.getElementById('siteTableBody');
+    const previewBox = document.getElementById('previewBox');
+    const downloadSelectedBtn = document.getElementById('downloadSelectedBtn');
+    const downloadAllBtn = document.getElementById('downloadAllBtn');
+    const formulaVal = document.getElementById('formulaVal');
+    const symOpsVal = document.getElementById('symOpsVal');
+    const atomCountVal = document.getElementById('atomCountVal');
+    const ineqVal = document.getElementById('ineqVal');
+    const elementChips = document.getElementById('elementChips');
+    const I18N = {
+      en: {
+        documentTitle: 'DefLab | Symmetry Defect Generator',
+        brandName: 'DefLab',
+        brandTag: 'Pure front-end symmetry defect builder',
+        appTitle: 'Symmetry Defect Generator',
+        appLead: 'Pure front-end local tool for CIF files. It expands the structure using symmetry operations found in the CIF, groups symmetry-equivalent sites for a chosen element, and generates vacancy or substitution defect structures, with optional supercell expansion and CIF/POSCAR export, entirely in your browser.',
+        pill1: 'No Python',
+        pill2: 'No backend',
+        pill3: 'Runs locally in your browser',
+        inputsTitle: 'Inputs',
+        lblFile: 'CIF file',
+        lblPaste: 'Or paste CIF text',
+        pastePlaceholder: 'Paste a CIF file here...',
+        lblTarget: 'Target element',
+        lblTol: 'Position tolerance',
+        lblDefectType: 'Defect type',
+        optVacancy: 'Vacancy',
+        optSubstitution: 'Substitution',
+        lblReplacement: 'Replacement element',
+        replacementPlaceholder: 'e.g. F, N, Co',
+        supercellTitle: 'Supercell size',
+        lblExport: 'Export format',
+        optBoth: 'Both (zip when downloading)',
+        lblNaming: 'File naming',
+        analyze: 'Analyze CIF',
+        clear: 'Clear',
+        statusLoad: 'Load a CIF to begin.',
+        statFormula: 'Formula',
+        statSymOps: 'Symmetry ops used',
+        statAtoms: 'Atoms in full cell',
+        statIneq: 'Inequivalent target sites',
+        elementsFoundTitle: 'Elements found',
+        footerNote: 'Notes: this single-file version first uses symmetry operations explicitly present in the CIF. If the CIF only provides identity/P1 symmetry, it will additionally try to infer symmetry from the lattice metric and exact atomic coordinates. This fallback works well for many orthogonal cells, but it is still not as general or as robust as a full crystallographic symmetry engine. Defect structures are exported as P1 CIF and/or POSCAR; when a supercell is requested, the defect is placed in the first translational image of the chosen inequivalent site.',
+        sitesTitle: 'Symmetry-inequivalent target sites',
+        thElement: 'Element',
+        thRep: 'Representative atom index',
+        thFrac: 'Fractional coordinates',
+        thMult: 'Multiplicity',
+        thEquiv: 'Equivalent atom indices',
+        thActions: 'Actions',
+        noData: 'No data yet.',
+        previewTitleCif: 'Selected generated CIF preview',
+        previewTitlePoscar: 'Selected generated POSCAR preview',
+        previewTitleBoth: 'Selected generated structure preview',
+        previewDefault: 'Select a generated structure from the table to preview the exported structure text.',
+        previewPrompt: 'Select a generated structure from the table to preview the {format} text.',
+        btnPreview: 'Preview',
+        btnDownload: 'Download',
+        downloadAll: 'Download all {mode} {fmt}',
+        downloadSelected: 'Download selected {mode} {fmt}',
+        modeVacancy: 'vacancy',
+        modeSubstitution: 'substitution to {el}',
+        filesWord: 'files',
+        selectedStructure: 'selected structure',
+        statusLoadedReady: 'Loaded {name}. Ready to analyze.',
+        statusCleared: 'Cleared.',
+        statusTargetUpdated: 'Updated target element to {target}. Found {n} inequivalent site(s).',
+        statusPreviewing: 'Previewing {label} for inequivalent site #{n} with supercell {sc} as {fmt}.',
+        statusDownloadedOne: 'Downloaded {name}.',
+        statusDownloadedZip: 'Downloaded {n} file(s) as {name}.',
+        statusDownloadedFallback: 'JSZip is unavailable, so files were downloaded one by one.',
+        replacementNeeded: 'Please enter a valid replacement element for substitution mode.',
+        noSitesFound: 'No inequivalent target sites found for the chosen element.',
+        langToggle: '中文'
+      },
+      zh: {
+        documentTitle: 'DefLab｜对称性缺陷生成器',
+        brandName: 'DefLab',
+        brandTag: '纯前端本地对称缺陷生成工具',
+        appTitle: '对称性缺陷生成器',
+        appLead: '纯前端、本地运行的 CIF 工具。它会利用 CIF 中的对称操作展开结构，按所选元素归并对称等效位点，并生成空位或取代缺陷结构；支持扩胞与 CIF/POSCAR 导出，全部在浏览器中完成。',
+        pill1: '无需 Python',
+        pill2: '无需后端',
+        pill3: '直接在浏览器本地运行',
+        inputsTitle: '输入区',
+        lblFile: 'CIF 文件',
+        lblPaste: '或直接粘贴 CIF 文本',
+        pastePlaceholder: '在这里粘贴 CIF 文件内容…',
+        lblTarget: '目标元素',
+        lblTol: '位置容差',
+        lblDefectType: '缺陷类型',
+        optVacancy: '空位',
+        optSubstitution: '取代',
+        lblReplacement: '替换元素',
+        replacementPlaceholder: '例如 F、N、Co',
+        supercellTitle: '扩胞倍数',
+        lblExport: '导出格式',
+        optBoth: '两者都导出（下载时打包 zip）',
+        lblNaming: '文件命名',
+        analyze: '分析 CIF',
+        clear: '清空',
+        statusLoad: '请先加载一个 CIF。',
+        statFormula: '化学式',
+        statSymOps: '使用的对称操作数',
+        statAtoms: '完整晶胞原子数',
+        statIneq: '不等价目标位点数',
+        elementsFoundTitle: '识别到的元素',
+        footerNote: '说明：这个单文件版本会优先使用 CIF 中显式给出的对称操作。如果 CIF 只提供了恒等操作或 P1，它还会根据晶格度量和原子坐标尝试推回一部分对称性。这个补救方案对很多正交晶胞表现不错，但整体上仍不如完整的晶体对称性引擎稳健。生成的缺陷结构会导出为 P1 的 CIF 和/或 POSCAR；如果设置了扩胞，缺陷会放在所选不等价位点的第一个平移像中。',
+        sitesTitle: '目标元素的不等价位点',
+        thElement: '元素',
+        thRep: '代表原子索引',
+        thFrac: '分数坐标',
+        thMult: '简并度',
+        thEquiv: '等效原子索引',
+        thActions: '操作',
+        noData: '暂时还没有数据。',
+        previewTitleCif: '所选生成结构的 CIF 预览',
+        previewTitlePoscar: '所选生成结构的 POSCAR 预览',
+        previewTitleBoth: '所选生成结构预览',
+        previewDefault: '请从上表中选择一个生成结构进行预览。',
+        previewPrompt: '请从上表中选择一个生成结构，以预览导出的 {format} 文本。',
+        btnPreview: '预览',
+        btnDownload: '下载',
+        downloadAll: '下载全部{mode}{fmt}',
+        downloadSelected: '下载当前{mode}{fmt}',
+        modeVacancy: '空位结构',
+        modeSubstitution: '取代为 {el} 的结构',
+        filesWord: '文件',
+        selectedStructure: '当前结构',
+        statusLoadedReady: '已加载 {name}，可以开始分析。',
+        statusCleared: '已清空。',
+        statusTargetUpdated: '目标元素已更新为 {target}，共找到 {n} 个不等价位点。',
+        statusPreviewing: '正在预览第 {n} 个不等价位点的{label}，扩胞为 {sc}，导出格式为 {fmt}。',
+        statusDownloadedOne: '已下载 {name}。',
+        statusDownloadedZip: '已将 {n} 个文件打包下载为 {name}。',
+        statusDownloadedFallback: '当前无法使用 JSZip，因此文件已逐个下载。',
+        replacementNeeded: '取代模式下，请填写有效的替换元素。',
+        noSitesFound: '当前所选元素没有找到不等价位点。',
+        langToggle: 'EN'
+      }
+    };
+
+    function t(key, vars = {}) {
+      const lang = state.lang || 'en';
+      const base = (I18N[lang] && I18N[lang][key]) || (I18N.en && I18N.en[key]) || key;
+      return String(base).replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? `{${k}}`);
+    }
+
+    function setText(id, key, vars = {}) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = t(key, vars);
+    }
+
+    function updatePreviewTitle() {
+      const fmt = normalizeExportFormat(exportFormatSelect.value);
+      previewTitle.textContent = fmt === 'poscar' ? t('previewTitlePoscar') : fmt === 'both' ? t('previewTitleBoth') : t('previewTitleCif');
+    }
+
+    function applyLanguage() {
+      document.documentElement.lang = state.lang === 'zh' ? 'zh-CN' : 'en';
+      document.title = t('documentTitle');
+      setText('brandName', 'brandName');
+      setText('brandTag', 'brandTag');
+      setText('appTitle', 'appTitle');
+      setText('appLead', 'appLead');
+      setText('pill1', 'pill1');
+      setText('pill2', 'pill2');
+      setText('pill3', 'pill3');
+      setText('inputsTitle', 'inputsTitle');
+      setText('lblFile', 'lblFile');
+      setText('lblPaste', 'lblPaste');
+      setText('lblTarget', 'lblTarget');
+      setText('lblTol', 'lblTol');
+      setText('lblDefectType', 'lblDefectType');
+      setText('lblReplacement', 'lblReplacement');
+      setText('supercellTitle', 'supercellTitle');
+      setText('lblExport', 'lblExport');
+      setText('lblNaming', 'lblNaming');
+      setText('statFormula', 'statFormula');
+      setText('statSymOps', 'statSymOps');
+      setText('statAtoms', 'statAtoms');
+      setText('statIneq', 'statIneq');
+      setText('elementsFoundTitle', 'elementsFoundTitle');
+      setText('sitesTitle', 'sitesTitle');
+      setText('thElement', 'thElement');
+      setText('thRep', 'thRep');
+      setText('thFrac', 'thFrac');
+      setText('thMult', 'thMult');
+      setText('thEquiv', 'thEquiv');
+      setText('thActions', 'thActions');
+      setText('footerNote', 'footerNote');
+      document.getElementById('optVacancy').textContent = t('optVacancy');
+      document.getElementById('optSubstitution').textContent = t('optSubstitution');
+      document.getElementById('optBoth').textContent = t('optBoth');
+      document.getElementById('cifText').placeholder = t('pastePlaceholder');
+      document.getElementById('replacementInput').placeholder = t('replacementPlaceholder');
+      document.getElementById('namingInput').value = 'base_scAxBxC_siteN_multM_repR_Element_defect';
+      analyzeBtn.textContent = t('analyze');
+      clearBtn.textContent = t('clear');
+      langToggle.textContent = t('langToggle');
+      if (!state.selectedGroupIndex && !state.groups.length && !(statusBox.textContent || '').trim()) {
+        setStatus(t('statusLoad'));
+      }
+      const noDataEl = document.getElementById('noDataText');
+      if (noDataEl) noDataEl.textContent = t('noData');
+      updatePreviewTitle();
+      updateActionLabels();
+      if (state.selectedGroupIndex == null) {
+        previewBox.textContent = state.groups.length ? t('previewPrompt', { format: previewExportFormat(getCurrentSettings().exportFormat).toUpperCase() }) : t('previewDefault');
+      }
+      if (state.groups.length) renderGroupsTable(state.groups);
+    }
+
+    updateModeUI();
+    updateActionLabels();
+    applyLanguage();
+
+    langToggle.addEventListener('click', () => {
+      state.lang = state.lang === 'en' ? 'zh' : 'en';
+      applyLanguage();
+    });
+
+    fileInput.addEventListener('change', async (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      state.basename = sanitizeBaseName(file.name.replace(/\.[^.]+$/, '') || 'structure');
+      const text = await file.text();
+      cifTextArea.value = text;
+      setStatus(t('statusLoadedReady', { name: file.name }), 'ok');
+    });
+
+    analyzeBtn.addEventListener('click', () => {
+      try {
+        const text = cifTextArea.value.trim();
+        if (!text) throw new Error('Please load or paste a CIF first.');
+        state.tol = Math.max(Number(tolInput.value) || 1e-3, 1e-8);
+        state.defectType = defectTypeSelect.value;
+        state.replacementElement = normalizeElement(replacementInput.value);
+        state.supercell = getSupercell();
+        validateDefectSettings();
+        state.cifText = text;
+
+        const parsed = parseCIF(text);
+        parsed.analysisSymOps = getAnalysisSymOps(parsed, state.tol);
+        state.parsed = parsed;
+
+        const fullAtoms = expandAtomsBySymmetry(parsed.atoms, parsed.analysisSymOps, state.tol);
+        state.fullAtoms = fullAtoms;
+
+        populateElementSelect(uniqueElements(fullAtoms));
+        const target = elementSelect.value || uniqueElements(fullAtoms)[0];
+        elementSelect.value = target;
+
+        const groups = buildEquivalentGroups(fullAtoms, parsed.analysisSymOps, target, state.tol);
+        state.groups = groups;
+        state.selectedGroupIndex = null;
+
+        renderSummary(parsed, fullAtoms, groups);
+        updateActionLabels();
+        renderGroupsTable(groups);
+        updatePreviewTitle();
+        previewBox.textContent = t('previewPrompt', { format: previewExportFormat(getCurrentSettings().exportFormat).toUpperCase() });
+        downloadSelectedBtn.disabled = true;
+        downloadAllBtn.disabled = groups.length === 0;
+
+        const rawOpCount = parsed.symOps.length;
+        const analysisOpCount = parsed.analysisSymOps.length;
+        if (rawOpCount <= 1 && analysisOpCount > rawOpCount) {
+          setStatus(`Analysis complete. The CIF only provided identity/P1 symmetry, so the tool inferred ${analysisOpCount} symmetry operation(s) from the lattice metric and coordinates. Found ${groups.length} symmetry-inequivalent ${target} site(s).`, 'ok');
+        } else if (analysisOpCount <= 1) {
+          setStatus(`Analysis complete. No usable symmetry operations were found or inferred. ${groups.length} target site(s) treated as inequivalent for ${target}.`, 'ok');
+        } else {
+          setStatus(`Analysis complete. Found ${groups.length} symmetry-inequivalent ${target} site(s) using ${analysisOpCount} symmetry operation(s).`, 'ok');
+        }
+      } catch (error) {
+        console.error(error);
+        setStatus(error.message || String(error), 'error');
+      }
+    });
+
+    clearBtn.addEventListener('click', () => {
+      fileInput.value = '';
+      cifTextArea.value = '';
+      elementSelect.innerHTML = '';
+      siteTableBody.innerHTML = `<tr><td colspan="7" class="muted">${t('noData')}</td></tr>`;
+      previewBox.textContent = t('previewDefault');
+      formulaVal.textContent = '—';
+      symOpsVal.textContent = '—';
+      atomCountVal.textContent = '—';
+      ineqVal.textContent = '—';
+      elementChips.innerHTML = '';
+      defectTypeSelect.value = 'vacancy';
+      replacementInput.value = '';
+      superAInput.value = '1';
+      superBInput.value = '1';
+      superCInput.value = '1';
+      exportFormatSelect.value = 'cif';
+      state.parsed = null;
+      state.fullAtoms = [];
+      state.groups = [];
+      state.selectedGroupIndex = null;
+      state.defectType = 'vacancy';
+      state.replacementElement = '';
+      state.supercell = [1, 1, 1];
+      state.exportFormat = 'cif';
+      updatePreviewTitle();
+      updateModeUI();
+      updateActionLabels();
+      downloadSelectedBtn.disabled = true;
+      downloadAllBtn.disabled = true;
+      setStatus(t('statusCleared'), 'ok');
+    });
+
+    elementSelect.addEventListener('change', () => {
+      if (!state.parsed || !state.fullAtoms.length) return;
+      try {
+        const target = elementSelect.value;
+        const groups = buildEquivalentGroups(state.fullAtoms, state.parsed.analysisSymOps || state.parsed.symOps, target, state.tol);
+        state.groups = groups;
+        state.selectedGroupIndex = null;
+        renderSummary(state.parsed, state.fullAtoms, groups);
+        updateActionLabels();
+        renderGroupsTable(groups);
+        updatePreviewTitle();
+        previewBox.textContent = t('previewPrompt', { format: previewExportFormat(getCurrentSettings().exportFormat).toUpperCase() });
+        downloadSelectedBtn.disabled = true;
+        downloadAllBtn.disabled = groups.length === 0;
+        setStatus(t('statusTargetUpdated', { target, n: groups.length }), 'ok');
+      } catch (error) {
+        console.error(error);
+        setStatus(error.message || String(error), 'error');
+      }
+    });
+
+    defectTypeSelect.addEventListener('change', () => {
+      state.defectType = defectTypeSelect.value;
+      updateModeUI();
+      tryUpdateSelectedPreview();
+      updateActionLabels();
+    });
+
+    replacementInput.addEventListener('input', () => {
+      state.replacementElement = normalizeElement(replacementInput.value);
+      replacementInput.value = state.replacementElement;
+      tryUpdateSelectedPreview();
+      updateActionLabels();
+    });
+
+    [superAInput, superBInput, superCInput].forEach(input => {
+      input.addEventListener('input', () => {
+        try {
+          state.supercell = getSupercell();
+          tryUpdateSelectedPreview();
+          updateActionLabels();
+        } catch (_) {
+          // wait until valid integers are entered
+        }
+      });
+    });
+
+    exportFormatSelect.addEventListener('change', () => {
+      state.exportFormat = normalizeExportFormat(exportFormatSelect.value);
+      updatePreviewTitle();
+      tryUpdateSelectedPreview();
+      updateActionLabels();
+    });
+
+    downloadSelectedBtn.addEventListener('click', async () => {
+      if (state.selectedGroupIndex == null) return;
+      try {
+        validateDefectSettings();
+        const group = state.groups[state.selectedGroupIndex];
+        const settings = getCurrentSettings();
+        const payloads = makeDefectPayloads(state.parsed, state.fullAtoms, group, settings);
+        await downloadPayloads(payloads, `${defectStem(state.basename, group, state.fullAtoms, settings)}.zip`);
+      } catch (error) {
+        setStatus(error.message || String(error), 'error');
+      }
+    });
+
+    downloadAllBtn.addEventListener('click', async () => {
+      if (!state.groups.length) return;
+      try {
+        validateDefectSettings();
+        const settings = getCurrentSettings();
+        const payloads = state.groups.flatMap(group => makeDefectPayloads(state.parsed, state.fullAtoms, group, settings));
+        const manifest = makeManifest(state.groups, settings);
+        payloads.push({
+          name: `${sanitizeBaseName(state.basename)}_defect_manifest.txt`,
+          text: manifest,
+        });
+        await downloadPayloads(payloads, `${sanitizeBaseName(state.basename)}_generated_defects.zip`);
+      } catch (error) {
+        setStatus(error.message || String(error), 'error');
+      }
+    });
+
+    function setStatus(message, kind = '') {
+      statusBox.className = `status ${kind}`.trim();
+      statusBox.textContent = message;
+    }
+
+    function getSupercell() {
+      return [superAInput, superBInput, superCInput].map(input => {
+        const v = Math.max(1, Math.round(Number(input.value) || 1));
+        input.value = String(v);
+        return v;
+      });
+    }
+
+    function getCurrentSettings() {
+      return {
+        defectType: defectTypeSelect.value,
+        replacementElement: normalizeElement(replacementInput.value),
+        supercell: getSupercell(),
+        exportFormat: normalizeExportFormat(exportFormatSelect.value),
+      };
+    }
+
+    function validateDefectSettings() {
+      const settings = getCurrentSettings();
+      if (settings.defectType === 'substitution' && !settings.replacementElement) {
+        throw new Error(t('replacementNeeded'));
+      }
+      return settings;
+    }
+
+    function updateModeUI() {
+      const isSub = defectTypeSelect.value === 'substitution';
+      replacementInput.disabled = !isSub;
+    }
+
+    function currentDefectLabel() {
+      const settings = getCurrentSettings();
+      return settings.defectType === 'vacancy'
+        ? t('modeVacancy')
+        : t('modeSubstitution', { el: settings.replacementElement || '?' });
+    }
+
+    function updateActionLabels() {
+      const settings = getCurrentSettings();
+      const sc = settings.supercell.join('×');
+      const modeText = settings.defectType === 'vacancy'
+        ? t('modeVacancy')
+        : t('modeSubstitution', { el: settings.replacementElement || '?' });
+      const fmt = settings.exportFormat === 'both' ? t('filesWord') : settings.exportFormat.toUpperCase();
+      downloadAllBtn.textContent = t('downloadAll', { mode: modeText, fmt: state.lang === 'zh' ? `（${fmt}）` : ` ${fmt}` }).replace('  ', ' ');
+      downloadSelectedBtn.textContent = t('downloadSelected', { mode: modeText, fmt: state.lang === 'zh' ? `（${fmt}）` : ` ${fmt}` }).replace('  ', ' ');
+      previewBox.dataset.modeSummary = `${modeText}, supercell ${sc}, export ${settings.exportFormat}`;
+      updatePreviewTitle();
+    }
+
+    function tryUpdateSelectedPreview() {
+      if (state.selectedGroupIndex == null) return;
+      try {
+        validateDefectSettings();
+        previewGroup(state.selectedGroupIndex);
+      } catch (error) {
+        downloadSelectedBtn.disabled = true;
+        previewBox.textContent = error.message || String(error);
+      }
+    }
+
+    function populateElementSelect(elements) {
+      elementSelect.innerHTML = '';
+      elements.forEach(el => {
+        const option = document.createElement('option');
+        option.value = el;
+        option.textContent = el;
+        elementSelect.appendChild(option);
+      });
+      elementChips.innerHTML = elements.map(el => `<span class="chip">${escapeHtml(el)}</span>`).join('');
+    }
+
+    function renderSummary(parsed, fullAtoms, groups) {
+      formulaVal.textContent = makeFormula(fullAtoms);
+      const rawCount = parsed.symOps.length;
+      const analysisCount = (parsed.analysisSymOps || parsed.symOps).length;
+      symOpsVal.textContent = analysisCount === rawCount ? String(rawCount) : `${analysisCount} (${rawCount} from CIF)`;
+      atomCountVal.textContent = String(fullAtoms.length);
+      ineqVal.textContent = String(groups.length);
+    }
+
+    function renderGroupsTable(groups) {
+      if (!groups.length) {
+        siteTableBody.innerHTML = `<tr><td colspan="7" class="muted">${t('noSitesFound')}</td></tr>`;
+        return;
+      }
+
+      siteTableBody.innerHTML = '';
+      groups.forEach((group, idx) => {
+        const repAtom = state.fullAtoms[group.representativeIndex];
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td>${escapeHtml(repAtom.element)}</td>
+          <td>${group.representativeIndex + 1}</td>
+          <td>${formatFrac(repAtom.frac)}</td>
+          <td>${group.indices.length}</td>
+          <td>${group.indices.map(i => i + 1).join(', ')}</td>
+          <td>
+            <div class="row" style="gap:6px;">
+              <button data-action="preview" data-idx="${idx}">${t('btnPreview')}</button>
+              <button data-action="download" data-idx="${idx}">${t('btnDownload')}</button>
+            </div>
+          </td>
+        `;
+        siteTableBody.appendChild(tr);
+      });
+
+      siteTableBody.querySelectorAll('button[data-action="preview"]').forEach(btn => {
+        btn.addEventListener('click', () => previewGroup(Number(btn.dataset.idx)));
+      });
+      siteTableBody.querySelectorAll('button[data-action="download"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          try {
+            validateDefectSettings();
+            const idx = Number(btn.dataset.idx);
+            const group = state.groups[idx];
+            const settings = getCurrentSettings();
+            const payloads = makeDefectPayloads(state.parsed, state.fullAtoms, group, settings);
+            await downloadPayloads(payloads, `${defectStem(state.basename, group, state.fullAtoms, settings)}.zip`);
+          } catch (error) {
+            setStatus(error.message || String(error), 'error');
+          }
+        });
+      });
+    }
+
+    function previewGroup(groupIndex) {
+      const group = state.groups[groupIndex];
+      const settings = getCurrentSettings();
+      const previewFormat = previewExportFormat(settings.exportFormat);
+      const text = previewFormat === 'poscar'
+        ? makeDefectPOSCAR(state.parsed, state.fullAtoms, group, settings)
+        : makeDefectCIF(state.parsed, state.fullAtoms, group.representativeIndex, settings);
+      previewBox.textContent = text;
+      state.selectedGroupIndex = groupIndex;
+      downloadSelectedBtn.disabled = false;
+      setStatus(t('statusPreviewing', { label: currentDefectLabel(), n: groupIndex + 1, sc: settings.supercell.join('×'), fmt: previewFormat.toUpperCase() }), 'ok');
+    }
+
+    function parseCIF(cifText) {
+      const cleaned = cifText.replace(/\r/g, '');
+      const lines = cleaned.split('\n');
+
+      const scalar = {};
+      const loops = [];
+      let i = 0;
+
+      while (i < lines.length) {
+        let line = stripInlineComment(lines[i]).trim();
+        if (!line) { i++; continue; }
+
+        if (/^data_/i.test(line)) {
+          i++;
+          continue;
+        }
+
+        if (/^loop_/i.test(line)) {
+          i++;
+          const headers = [];
+          while (i < lines.length) {
+            let hdr = stripInlineComment(lines[i]).trim();
+            if (!hdr) { i++; continue; }
+            if (hdr.startsWith('_')) {
+              headers.push(hdr.split(/\s+/)[0]);
+              i++;
+              continue;
+            }
+            break;
+          }
+          const rows = [];
+          while (i < lines.length) {
+            let raw = lines[i];
+            let trimmed = stripInlineComment(raw).trim();
+            if (!trimmed) { i++; continue; }
+            if (/^(loop_|data_)/i.test(trimmed) || trimmed.startsWith('_')) break;
+            const tokens = tokenizeCifRow(trimmed);
+            if (tokens.length) rows.push(tokens);
+            i++;
+          }
+          loops.push({ headers, rows });
+          continue;
+        }
+
+        if (line.startsWith('_')) {
+          const firstSpace = line.search(/\s/);
+          if (firstSpace === -1) {
+            scalar[line] = '?';
+          } else {
+            const key = line.slice(0, firstSpace).trim();
+            const value = line.slice(firstSpace).trim();
+            scalar[key] = unquote(value);
+          }
+        }
+        i++;
+      }
+
+      const cell = {
+        a: parseNumericScalar(scalar, ['_cell_length_a']),
+        b: parseNumericScalar(scalar, ['_cell_length_b']),
+        c: parseNumericScalar(scalar, ['_cell_length_c']),
+        alpha: parseNumericScalar(scalar, ['_cell_angle_alpha']),
+        beta: parseNumericScalar(scalar, ['_cell_angle_beta']),
+        gamma: parseNumericScalar(scalar, ['_cell_angle_gamma']),
+      };
+
+      if (Object.values(cell).some(v => Number.isNaN(v))) {
+        throw new Error('Failed to parse unit-cell parameters from the CIF.');
+      }
+
+      const atomLoop = findAtomLoop(loops);
+      if (!atomLoop) throw new Error('No atom-site loop was found in the CIF.');
+      const atoms = parseAtomsFromLoop(atomLoop);
+      if (!atoms.length) throw new Error('No atom positions could be parsed from the atom-site loop.');
+
+      const symOps = parseSymmetryOps(loops);
+      const hm = scalar['_space_group_name_H-M_alt'] || scalar['_symmetry_space_group_name_H-M'] || scalar['_space_group_name_H-M'] || 'Unknown';
+      const sgNumber = scalar['_space_group_IT_number'] || scalar['_symmetry_Int_Tables_number'] || 'Unknown';
+
+      return {
+        cell,
+        atoms,
+        symOps,
+        hm,
+        sgNumber,
+      };
+    }
+
+    function stripInlineComment(line) {
+      let inSingle = false;
+      let inDouble = false;
+      let out = '';
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === "'" && !inDouble) inSingle = !inSingle;
+        if (ch === '"' && !inSingle) inDouble = !inDouble;
+        if (ch === '#' && !inSingle && !inDouble) break;
+        out += ch;
+      }
+      return out;
+    }
+
+    function tokenizeCifRow(line) {
+      const regex = /'(?:[^']*)'|"(?:[^"]*)"|[^\s]+/g;
+      return (line.match(regex) || []).map(unquote);
+    }
+
+    function unquote(value) {
+      if (value == null) return value;
+      const trimmed = String(value).trim();
+      if ((trimmed.startsWith("'") && trimmed.endsWith("'")) || (trimmed.startsWith('"') && trimmed.endsWith('"'))) {
+        return trimmed.slice(1, -1);
+      }
+      return trimmed;
+    }
+
+    function parseNumericScalar(scalar, keys) {
+      for (const key of keys) {
+        if (scalar[key] != null) return parseNumber(scalar[key]);
+      }
+      return NaN;
+    }
+
+    function parseNumber(value) {
+      const s = String(value).trim();
+      if (s === '?' || s === '.') return NaN;
+      const m = s.match(/^([+-]?(?:\d+\.?\d*|\d*\.\d+)(?:[eE][+-]?\d+)?)(?:\(\d+\))?$/);
+      if (m) return Number(m[1]);
+      return Number(s);
+    }
+
+    function findAtomLoop(loops) {
+      return loops.find(loop => loop.headers.some(h => /_atom_site_fract_x/i.test(h)) && loop.headers.some(h => /_atom_site_fract_y/i.test(h)) && loop.headers.some(h => /_atom_site_fract_z/i.test(h)));
+    }
+
+    function parseAtomsFromLoop(loop) {
+      const idx = {
+        label: loop.headers.findIndex(h => /_atom_site_label/i.test(h)),
+        type: loop.headers.findIndex(h => /_atom_site_type_symbol/i.test(h)),
+        fx: loop.headers.findIndex(h => /_atom_site_fract_x/i.test(h)),
+        fy: loop.headers.findIndex(h => /_atom_site_fract_y/i.test(h)),
+        fz: loop.headers.findIndex(h => /_atom_site_fract_z/i.test(h)),
+        occ: loop.headers.findIndex(h => /_atom_site_occupancy/i.test(h)),
+      };
+      if (idx.fx < 0 || idx.fy < 0 || idx.fz < 0) throw new Error('Atom-site loop is missing fractional coordinate columns.');
+
+      const atoms = [];
+      for (const row of loop.rows) {
+        if (row.length < loop.headers.length) continue;
+        const label = idx.label >= 0 ? row[idx.label] : '';
+        const typeSymbol = idx.type >= 0 ? row[idx.type] : inferElementFromLabel(label);
+        const element = normalizeElement(typeSymbol || inferElementFromLabel(label));
+        if (!element) continue;
+        atoms.push({
+          label: label || `${element}${atoms.length + 1}`,
+          element,
+          frac: [parseNumber(row[idx.fx]), parseNumber(row[idx.fy]), parseNumber(row[idx.fz])].map(wrap01),
+          occupancy: idx.occ >= 0 ? parseNumber(row[idx.occ]) : 1,
+        });
+      }
+      return atoms;
+    }
+
+    function inferElementFromLabel(label) {
+      const s = String(label || '').trim();
+      const m = s.match(/^([A-Za-z]{1,2})/);
+      return m ? m[1] : '';
+    }
+
+    function normalizeElement(symbol) {
+      const s = String(symbol || '').trim();
+      if (!s) return '';
+      const clean = s.replace(/[^A-Za-z]/g, '');
+      if (!clean) return '';
+      return clean.charAt(0).toUpperCase() + clean.slice(1).toLowerCase();
+    }
+
+    function parseSymmetryOps(loops) {
+      const loop = loops.find(loop => loop.headers.some(h => /_space_group_symop_operation_xyz/i.test(h) || /_symmetry_equiv_pos_as_xyz/i.test(h)));
+      if (!loop) return [parseSymOp('x,y,z')];
+      const col = loop.headers.findIndex(h => /_space_group_symop_operation_xyz/i.test(h) || /_symmetry_equiv_pos_as_xyz/i.test(h));
+      const ops = [];
+      for (const row of loop.rows) {
+        const expr = row[col];
+        if (!expr) continue;
+        ops.push(parseSymOp(expr));
+      }
+      return ops.length ? dedupeSymOps(ops) : [parseSymOp('x,y,z')];
+    }
+
+    function dedupeSymOps(ops, tol = 1e-10) {
+      const unique = [];
+      for (const op of ops) {
+        const key = JSON.stringify({
+          m: op.matrix.map(v => Math.abs(v) < tol ? 0 : v),
+          t: op.translation.map(v => roundWrapped(v, 1e-9)),
+        });
+        if (!unique.some(u => u.key === key)) unique.push({ key, op });
+      }
+      return unique.map(x => x.op);
+    }
+
+    function parseSymOp(expr) {
+      const parts = expr.replace(/\s+/g, '').split(',');
+      if (parts.length !== 3) throw new Error(`Failed to parse symmetry operation: ${expr}`);
+      const matrix = [];
+      const translation = [];
+      for (const part of parts) {
+        const { coeffs, constant } = parseSymExpr(part);
+        matrix.push(...coeffs);
+        translation.push(wrap01(constant));
+      }
+      return { raw: expr, matrix, translation };
+    }
+
+    function parseSymExpr(expr) {
+      const coeffs = [0, 0, 0];
+      let constant = 0;
+      const terms = expr.match(/[+-]?[^+-]+/g) || [];
+      for (let term of terms) {
+        if (!term) continue;
+        if (/[xyz]/i.test(term)) {
+          let sign = 1;
+          if (term.startsWith('-')) sign = -1;
+          const v = term.match(/[xyz]/i)[0].toLowerCase();
+          coeffs[{x:0,y:1,z:2}[v]] += sign;
+        } else {
+          constant += parseFraction(term);
+        }
+      }
+      return { coeffs, constant };
+    }
+
+    function parseFraction(text) {
+      const s = String(text).trim();
+      if (s.includes('/')) {
+        const [a, b] = s.split('/').map(Number);
+        return a / b;
+      }
+      return Number(s);
+    }
+
+    function applySymOp(frac, op) {
+      const m = op.matrix;
+      const t = op.translation;
+      return [
+        wrap01(m[0]*frac[0] + m[1]*frac[1] + m[2]*frac[2] + t[0]),
+        wrap01(m[3]*frac[0] + m[4]*frac[1] + m[5]*frac[2] + t[1]),
+        wrap01(m[6]*frac[0] + m[7]*frac[1] + m[8]*frac[2] + t[2]),
+      ];
+    }
+
+    function wrap01(v) {
+      let x = Number(v);
+      if (!Number.isFinite(x)) return x;
+      x = x % 1;
+      if (x < 0) x += 1;
+      if (Math.abs(x - 1) < 1e-12 || Math.abs(x) < 1e-12) x = 0;
+      return x;
+    }
+
+    function roundWrapped(v, eps = 1e-9) {
+      const x = wrap01(v);
+      return Math.abs(x) < eps ? 0 : x;
+    }
+
+    function fracClose(a, b, tol) {
+      for (let k = 0; k < 3; k++) {
+        let d = Math.abs(a[k] - b[k]);
+        d = Math.min(d, 1 - d);
+        if (d > tol) return false;
+      }
+      return true;
+    }
+
+    function expandAtomsBySymmetry(atoms, symOps, tol) {
+      const full = [];
+      atoms.forEach((atom) => {
+        symOps.forEach((op) => {
+          const frac = applySymOp(atom.frac, op);
+          const exists = full.some(existing => existing.element === atom.element && fracClose(existing.frac, frac, tol));
+          if (!exists) {
+            full.push({
+              label: atom.label,
+              element: atom.element,
+              frac,
+              occupancy: atom.occupancy,
+            });
+          }
+        });
+      });
+      full.sort(compareAtoms);
+      full.forEach((atom, idx) => atom.fullIndex = idx);
+      return full;
+    }
+
+    function compareAtoms(a, b) {
+      if (a.element !== b.element) return a.element.localeCompare(b.element);
+      for (let i = 0; i < 3; i++) {
+        if (Math.abs(a.frac[i] - b.frac[i]) > 1e-10) return a.frac[i] - b.frac[i];
+      }
+      return 0;
+    }
+
+    function buildEquivalentGroups(fullAtoms, symOps, targetElement, tol) {
+      const indices = fullAtoms.map((atom, idx) => ({ atom, idx })).filter(x => x.atom.element === targetElement).map(x => x.idx);
+      const visited = new Set();
+      const groups = [];
+
+      for (const idx of indices) {
+        if (visited.has(idx)) continue;
+        const rep = fullAtoms[idx];
+        const groupSet = new Set([idx]);
+        for (const op of symOps) {
+          const mapped = applySymOp(rep.frac, op);
+          for (const j of indices) {
+            if (fracClose(mapped, fullAtoms[j].frac, tol)) groupSet.add(j);
+          }
+        }
+        const groupIndices = Array.from(groupSet).sort((a, b) => a - b);
+        groupIndices.forEach(i => visited.add(i));
+        groups.push({
+          representativeIndex: groupIndices[0],
+          indices: groupIndices,
+        });
+      }
+
+      groups.sort((g1, g2) => g1.representativeIndex - g2.representativeIndex);
+      groups.forEach((g, idx) => g.sequence = idx + 1);
+      return groups;
+    }
+
+
+    function getAnalysisSymOps(parsed, tol) {
+      const explicit = parsed.symOps && parsed.symOps.length ? dedupeSymOps(parsed.symOps) : [parseSymOp('x,y,z')];
+      if (explicit.length > 1) return explicit;
+
+      const inferred = inferSymOpsFromStructure(parsed.cell, parsed.atoms, tol);
+      return inferred.length > explicit.length ? inferred : explicit;
+    }
+
+    function inferSymOpsFromStructure(cell, atoms, tol) {
+      const lattice = latticeMatrixFromCell(cell);
+      const metric = multiplyMatrices(transpose3(lattice), lattice);
+      const rotations = getMetricPreservingSignedPermutations(metric, 1e-6);
+      if (!rotations.length) return [parseSymOp('x,y,z')];
+
+      const ops = [];
+      for (const R of rotations) {
+        for (let i = 0; i < atoms.length; i++) {
+          for (let j = 0; j < atoms.length; j++) {
+            if (atoms[i].element !== atoms[j].element) continue;
+            const t = wrapFracVec(subVec(atoms[j].frac, matVecMul(R, atoms[i].frac)));
+            if (structureMatchesUnderOp(atoms, R, t, tol)) {
+              ops.push({ raw: 'inferred', matrix: flatten3(R), translation: t });
+            }
+          }
+        }
+      }
+      return ops.length ? dedupeSymOps(ops) : [parseSymOp('x,y,z')];
+    }
+
+    function structureMatchesUnderOp(atoms, R, t, tol) {
+      for (const atom of atoms) {
+        const mapped = wrapFracVec(addVec(matVecMul(R, atom.frac), t));
+        let found = false;
+        for (const other of atoms) {
+          if (other.element !== atom.element) continue;
+          if (fracClose(mapped, other.frac, tol)) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) return false;
+      }
+      return true;
+    }
+
+    function latticeMatrixFromCell(cell) {
+      const a = cell.a, b = cell.b, c = cell.c;
+      const alpha = degToRad(cell.alpha), beta = degToRad(cell.beta), gamma = degToRad(cell.gamma);
+      const va = [a, 0, 0];
+      const vb = [b * Math.cos(gamma), b * Math.sin(gamma), 0];
+      const cx = c * Math.cos(beta);
+      const cy = c * (Math.cos(alpha) - Math.cos(beta) * Math.cos(gamma)) / Math.sin(gamma);
+      const cz2 = Math.max(c * c - cx * cx - cy * cy, 0);
+      const vc = [cx, cy, Math.sqrt(cz2)];
+      return [
+        [va[0], vb[0], vc[0]],
+        [va[1], vb[1], vc[1]],
+        [va[2], vb[2], vc[2]],
+      ];
+    }
+
+    function getMetricPreservingSignedPermutations(metric, tol = 1e-6) {
+      const perms = [
+        [0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]
+      ];
+      const signs = [-1, 1];
+      const mats = [];
+      for (const perm of perms) {
+        for (const sx of signs) {
+          for (const sy of signs) {
+            for (const sz of signs) {
+              const R = [
+                [0,0,0],
+                [0,0,0],
+                [0,0,0],
+              ];
+              R[0][perm[0]] = sx;
+              R[1][perm[1]] = sy;
+              R[2][perm[2]] = sz;
+              const test = multiplyMatrices(multiplyMatrices(transpose3(R), metric), R);
+              if (matrixClose(test, metric, tol)) mats.push(R);
+            }
+          }
+        }
+      }
+      return mats;
+    }
+
+    function degToRad(x) { return x * Math.PI / 180; }
+    function transpose3(M) {
+      return [
+        [M[0][0], M[1][0], M[2][0]],
+        [M[0][1], M[1][1], M[2][1]],
+        [M[0][2], M[1][2], M[2][2]],
+      ];
+    }
+    function multiplyMatrices(A, B) {
+      const out = Array.from({ length: 3 }, () => [0,0,0]);
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          let s = 0;
+          for (let k = 0; k < 3; k++) s += A[i][k] * B[k][j];
+          out[i][j] = s;
+        }
+      }
+      return out;
+    }
+    function matVecMul(M, v) {
+      return [
+        M[0][0]*v[0] + M[0][1]*v[1] + M[0][2]*v[2],
+        M[1][0]*v[0] + M[1][1]*v[1] + M[1][2]*v[2],
+        M[2][0]*v[0] + M[2][1]*v[1] + M[2][2]*v[2],
+      ];
+    }
+    function matrixClose(A, B, tol = 1e-6) {
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          if (Math.abs(A[i][j] - B[i][j]) > tol) return false;
+        }
+      }
+      return true;
+    }
+    function flatten3(M) {
+      return [M[0][0],M[0][1],M[0][2],M[1][0],M[1][1],M[1][2],M[2][0],M[2][1],M[2][2]];
+    }
+    function addVec(a, b) { return [a[0]+b[0], a[1]+b[1], a[2]+b[2]]; }
+    function subVec(a, b) { return [a[0]-b[0], a[1]-b[1], a[2]-b[2]]; }
+    function wrapFracVec(v) { return [wrap01(v[0]), wrap01(v[1]), wrap01(v[2])]; }
+
+    function buildSupercellAtoms(fullAtoms, supercell) {
+      const [na, nb, nc] = supercell;
+      const out = [];
+      for (let ia = 0; ia < na; ia++) {
+        for (let ib = 0; ib < nb; ib++) {
+          for (let ic = 0; ic < nc; ic++) {
+            fullAtoms.forEach((atom, idx) => {
+              out.push({
+                label: atom.label,
+                element: atom.element,
+                occupancy: atom.occupancy,
+                sourceIndex: idx,
+                image: [ia, ib, ic],
+                frac: [
+                  (atom.frac[0] + ia) / na,
+                  (atom.frac[1] + ib) / nb,
+                  (atom.frac[2] + ic) / nc,
+                ].map(wrap01),
+              });
+            });
+          }
+        }
+      }
+      return out;
+    }
+
+    function generateDefectAtoms(fullAtoms, defectRepIndex, settings) {
+      const superAtoms = buildSupercellAtoms(fullAtoms, settings.supercell);
+      const out = [];
+      let defectApplied = false;
+      for (const atom of superAtoms) {
+        const isTarget = atom.sourceIndex === defectRepIndex && atom.image[0] === 0 && atom.image[1] === 0 && atom.image[2] === 0;
+        if (isTarget) {
+          defectApplied = true;
+          if (settings.defectType === 'vacancy') {
+            continue;
+          }
+          out.push({ ...atom, element: settings.replacementElement });
+        } else {
+          out.push(atom);
+        }
+      }
+      if (!defectApplied) throw new Error('Failed to place the requested defect in the generated supercell.');
+      return out;
+    }
+
+    function makeDefectCIF(parsed, fullAtoms, defectRepIndex, settings) {
+      const atoms = generateDefectAtoms(fullAtoms, defectRepIndex, settings);
+      const [na, nb, nc] = settings.supercell;
+      const lines = [];
+      lines.push(`data_${sanitizeBaseName(state.basename)}_defect`);
+      lines.push(`_audit_creation_method 'Pure front-end symmetry defect generator'`);
+      lines.push(`_symmetry_space_group_name_H-M 'P1'`);
+      lines.push(`_symmetry_Int_Tables_number 1`);
+      lines.push(`_cell_length_a ${formatNumber(parsed.cell.a * na, 8)}`);
+      lines.push(`_cell_length_b ${formatNumber(parsed.cell.b * nb, 8)}`);
+      lines.push(`_cell_length_c ${formatNumber(parsed.cell.c * nc, 8)}`);
+      lines.push(`_cell_angle_alpha ${formatNumber(parsed.cell.alpha, 8)}`);
+      lines.push(`_cell_angle_beta ${formatNumber(parsed.cell.beta, 8)}`);
+      lines.push(`_cell_angle_gamma ${formatNumber(parsed.cell.gamma, 8)}`);
+      lines.push(`_chemical_formula_structural '${makeFormula(atoms)}'`);
+      lines.push(`_audit_update_record '${escapeSingleQuote(makeDefectDescription(defectRepIndex, fullAtoms, settings))}'`);
+      lines.push('');
+      lines.push('loop_');
+      lines.push('_space_group_symop_operation_xyz');
+      lines.push('x,y,z');
+      lines.push('');
+      lines.push('loop_');
+      lines.push('_atom_site_label');
+      lines.push('_atom_site_type_symbol');
+      lines.push('_atom_site_fract_x');
+      lines.push('_atom_site_fract_y');
+      lines.push('_atom_site_fract_z');
+      lines.push('_atom_site_occupancy');
+
+      const counters = {};
+      atoms.forEach(atom => {
+        counters[atom.element] = (counters[atom.element] || 0) + 1;
+        const label = `${atom.element}${counters[atom.element]}`;
+        lines.push([
+          label,
+          atom.element,
+          formatNumber(atom.frac[0], 8),
+          formatNumber(atom.frac[1], 8),
+          formatNumber(atom.frac[2], 8),
+          Number.isFinite(atom.occupancy) ? formatNumber(atom.occupancy, 6) : '1',
+        ].join(' '));
+      });
+      lines.push('');
+      return lines.join('\n');
+    }
+
+    function makeDefectDescription(defectRepIndex, fullAtoms, settings) {
+      const atom = fullAtoms[defectRepIndex];
+      const sc = settings.supercell.join('x');
+      if (settings.defectType === 'vacancy') {
+        return `vacancy at ${atom.element} inequivalent site based on atom ${defectRepIndex + 1} in ${sc} supercell`;
+      }
+      return `${atom.element} substituted by ${settings.replacementElement} at inequivalent site based on atom ${defectRepIndex + 1} in ${sc} supercell`;
+    }
+
+    function normalizeExportFormat(format) {
+      const f = String(format || 'cif').toLowerCase();
+      return ['cif', 'poscar', 'both'].includes(f) ? f : 'cif';
+    }
+
+    function previewExportFormat(format) {
+      const f = normalizeExportFormat(format);
+      return f === 'both' ? 'cif' : f;
+    }
+
+    function defectStem(base, group, fullAtoms, settings) {
+      const atom = fullAtoms[group.representativeIndex];
+      const seq = group.sequence || 1;
+      const sc = settings.supercell.join('x');
+      const defectTag = settings.defectType === 'vacancy' ? 'vac' : `to_${settings.replacementElement}`;
+      return `${sanitizeBaseName(base)}_sc${sc}_site${seq}_mult${group.indices.length}_rep${group.representativeIndex + 1}_${atom.element}_${defectTag}`;
+    }
+
+    function defectFileName(base, group, fullAtoms, settings, format = null) {
+      const fmt = (format || previewExportFormat(settings.exportFormat)).toLowerCase();
+      const ext = fmt === 'poscar' ? 'POSCAR' : 'cif';
+      return `${defectStem(base, group, fullAtoms, settings)}.${ext}`;
+    }
+
+    function latticeVectorsFromCell(cell, supercell = [1, 1, 1]) {
+      const [na, nb, nc] = supercell;
+      const a = cell.a * na, b = cell.b * nb, c = cell.c * nc;
+      const alpha = degToRad(cell.alpha), beta = degToRad(cell.beta), gamma = degToRad(cell.gamma);
+      const va = [a, 0, 0];
+      const vb = [b * Math.cos(gamma), b * Math.sin(gamma), 0];
+      const cx = c * Math.cos(beta);
+      const cy = c * (Math.cos(alpha) - Math.cos(beta) * Math.cos(gamma)) / Math.sin(gamma);
+      const cz2 = Math.max(c * c - cx * cx - cy * cy, 0);
+      const vc = [cx, cy, Math.sqrt(cz2)];
+      return [va, vb, vc];
+    }
+
+    function makeDefectPOSCAR(parsed, fullAtoms, group, settings) {
+      const atoms = generateDefectAtoms(fullAtoms, group.representativeIndex, settings);
+      const vectors = latticeVectorsFromCell(parsed.cell, settings.supercell);
+
+      const originalSpeciesOrder = [];
+      parsed.atoms.forEach(atom => {
+        if (atom.element && !originalSpeciesOrder.includes(atom.element)) originalSpeciesOrder.push(atom.element);
+      });
+
+      const buckets = new Map();
+      atoms.forEach(atom => {
+        if (!buckets.has(atom.element)) buckets.set(atom.element, []);
+        buckets.get(atom.element).push(atom);
+      });
+
+      const speciesOrder = [];
+      originalSpeciesOrder.forEach(el => {
+        if (buckets.has(el) && buckets.get(el).length > 0) speciesOrder.push(el);
+      });
+      Array.from(buckets.keys()).forEach(el => {
+        if (!speciesOrder.includes(el)) speciesOrder.push(el);
+      });
+
+      const fmt = (x) => Number(x).toFixed(16);
+      const lines = [];
+      lines.push(defectStem(state.basename, group, fullAtoms, settings));
+      lines.push('1.0');
+      vectors.forEach(v => lines.push(v.map(fmt).join('  ')));
+      lines.push(speciesOrder.join('  '));
+      lines.push(speciesOrder.map(el => String(buckets.get(el).length)).join('  '));
+      lines.push('Direct');
+      speciesOrder.forEach(el => {
+        buckets.get(el).forEach(atom => {
+          const frac = atom.frac.map(wrap01);
+          lines.push(frac.map(fmt).join('  '));
+        });
+      });
+      return lines.join('\n') + '\n';
+    }
+
+    function makeDefectPayloads(parsed, fullAtoms, group, settings) {
+      const format = normalizeExportFormat(settings.exportFormat);
+      const payloads = [];
+      if (format === 'cif' || format === 'both') {
+        payloads.push({
+          name: defectFileName(state.basename, group, fullAtoms, settings, 'cif'),
+          text: makeDefectCIF(parsed, fullAtoms, group.representativeIndex, settings),
+        });
+      }
+      if (format === 'poscar' || format === 'both') {
+        payloads.push({
+          name: defectFileName(state.basename, group, fullAtoms, settings, 'poscar'),
+          text: makeDefectPOSCAR(parsed, fullAtoms, group, settings),
+        });
+      }
+      return payloads;
+    }
+
+    async function downloadPayloads(payloads, zipName) {
+      if (!payloads.length) return;
+      if (payloads.length === 1) {
+        downloadText(payloads[0].name, payloads[0].text);
+        setStatus(t('statusDownloadedOne', { name: payloads[0].name }), 'ok');
+        return;
+      }
+      if (window.JSZip) {
+        const zip = new JSZip();
+        payloads.forEach(item => zip.file(item.name, item.text));
+        const blob = await zip.generateAsync({ type: 'blob' });
+        downloadBlob(zipName, blob);
+        setStatus(t('statusDownloadedZip', { n: payloads.length, name: zipName }), 'ok');
+        return;
+      }
+      payloads.forEach((item, idx) => setTimeout(() => downloadText(item.name, item.text), idx * 150));
+      setStatus(t('statusDownloadedFallback'), 'ok');
+    }
+
+    function makeManifest(groups, settings) {
+      const lines = [];
+      lines.push(`Base file: ${state.basename}`);
+      lines.push(`Defect type: ${settings.defectType}`);
+      if (settings.defectType === 'substitution') lines.push(`Replacement element: ${settings.replacementElement}`);
+      lines.push(`Target element: ${elementSelect.value}`);
+      lines.push(`Supercell: ${settings.supercell.join(' x ')}`);
+      lines.push(`Export format: ${settings.exportFormat}`);
+      lines.push('');
+      lines.push('Generated structures:');
+      groups.forEach((group, idx) => {
+        const atom = state.fullAtoms[group.representativeIndex];
+        const files = makeDefectPayloads(state.parsed, state.fullAtoms, group, settings).map(x => x.name).join(', ');
+        lines.push(`${idx + 1}. rep atom ${group.representativeIndex + 1} (${atom.element} at ${formatFrac(atom.frac)}) ; multiplicity ${group.indices.length} ; stem ${defectStem(state.basename, group, state.fullAtoms, settings)} ; files ${files}`);
+      });
+      return lines.join('\n');
+    }
+
+    function uniqueElements(atoms) {
+      return Array.from(new Set(atoms.map(a => a.element))).sort((a, b) => a.localeCompare(b));
+    }
+
+    function makeFormula(atoms) {
+      const counts = {};
+      atoms.forEach(atom => counts[atom.element] = (counts[atom.element] || 0) + 1);
+      return Object.entries(counts)
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([el, n]) => `${el}${n === 1 ? '' : n}`)
+        .join('');
+    }
+
+    function formatFrac(frac) {
+      return frac.map(v => formatNumber(v, 6)).join(', ');
+    }
+
+    function formatNumber(value, digits = 6) {
+      const s = Number(value).toFixed(digits);
+      return s.replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1');
+    }
+
+    function sanitizeBaseName(name) {
+      return String(name || 'structure').replace(/[^A-Za-z0-9._-]+/g, '_');
+    }
+
+    function escapeSingleQuote(text) {
+      return String(text).replace(/'/g, "''");
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function downloadText(filename, text) {
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      downloadBlob(filename, blob);
+    }
+
+    function downloadBlob(filename, blob) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+  </script>
+</body>
+</html>
