@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Supercell Builder | HKUST MAE / Energy Institute</title>
+<style>
+
+:root{--bg:#f7f7f8;--panel:#fff;--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--soft:#f3f4f6;--bad:#b91c1c;--ok:#047857;--blue:#eef2ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Microsoft YaHei",sans-serif;line-height:1.45}
+body[data-lang="zh"] .en{display:none!important}
+body[data-lang="en"] .zh{display:none!important}
+header{padding:22px 28px 16px;border-bottom:1px solid var(--line);background:var(--panel);position:relative}
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;max-width:1680px;margin:auto}
+h1{margin:0 0 6px;font-size:26px;letter-spacing:.2px}
+.sub{color:var(--muted);font-size:14px}
+.credit{font-size:13px;color:var(--ink);margin-top:6px}
+.lang-toggle{display:flex;align-items:center;gap:6px;background:var(--soft);border:1px solid var(--line);padding:5px;border-radius:999px;white-space:nowrap}
+.lang-toggle button{border:0;border-radius:999px;background:transparent;padding:6px 10px;font-size:12px}
+.lang-toggle button.active{background:var(--accent);color:#fff}
+main{display:grid;grid-template-columns:460px 1fr;gap:16px;padding:16px;max-width:1680px;margin:auto}
+section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+h2{font-size:16px;margin:0 0 12px}
+h3{font-size:14px;margin:16px 0 8px}
+label{display:block;font-size:13px;font-weight:600;margin:10px 0 5px}
+input,select,textarea,button{font:inherit;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+input,select,textarea{width:100%;padding:9px 10px}
+input[type=file]{padding:8px;background:var(--soft)}
+textarea{min-height:108px;font-family:Consolas,Menlo,monospace;font-size:12px;white-space:pre}
+button{padding:9px 12px;cursor:pointer;background:#fff}
+button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.row4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.hint{font-size:12px;color:var(--muted);margin-top:6px;white-space:pre-wrap}
+.warn{font-size:12px;color:var(--bad);margin-top:6px;white-space:pre-wrap}
+.ok{font-size:12px;color:var(--ok);margin-top:6px;white-space:pre-wrap}
+.pill{display:inline-block;padding:2px 8px;background:var(--soft);border:1px solid var(--line);border-radius:999px;font-size:12px;margin:2px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th,td{border-bottom:1px solid var(--line);padding:7px;text-align:left;vertical-align:top}
+th{background:var(--soft)}
+.mono{font-family:Consolas,Menlo,monospace}
+.scroll{max-height:315px;overflow:auto;border:1px solid var(--line);border-radius:10px}
+.result-item{padding:9px;border-bottom:1px solid var(--line);cursor:pointer}
+.result-item:hover{background:var(--soft)}
+.result-item.active{background:#eef2ff}
+.small{font-size:12px;color:var(--muted)}
+.mini{font-size:11px;color:var(--muted)}
+.helpbox{background:var(--blue);border:1px solid #dbe3ff;border-radius:12px;padding:12px;margin:10px 0 4px}
+.helpbox ol{margin:8px 0 0 18px;padding:0}
+.helpbox li{margin:4px 0}
+.kbd{font-family:Consolas,Menlo,monospace;background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 5px}
+.note{background:#fafafa;border:1px dashed var(--line);border-radius:10px;padding:10px;margin-top:8px}
+footer{padding:10px 18px 24px;color:var(--muted);font-size:12px;max-width:1680px;margin:auto}
+@media(max-width:1080px){main{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.topbar{flex-direction:column}.lang-toggle{align-self:flex-end}}
+
+</style>
+</head>
+<body data-lang="zh">
+
+<header>
+  <div class="topbar">
+    <div>
+      <h1>Supercell Builder</h1>
+      <div class="credit">
+        <span class="zh">由香港科技大学 机械及航空航天工程学系 / 能源研究院 王宇豪教授开发</span>
+        <span class="en">Developed by Professor Yuhao Wang, Department of Mechanical and Aerospace Engineering / Energy Institute, The Hong Kong University of Science and Technology</span>
+      </div>
+      <div class="sub">
+        <span class="zh">纯前端、本地 CPU 运行；支持 partial occupancy CIF、超胞构型生成、轻量对称去重与 Coulomb / Ewald-like 能量排序。</span>
+        <span class="en">A pure front-end local CPU tool for partial-occupancy CIF handling, supercell configuration generation, lightweight symmetry deduplication, and Coulomb / Ewald-like energy ranking.</span>
+      </div>
+    </div>
+    <div class="lang-toggle" aria-label="Language switch">
+      <button id="langZh" class="active" type="button">中文</button>
+      <button id="langEn" type="button">English</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section>
+<h2><span class="zh">1. 输入结构</span><span class="en">1. Input structure</span></h2>
+<input id="fileInput" type="file" accept=".cif,.vasp,.poscar,.txt"/>
+<div class="buttons">
+<button id="loadPartialBFO"><span class="zh">示例 partial BaFe<sub>0.875</sub>Co<sub>0.125</sub>O<sub>2.875</sub></span><span class="en">Example partial BaFe<sub>0.875</sub>Co<sub>0.125</sub>O<sub>2.875</sub></span></button>
+<button id="loadBFO"><span class="zh">示例 BaFeO<sub>3</sub></span><span class="en">Example BaFeO<sub>3</sub></span></button>
+<button id="parseBtn" class="primary"><span class="zh">解析结构</span><span class="en">Parse structure</span></button>
+</div>
+<label><span class="zh">或直接粘贴 CIF/POSCAR</span><span class="en">Or paste CIF/POSCAR directly</span></label>
+<textarea id="inputText"></textarea>
+<div id="parseMsg" class="hint"></div>
+
+<h3><span class="zh">2. 扩胞</span><span class="en">2. Supercell size</span></h3>
+<div class="row">
+<div><label>a</label><input id="nx" type="number" min="1" max="10" value="2"></div>
+<div><label>b</label><input id="ny" type="number" min="1" max="10" value="2"></div>
+<div><label>c</label><input id="nz" type="number" min="1" max="10" value="2"></div>
+</div>
+<button id="superBtn" class="primary" style="width:100%;margin-top:10px" disabled><span class="zh">生成超胞</span><span class="en">Build supercell</span></button>
+<div id="superMsg" class="hint"></div>
+
+<h3><span class="zh">3. 规则</span><span class="en">3. Occupation rules</span></h3>
+<div class="helpbox">
+  <b><span class="zh">推荐流程</span><span class="en">Recommended workflow</span></b>
+  <ol class="zh">
+    <li>上传/粘贴 CIF 或 POSCAR，点击 <span class="kbd">解析结构</span>。</li>
+    <li>设置扩胞尺寸，点击 <span class="kbd">生成超胞</span>。</li>
+    <li>若 CIF 有 partial occupancy，点击 <span class="kbd">从 partial occupancy 生成规则</span>。</li>
+    <li>点击 <span class="kbd">预览规则</span> 检查实际整数比例。</li>
+    <li>选择生成模式和能量排序，点击 <span class="kbd">生成构型</span>，最后导出 CIF/POSCAR。</li>
+  </ol>
+  <ol class="en">
+    <li>Upload or paste a CIF/POSCAR, then click <span class="kbd">Parse structure</span>.</li>
+    <li>Set the supercell size and click <span class="kbd">Build supercell</span>.</li>
+    <li>For partial-occupancy CIFs, click <span class="kbd">Generate rules from partial occupancy</span>.</li>
+    <li>Click <span class="kbd">Preview rules</span> to check integer site counts.</li>
+    <li>Select a generation mode and energy ranking method, then export CIF/POSCAR files.</li>
+  </ol>
+</div>
+
+<label><span class="zh">单规则：目标元素或 site tag</span><span class="en">Single rule: target element or site tag</span></label>
+<input id="targetSpecies"/>
+<label><span class="zh">单规则：组成</span><span class="en">Single rule: composition</span></label>
+<input id="replaceSpec"/>
+
+<label><span class="zh">多规则；非空时优先使用</span><span class="en">Multi-rules; used first when non-empty</span></label>
+<textarea id="multiRules"></textarea>
+
+<div class="buttons">
+<button id="autoPartialBtn" disabled><span class="zh">从 partial occupancy 生成规则</span><span class="en">Generate rules from partial occupancy</span></button>
+<button id="previewBtn" disabled><span class="zh">预览规则</span><span class="en">Preview rules</span></button>
+</div>
+<div class="hint">
+<span class="zh">target 支持元素名，例如 <span class="mono">Fe</span>；也支持 partial site tag，例如 <span class="mono">P1</span>。自动生成规则时优先使用 <span class="mono">P1/P2</span>，避免误替换同元素的 full-occupancy 位点。</span>
+<span class="en">The target can be an element, e.g., <span class="mono">Fe</span>, or a partial-site tag, e.g., <span class="mono">P1</span>. Auto-generated rules use <span class="mono">P1/P2</span> tags to avoid replacing full-occupancy sites of the same element.</span>
+</div>
+
+<div class="row2">
+<div>
+<label><span class="zh">比例处理</span><span class="en">Fraction handling</span></label>
+<select id="fractionMode">
+<option value="auto">Auto</option>
+<option value="fraction">Force fraction</option>
+<option value="count">Force count</option>
+</select>
+</div>
+<div>
+<label><span class="zh">去重模式</span><span class="en">Deduplication mode</span></label>
+<select id="symmetryMode">
+<option value="none">None</option>
+<option value="fingerprint">Fingerprint</option>
+<option value="light" selected>Light symmetry</option>
+</select>
+</div>
+</div>
+
+<h3><span class="zh">4. 生成与排序</span><span class="en">4. Generation and ranking</span></h3>
+<div class="note small">
+<span class="zh"><b>模式建议：</b> Random 用于快速候选；Enumerate small 用于小组合数；SQS-like 用于让掺杂/空位更分散。Light symmetry 是轻量去重，不等价于完整 spglib/supercell 对称枚举。</span>
+<span class="en"><b>Mode guide:</b> Random is for quick candidates; Enumerate small is for small combinatorial spaces; SQS-like promotes dopant/vacancy dispersion. Light symmetry is a lightweight deduplication method, not full spglib/supercell symmetry enumeration.</span>
+</div>
+<label><span class="zh">生成模式</span><span class="en">Generation mode</span></label>
+<select id="mode">
+<option value="random">Random / 随机</option>
+<option value="enumerate">Enumerate small / 小体系枚举</option>
+<option value="sqs">SQS-like / 类 SQS</option>
+</select>
+<div class="row2">
+<div><label><span class="zh">结构数量</span><span class="en">Number of structures</span></label><input id="nStruct" type="number" min="1" max="500" value="20"></div>
+<div><label><span class="zh">随机种子</span><span class="en">Random seed</span></label><input id="seed" type="number" value="2026"></div>
+</div>
+<div class="row2">
+<div><label><span class="zh">枚举上限</span><span class="en">Enumeration cap</span></label><input id="enumCap" type="number" min="1" max="100000" value="10000"></div>
+<div><label><span class="zh">SQS 迭代步</span><span class="en">SQS steps</span></label><input id="sqsSteps" type="number" min="100" max="200000" value="12000"></div>
+</div>
+<label><span class="zh">最小距离软约束 / Å</span><span class="en">Soft minimum-distance penalty / Å</span></label>
+<input id="minDist" type="number" step="0.1" min="0" value="3.0"/>
+
+<label><span class="zh">能量排序</span><span class="en">Energy ranking</span></label>
+<select id="energyMode">
+<option value="none">None / 不使用能量排序</option>
+<option value="local">Local Coulomb-like / 局域库仑近似</option>
+<option value="ewald">Ewald-like / 周期点电荷近似</option>
+</select>
+<label><span class="zh">形式电荷 / charges</span><span class="en">Formal charges</span></label>
+<textarea id="chargesText" style="min-height:74px">Ba:+2,Sr:+2,La:+3,Ca:+2,Fe:+3,Co:+3,Ni:+2,Ru:+4,Ti:+4,Zr:+4,Y:+3,Yb:+3,Ce:+4,O:-2,H:+1,Vac:0</textarea>
+<div class="row4">
+<div><label>local cutoff / Å</label><input id="localCut" type="number" step="0.5" value="0"></div>
+<div><label>Ewald α</label><input id="ewaldAlpha" type="number" step="0.05" value="0"></div>
+<div><label>real images</label><input id="realN" type="number" min="0" max="3" value="1"></div>
+<div><label>G max</label><input id="gMax" type="number" min="1" max="8" value="4"></div>
+</div>
+<div class="hint">
+<span class="zh">Ewald-like 是浏览器内点电荷近似，用于候选排序，不等于 DFT 能量。α=0 时自动估算。非电中性体系会使用均匀背景修正。若希望氧空位按有效正电缺陷排序，可把 <span class="mono">Vac:0</span> 改为 <span class="mono">Vac:+2</span>。</span>
+<span class="en">Ewald-like ranking is a point-charge approximation for screening only, not a DFT energy. α=0 enables automatic estimation. A uniform-background correction is used for non-neutral cells. To treat oxygen vacancies as effective positive defects, set <span class="mono">Vac:+2</span>.</span>
+</div>
+
+<div class="buttons">
+<button id="runBtn" class="primary" disabled><span class="zh">生成构型</span><span class="en">Generate configurations</span></button>
+<button id="clearBtn"><span class="zh">清空结果</span><span class="en">Clear results</span></button>
+</div>
+<div id="compMsg" class="hint"></div>
+<div id="runMsg" class="hint"></div>
+</section>
+
+<div>
+<div class="grid">
+<section>
+<h2><span class="zh">结构摘要</span><span class="en">Structure summary</span></h2>
+<div id="summary" class="small"><span class="zh">尚未解析结构。</span><span class="en">No structure parsed yet.</span></div>
+<div id="speciesPills" style="margin-top:8px"></div>
+<h3><span class="zh">partial occupancy 检测</span><span class="en">Partial-occupancy detection</span></h3>
+<div id="partialInfo" class="scroll small" style="padding:8px"><span class="zh">尚未解析。</span><span class="en">Not parsed yet.</span></div>
+<h3><span class="zh">元素计数</span><span class="en">Element/site counts</span></h3>
+<div class="scroll"><table id="countTable"><thead><tr><th><span class="zh">元素/site</span><span class="en">Element/site</span></th><th><span class="zh">数量</span><span class="en">Count</span></th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section>
+<h2><span class="zh">简明教程</span><span class="en">Quick tutorial</span></h2>
+<div class="small zh">
+<b>例 1：BaFeO<sub>3</sub> 中 Fe<sub>0.875</sub>Co<sub>0.125</sub></b><br>
+设置 2×2×2 超胞，写：<br>
+<span class="mono">Fe => Fe0.875Co0.125</span><br><br>
+<b>例 2：同时掺杂 + 氧空位</b><br>
+<span class="mono">Fe => Fe0.875Co0.125</span><br>
+<span class="mono">O => O0.958333Vac0.041667</span><br><br>
+<b>例 3：partial CIF</b><br>
+解析后先点击“从 partial occupancy 生成规则”，程序会生成 <span class="mono">P1/P2</span> 规则。
+</div>
+<div class="small en">
+<b>Example 1: Fe<sub>0.875</sub>Co<sub>0.125</sub> in BaFeO<sub>3</sub></b><br>
+Use a 2×2×2 supercell and enter:<br>
+<span class="mono">Fe => Fe0.875Co0.125</span><br><br>
+<b>Example 2: simultaneous dopant + oxygen vacancies</b><br>
+<span class="mono">Fe => Fe0.875Co0.125</span><br>
+<span class="mono">O => O0.958333Vac0.041667</span><br><br>
+<b>Example 3: partial-occupancy CIF</b><br>
+After parsing, click “Generate rules from partial occupancy”; the program will create <span class="mono">P1/P2</span> rules.
+</div>
+</section>
+</div>
+
+<section style="margin-top:16px">
+<h2><span class="zh">结果</span><span class="en">Results</span></h2>
+<div class="grid">
+<div>
+<div class="buttons">
+<button id="downloadCif" disabled><span class="zh">下载当前 CIF</span><span class="en">Download current CIF</span></button>
+<button id="downloadPoscar" disabled><span class="zh">下载当前 POSCAR</span><span class="en">Download current POSCAR</span></button>
+<button id="downloadTar" disabled><span class="zh">下载全部 CIF.tar</span><span class="en">Download all CIF.tar</span></button>
+</div>
+<div id="symInfo" class="hint"></div>
+<div id="energyInfo" class="hint"></div>
+<div id="results" class="scroll" style="margin-top:10px;max-height:430px"><div class="small" style="padding:10px"><span class="zh">尚无结果。</span><span class="en">No results yet.</span></div></div>
+</div>
+<div>
+<label><span class="zh">当前结构输出</span><span class="en">Current structure output</span></label>
+<textarea id="outputText" style="min-height:420px" readonly></textarea>
+</div>
+</div>
+</section>
+</div>
+</main>
+
+<footer>
+<span class="zh">建议：导出后用 VESTA / pymatgen / ASE 检查元素数量、空位位置、最短距离和周期边界；最终结构筛选仍以 DFT relax 能量为准。</span>
+<span class="en">Recommendation: after export, check element counts, vacancy sites, minimum distances, and periodic boundaries with VESTA / pymatgen / ASE. Final selection should still rely on DFT relaxation energies.</span>
+</footer>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+
+/* ---------- math ---------- */
+function cleanNum(x){return parseFloat(String(x??"").replace(/[()]/g,'').replace(/[^0-9eE+\-.]/g,''));}
+function deg2rad(d){return d*Math.PI/180} function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]} function norm(a){return Math.sqrt(dot(a,a))}
+function add(a,b){return [a[0]+b[0],a[1]+b[1],a[2]+b[2]]} function sub(a,b){return [a[0]-b[0],a[1]-b[1],a[2]-b[2]]} function mul(a,s){return [a[0]*s,a[1]*s,a[2]*s]}
+function cross(a,b){return [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]]}
+function matVecRows(M,f){return add(add(mul(M[0],f[0]),mul(M[1],f[1])),mul(M[2],f[2]))}
+function matFrac(P,f){return [P[0][0]*f[0]+P[0][1]*f[1]+P[0][2]*f[2],P[1][0]*f[0]+P[1][1]*f[1]+P[1][2]*f[2],P[2][0]*f[0]+P[2][1]*f[1]+P[2][2]*f[2]]}
+function wrap(x){x-=Math.floor(x); if(x<0)x+=1; return x} function wrapV(f){return [wrap(f[0]),wrap(f[1]),wrap(f[2])]}
+function fdiff(a,b){return [a[0]-b[0],a[1]-b[1],a[2]-b[2]].map(x=>x-Math.round(x))}
+function fclose(a,b,t=1e-4){let d=fdiff(a,b);return Math.max(Math.abs(d[0]),Math.abs(d[1]),Math.abs(d[2]))<t}
+function dist(lat,a,b){return norm(matVecRows(lat,fdiff(a,b)))}
+function angle(a,b){let c=dot(a,b)/(norm(a)*norm(b));return Math.acos(Math.max(-1,Math.min(1,c)))*180/Math.PI}
+function latticeFromParams(a,b,c,al,be,ga){let ar=deg2rad(al),br=deg2rad(be),gr=deg2rad(ga);let va=[a,0,0],vb=[b*Math.cos(gr),b*Math.sin(gr),0];let cx=c*Math.cos(br),cy=c*(Math.cos(ar)-Math.cos(br)*Math.cos(gr))/Math.sin(gr),cz=Math.sqrt(Math.max(0,c*c-cx*cx-cy*cy));return [va,vb,[cx,cy,cz]]}
+function latticeParams(L){return {a:norm(L[0]),b:norm(L[1]),c:norm(L[2]),alpha:angle(L[1],L[2]),beta:angle(L[0],L[2]),gamma:angle(L[0],L[1])}}
+function detL(L){return dot(L[0],cross(L[1],L[2]))}
+function reciprocal(L){let V=detL(L),f=2*Math.PI/V;return [mul(cross(L[1],L[2]),f),mul(cross(L[2],L[0]),f),mul(cross(L[0],L[1]),f)]}
+function metric(L){return [[dot(L[0],L[0]),dot(L[0],L[1]),dot(L[0],L[2])],[dot(L[1],L[0]),dot(L[1],L[1]),dot(L[1],L[2])],[dot(L[2],L[0]),dot(L[2],L[1]),dot(L[2],L[2])]]}
+function mm(A,B){let C=[[0,0,0],[0,0,0],[0,0,0]];for(let i=0;i<3;i++)for(let j=0;j<3;j++)for(let k=0;k<3;k++)C[i][j]+=A[i][k]*B[k][j];return C}
+function tr(A){return [[A[0][0],A[1][0],A[2][0]],[A[0][1],A[1][1],A[2][1]],[A[0][2],A[1][2],A[2][2]]]}
+function metricOK(G,P,tol=1e-6){let T=mm(tr(P),mm(G,P));let s=1;for(let i=0;i<3;i++)for(let j=0;j<3;j++)s=Math.max(s,Math.abs(G[i][j]));for(let i=0;i<3;i++)for(let j=0;j<3;j++)if(Math.abs(T[i][j]-G[i][j])/s>tol)return false;return true}
+function inv3(M){let A=[[M[0][0],M[1][0],M[2][0]],[M[0][1],M[1][1],M[2][1]],[M[0][2],M[1][2],M[2][2]]];let a=A[0][0],b=A[0][1],c=A[0][2],d=A[1][0],e=A[1][1],f=A[1][2],g=A[2][0],h=A[2][1],i=A[2][2];let D=a*(e*i-f*h)-b*(d*i-f*g)+c*(d*h-e*g);if(Math.abs(D)<1e-12)throw Error("Singular lattice");return [[(e*i-f*h)/D,(c*h-b*i)/D,(b*f-c*e)/D],[(f*g-d*i)/D,(a*i-c*g)/D,(c*d-a*f)/D],[(d*h-e*g)/D,(b*g-a*h)/D,(a*e-b*d)/D]]}
+function cartToFrac(L,c){let I=inv3(L);return [I[0][0]*c[0]+I[0][1]*c[1]+I[0][2]*c[2],I[1][0]*c[0]+I[1][1]*c[1]+I[1][2]*c[2],I[2][0]*c[0]+I[2][1]*c[1]+I[2][2]*c[2]]}
+function element(s){s=String(s||"X").replace(/['"]/g,'').trim(); if(/^vac/i.test(s))return"Vac"; let m=s.match(/[A-Z][a-z]?/); return m?m[0]:(s||"X")}
+function rng32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296}}
+function shuffle(a,r){for(let i=a.length-1;i>0;i--){let j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function erf(x){let s=x<0?-1:1;x=Math.abs(x);let a1=.254829592,a2=-.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=.3275911,t=1/(1+p*x);let y=1-(((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t)*Math.exp(-x*x);return s*y}
+function erfc(x){return 1-erf(x)}
+
+/* ---------- parse CIF/POSCAR ---------- */
+function getCif(txt,key){let re=new RegExp("^\\s*"+key.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+"\\s+([^\\s#]+)","mi");let m=txt.match(re);return m?cleanNum(m[1]):NaN}
+function toks(line){let out=[],cur="",q=null;for(let ch of line){if(q){if(ch===q){out.push(cur);cur="";q=null}else cur+=ch}else{if(ch==="'"||ch==='"'){if(cur){out.push(cur);cur=""}q=ch}else if(/\s/.test(ch)){if(cur){out.push(cur);cur=""}}else cur+=ch}}if(cur)out.push(cur);return out}
+function coordKey(f,t=1e-5){return f.map(x=>Math.round(wrap(x)/t)).join(",")}
+function parseCIF(txt){
+  let a=getCif(txt,"_cell_length_a"),b=getCif(txt,"_cell_length_b"),c=getCif(txt,"_cell_length_c"),al=getCif(txt,"_cell_angle_alpha"),be=getCif(txt,"_cell_angle_beta"),ga=getCif(txt,"_cell_angle_gamma");
+  if([a,b,c,al,be,ga].some(x=>!isFinite(x)))throw Error("CIF cell parameters incomplete");
+  let L=latticeFromParams(a,b,c,al,be,ga),lines=txt.split(/\r?\n/),raw=[];
+  for(let i=0;i<lines.length;i++){
+    if(!/^\s*loop_/i.test(lines[i]))continue;
+    let tags=[],j=i+1;while(j<lines.length&&/^\s*_/.test(lines[j].trim()))tags.push(lines[j++].trim());
+    let low=tags.map(x=>x.toLowerCase()),ix=low.findIndex(x=>x.includes("_atom_site_fract_x")),iy=low.findIndex(x=>x.includes("_atom_site_fract_y")),iz=low.findIndex(x=>x.includes("_atom_site_fract_z"));
+    if(ix<0||iy<0||iz<0)continue;
+    let it=low.findIndex(x=>x.includes("_atom_site_type_symbol")),il=low.findIndex(x=>x.includes("_atom_site_label")),io=low.findIndex(x=>x.includes("_atom_site_occupancy"));
+    while(j<lines.length){
+      let line=lines[j].trim();if(!line||line.startsWith("#")){j++;continue}if(line.startsWith("_")||/^loop_/i.test(line)||/^data_/i.test(line))break;
+      let tk=toks(line);if(tk.length>=tags.length){let rawEl=it>=0?tk[it]:(il>=0?tk[il]:"X"),f=[cleanNum(tk[ix]),cleanNum(tk[iy]),cleanNum(tk[iz])];if(f.every(Number.isFinite))raw.push({element:element(rawEl),frac:f.map(wrap),occ:io>=0?cleanNum(tk[io]):1,label:il>=0?tk[il]:""})}j++;
+    }
+  }
+  if(!raw.length)throw Error("No atom_site fractional coordinates found.");
+  let groups=new Map();
+  for(let r of raw){let k=coordKey(r.frac);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(r)}
+  let atoms=[],pid=1,partialGroups=[];
+  for(let arr of groups.values()){
+    let occ={},frac=arr[0].frac.slice();
+    for(let r of arr){occ[r.element]=(occ[r.element]||0)+(isFinite(r.occ)?r.occ:1)}
+    let total=Object.values(occ).reduce((s,x)=>s+x,0);
+    if(total<0.999)occ["Vac"]=(occ["Vac"]||0)+(1-total);
+    let alts=Object.entries(occ).map(([e,o])=>({element:e,occ:o})).sort((a,b)=>b.occ-a.occ);
+    let nonVac=alts.find(x=>x.element!=="Vac")||alts[0];
+    let isPartial=alts.length>1 || Math.abs((alts[0]?.occ??1)-1)>1e-4;
+    let siteTag=isPartial?`P${pid++}`:"";
+    let atom={element:nonVac.element,frac,occ:nonVac.occ,alts:isPartial?alts:null,partial:isPartial,siteTag};
+    atoms.push(atom);
+    if(isPartial)partialGroups.push({siteTag,frac,alts});
+  }
+  return{title:"Imported_CIF",lattice:L,atoms,partialGroups};
+}
+function parsePOSCAR(txt){
+  let raw=txt.split(/\r?\n/).map(x=>x.trim()).filter(x=>x&&!x.startsWith("#"));if(raw.length<8)throw Error("POSCAR too short");
+  let title=raw[0],sc=cleanNum(raw[1]),L=[raw[2].split(/\s+/).slice(0,3).map(cleanNum).map(x=>x*sc),raw[3].split(/\s+/).slice(0,3).map(cleanNum).map(x=>x*sc),raw[4].split(/\s+/).slice(0,3).map(cleanNum).map(x=>x*sc)];
+  let idx=5,els=raw[idx].split(/\s+/),cnt=raw[idx+1].split(/\s+/).map(x=>parseInt(x));if(cnt.some(x=>!Number.isInteger(x))){cnt=raw[idx].split(/\s+/).map(x=>parseInt(x));els=cnt.map((_,i)=>"X"+(i+1));idx=6}else idx=7;
+  if(/^s/i.test(raw[idx]))idx++;let direct=/^d/i.test(raw[idx]),cart=/^[ck]/i.test(raw[idx]);if(!direct&&!cart)throw Error("Cannot find Direct/Cartesian");idx++;
+  let atoms=[];for(let e=0;e<els.length;e++)for(let n=0;n<cnt[e];n++){let p=raw[idx++].split(/\s+/).slice(0,3).map(cleanNum);atoms.push({element:els[e],frac:wrapV(direct?p:cartToFrac(L,p)),occ:1,partial:false,siteTag:"",alts:null})}
+  return{title,lattice:L,atoms,partialGroups:[]};
+}
+function parseStruct(txt){txt=txt.trim();if(!txt)throw Error("No input");return /_cell_length_a/i.test(txt)||(/loop_/i.test(txt)&&/_atom_site/i.test(txt))?parseCIF(txt):parsePOSCAR(txt)}
+
+/* ---------- structure ---------- */
+function supercell(st,nx,ny,nz){
+  let out={title:`${st.title}_${nx}x${ny}x${nz}`,lattice:[mul(st.lattice[0],nx),mul(st.lattice[1],ny),mul(st.lattice[2],nz)],atoms:[],partialGroups:[]};
+  for(let ix=0;ix<nx;ix++)for(let iy=0;iy<ny;iy++)for(let iz=0;iz<nz;iz++)for(let a of st.atoms)out.atoms.push({element:a.element,frac:[(a.frac[0]+ix)/nx,(a.frac[1]+iy)/ny,(a.frac[2]+iz)/nz].map(wrap),occ:a.occ??1,partial:a.partial||false,siteTag:a.siteTag||"",alts:a.alts?JSON.parse(JSON.stringify(a.alts)):null});
+  let seen=new Set();for(let a of out.atoms)if(a.partial&&!seen.has(a.siteTag)){seen.add(a.siteTag);out.partialGroups.push({siteTag:a.siteTag,alts:a.alts})}
+  return out;
+}
+function counts(st){let m=new Map();for(let a of st.atoms)m.set(a.element,(m.get(a.element)||0)+1);return [...m.entries()].sort((a,b)=>a[0].localeCompare(b[0]))}
+function targetIdx(st,target){
+  let toks=target.split(",").map(x=>x.trim()).filter(Boolean);if(!toks.length)throw Error("Empty target");
+  let idx=[];for(let i=0;i<st.atoms.length;i++){let a=st.atoms[i];if(toks.includes(a.element)||toks.includes(a.siteTag)||(toks.includes("partial")&&a.partial))idx.push(i)}
+  if(!idx.length)throw Error("Target not found: "+target);return idx;
+}
+
+/* ---------- composition rules ---------- */
+function parseSpec(spec,mode){
+  spec=spec.trim();if(!spec)throw Error("Empty composition spec");let arr=[];
+  if(spec.includes(":")){for(let p of spec.split(",")){if(!p.trim())continue;let [e,v]=p.split(":").map(x=>x.trim());let val=parseFloat(v);if(!e||!isFinite(val)||val<0)throw Error("Bad spec: "+p);arr.push({element:element(e),value:val})}}
+  else{let re=/(Vac|vac|VAC|[A-Z][a-z]?)([0-9]*\.?[0-9]+(?:[eE][+\-]?[0-9]+)?)/g,m;while((m=re.exec(spec.replace(/\s+/g,'')))!==null)arr.push({element:element(m[1]),value:parseFloat(m[2])});if(!arr.length)throw Error("Cannot parse spec: "+spec)}
+  let isFrac;if(mode==="fraction")isFrac=true;else if(mode==="count")isFrac=false;else{let sum=arr.reduce((s,e)=>s+e.value,0);isFrac=arr.some(e=>e.value>0&&e.value<1)||Math.abs(sum-1)<1e-6}
+  return arr.map(e=>({...e,mode:isFrac?"fraction":"count"}));
+}
+function allocate(n,entries){
+  let mode=entries[0].mode,warning="",out=[];
+  if(mode==="count"){let total=0;for(let e of entries){let c=Math.round(e.value);if(Math.abs(c-e.value)>1e-8)warning+=`${e.element}:${e.value} rounded to ${c}. `;out.push({element:e.element,count:c});total+=c}if(total>n)throw Error(`Assigned ${total} > target sites ${n}`)}
+  else{let sum=entries.reduce((s,e)=>s+e.value,0);if(sum>1+1e-8)throw Error("Fraction sum > 1");let raw=entries.map(e=>e.value*n),base=raw.map(Math.floor);
+    if(Math.abs(sum-1)<1e-6){let rem=n-base.reduce((s,x)=>s+x,0),ord=raw.map((x,i)=>({i,frac:x-Math.floor(x)})).sort((a,b)=>b.frac-a.frac);for(let k=0;k<rem;k++)base[ord[k%ord.length].i]++}
+    else base=raw.map(x=>Math.round(x));
+    out=entries.map((e,i)=>({element:e.element,count:base[i]}));let assigned=out.reduce((s,e)=>s+e.count,0);if(assigned>n)throw Error(`Assigned ${assigned} > target sites ${n}`);
+    warning+=`actual: ${out.map(e=>`${e.element}=${e.count}/${n}(${(e.count/n).toFixed(4)})`).join(", ")}. `;if(Math.abs(sum-1)>1e-6)warning+=`rest ${(1-sum).toFixed(4)} keeps original. `;
+  }
+  return{counts:out,warning};
+}
+function parseRuleLines(){
+  let text=$("multiRules").value.trim(),rules=[];
+  if(text){let lines=text.split(/\r?\n|;/).map(x=>x.trim()).filter(x=>x&&!x.startsWith("#"));for(let line of lines){let m=line.match(/^(.+?)(?:=>|->|=)(.+)$/);if(!m)throw Error("Bad rule line: "+line);rules.push({target:m[1].trim(),spec:m[2].trim()})}}
+  else rules.push({target:$("targetSpecies").value.trim(),spec:$("replaceSpec").value.trim()});
+  return rules;
+}
+function buildRules(st){
+  let raw=parseRuleLines(),used=new Set(),rules=[],summ=[];
+  for(let r of raw){
+    let idx=targetIdx(st,r.target);for(let id of idx){if(used.has(id))throw Error("Overlapping target rules; atom belongs to more than one rule: "+r.target);used.add(id)}
+    let entries=parseSpec(r.spec,$("fractionMode").value),al=allocate(idx.length,entries);
+    rules.push({target:r.target,spec:r.spec,idx,counts:al.counts,warning:al.warning});
+    summ.push(`${r.target} (${idx.length} sites) => ${al.counts.map(c=>`${c.element}:${c.count}`).join(", ")}; ${al.warning}`);
+  }
+  return{rules,summary:summ.join("\n")};
+}
+function specFromAlts(alts){return alts.map(a=>`${a.element}${(+a.occ.toFixed(8)).toString()}`).join("")}
+function autoPartialRules(st){
+  if(!st||!st.partialGroups||!st.partialGroups.length)throw Error("No partial occupancy sites detected.");
+  let grouped=new Map();
+  for(let g of st.partialGroups){
+    let spec=specFromAlts(g.alts);
+    if(!grouped.has(spec))grouped.set(spec,[]);
+    grouped.get(spec).push(g.siteTag);
+  }
+  let lines=[];
+  for(let [spec,tags] of grouped.entries()){
+    lines.push(`${tags.join(",")} => ${spec}`);
+  }
+  $("multiRules").value=lines.join("\n");
+  return lines.join("\n");
+}
+function randomRuleAssignment(rule,rng){let n=rule.idx.length,ass=new Array(n).fill(null),pos=shuffle([...Array(n).keys()],rng),p=0;for(let c of rule.counts)for(let k=0;k<c.count;k++){if(p>=n)throw Error("Too many assigned sites");ass[pos[p++]]=c.element}return ass}
+function makeState(rules,rng){return rules.map(r=>randomRuleAssignment(r,rng))}
+function labelAt(st,rule,j,ass){return ass[j]==null?st.atoms[rule.idx[j]].element:ass[j]}
+function labelsForUnion(st,union,state,rules){let map=new Map();for(let ri=0;ri<rules.length;ri++){let r=rules[ri],ass=state[ri];for(let j=0;j<r.idx.length;j++)if(ass[j]!=null)map.set(r.idx[j],ass[j])}return union.map(id=>map.has(id)?map.get(id):st.atoms[id].element)}
+function specialList(st,state,rules){let arr=[];for(let ri=0;ri<rules.length;ri++){let r=rules[ri],ass=state[ri];for(let j=0;j<r.idx.length;j++){let id=r.idx[j],base=st.atoms[id].element,lab=labelAt(st,r,j,ass);if(lab!==base||lab==="Vac")arr.push({label:lab,frac:st.atoms[id].frac})}}return arr}
+function scoreState(st,state,rules,minD){let sp=specialList(st,state,rules);if(sp.length<2)return{score:0,minDistance:null};let s=0,md=Infinity;for(let i=0;i<sp.length;i++)for(let j=i+1;j<sp.length;j++){let r=dist(st.lattice,sp[i].frac,sp[j].frac);md=Math.min(md,r);s+=(sp[i].label===sp[j].label?5:1)/(r*r+1e-6);if(minD>0&&r<minD)s+=100*Math.pow((minD-r)/minD,2)}return{score:s,minDistance:md}}
+function assignmentMap(state,rules){let map=new Map();for(let ri=0;ri<rules.length;ri++){let r=rules[ri],ass=state[ri];for(let j=0;j<r.idx.length;j++)if(ass[j]!=null)map.set(r.idx[j],ass[j])}return map}
+function applyState(st,state,rules){let map=assignmentMap(state,rules),atoms=[];for(let i=0;i<st.atoms.length;i++){if(map.has(i)){let e=map.get(i);if(/^vac/i.test(e))continue;atoms.push({element:e,frac:st.atoms[i].frac.slice(),occ:1})}else atoms.push({element:st.atoms[i].element,frac:st.atoms[i].frac.slice(),occ:st.atoms[i].occ??1})}return{title:st.title+"_config",lattice:st.lattice.map(v=>v.slice()),atoms}}
+
+/* ---------- symmetry keys ---------- */
+function signedPerms(){let perms=[[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]],sg=[-1,1],mats=[];for(let p of perms)for(let sx of sg)for(let sy of sg)for(let sz of sg){let M=[[0,0,0],[0,0,0],[0,0,0]];M[0][p[0]]=sx;M[1][p[1]]=sy;M[2][p[2]]=sz;mats.push(M)}return mats}
+function fkey(f,t=1e-4){return wrapV(f).map(x=>Math.round(x/t)).join(",")}
+function buildSym(st,union){
+  let G=metric(st.lattice),pts=union.map(i=>st.atoms[i].frac),bases=union.map(i=>st.atoms[i].element),tol=1e-4,pk=new Map();
+  for(let i=0;i<pts.length;i++){let k=fkey(pts[i],tol);if(!pk.has(k))pk.set(k,[]);pk.get(k).push(i)}
+  let Ps=signedPerms().filter(P=>metricOK(G,P,1e-6)),maps=[],seen=new Set();
+  for(let P of Ps){let p0=wrapV(matFrac(P,pts[0]));for(let a=0;a<pts.length;a++){if(bases[a]!==bases[0])continue;let t=fdiff(pts[a],p0),map=new Array(pts.length).fill(-1),ok=true;for(let i=0;i<pts.length;i++){let q=wrapV(add(matFrac(P,pts[i]),t)),cand=pk.get(fkey(q,tol))||[],found=-1;for(let c of cand)if(bases[c]===bases[i]&&fclose(q,pts[c],tol)){found=c;break}if(found<0){ok=false;break}map[i]=found}if(ok&&new Set(map).size===pts.length){let key=map.join(",");if(!seen.has(key)){seen.add(key);maps.push(map)}}}}
+  if(!maps.length)maps.push([...Array(pts.length).keys()]);
+  return{maps,info:`Light symmetry: ${maps.length} target-site mappings from ${Ps.length} metric-preserving point operations.`}
+}
+function rawKey(labels){return labels.join("|")}
+function fpKey(st,union,labels){let arr=[];for(let i=0;i<union.length;i++)for(let j=i+1;j<union.length;j++){if(labels[i]===st.atoms[union[i]].element&&labels[j]===st.atoms[union[j]].element)continue;let pair=[labels[i],labels[j]].sort().join("-"),r=dist(st.lattice,st.atoms[union[i]].frac,st.atoms[union[j]].frac);arr.push(pair+":"+r.toFixed(2))}arr.sort();return arr.join("|")||rawKey(labels)}
+function canonical(st,union,state,rules,symMode,sym){let labels=labelsForUnion(st,union,state,rules);if(symMode==="none")return rawKey(labels);if(symMode==="fingerprint")return fpKey(st,union,labels);let best=null;for(let map of sym.maps){let nl=new Array(labels.length);for(let i=0;i<labels.length;i++)nl[map[i]]=labels[i];let k=rawKey(nl);if(best===null||k<best)best=k}return best}
+
+/* ---------- energy ---------- */
+function parseCharges(txt){
+  let m={};for(let p of txt.split(/[,\n;]/)){if(!p.trim())continue;let [e,v]=p.split(":").map(x=>x.trim());if(!e||v===undefined)continue;let val=parseFloat(v.replace("+",""));if(isFinite(val))m[element(e)]=val}
+  return m;
+}
+function energySites(st,state,rules,charges){
+  let map=assignmentMap(state,rules),sites=[];
+  for(let i=0;i<st.atoms.length;i++){
+    let el=map.has(i)?map.get(i):st.atoms[i].element;
+    let q=charges[el]??0;
+    if(/^vac/i.test(el)){if(Math.abs(q)>1e-12)sites.push({element:"Vac",frac:st.atoms[i].frac,cart:matVecRows(st.lattice,st.atoms[i].frac),q});}
+    else if(Math.abs(q)>1e-12)sites.push({element:el,frac:st.atoms[i].frac,cart:matVecRows(st.lattice,st.atoms[i].frac),q});
+  }
+  return sites;
+}
+const KE=14.3996454784255;
+function localEnergy(st,state,rules,charges,cutoff){
+  let sites=energySites(st,state,rules,charges),E=0;
+  for(let i=0;i<sites.length;i++)for(let j=i+1;j<sites.length;j++){let r=dist(st.lattice,sites[i].frac,sites[j].frac);if(cutoff>0&&r>cutoff)continue;if(r>1e-8)E+=KE*sites[i].q*sites[j].q/r}
+  return E;
+}
+function ewaldEnergy(st,state,rules,charges,alpha,realN,gmax){
+  let sites=energySites(st,state,rules,charges),N=sites.length;if(!N)return 0;
+  let L=st.lattice,V=Math.abs(detL(L)),p=latticeParams(L);if(!alpha||alpha<=0)alpha=5/Math.max(p.a,p.b,p.c);
+  let Ereal=0;
+  for(let i=0;i<N;i++)for(let j=0;j<N;j++)for(let nx=-realN;nx<=realN;nx++)for(let ny=-realN;ny<=realN;ny++)for(let nz=-realN;nz<=realN;nz++){
+    if(i===j&&nx===0&&ny===0&&nz===0)continue;
+    let shift=add(add(mul(L[0],nx),mul(L[1],ny)),mul(L[2],nz));
+    let rij=add(sub(sites[j].cart,sites[i].cart),shift),r=norm(rij);
+    if(r>1e-9)Ereal+=sites[i].q*sites[j].q*erfc(alpha*r)/r;
+  }
+  Ereal*=0.5;
+  let B=reciprocal(L),Erec=0;
+  for(let h=-gmax;h<=gmax;h++)for(let k=-gmax;k<=gmax;k++)for(let l=-gmax;l<=gmax;l++){
+    if(h===0&&k===0&&l===0)continue;
+    let G=add(add(mul(B[0],h),mul(B[1],k)),mul(B[2],l)),G2=dot(G,G);
+    let re=0,im=0;
+    for(let s of sites){let phase=dot(G,s.cart);re+=s.q*Math.cos(phase);im+=s.q*Math.sin(phase)}
+    Erec+=(Math.exp(-G2/(4*alpha*alpha))/G2)*(re*re+im*im);
+  }
+  Erec*=2*Math.PI/V;
+  let q2=sites.reduce((s,x)=>s+x.q*x.q,0),qsum=sites.reduce((s,x)=>s+x.q,0);
+  let Eself=-alpha/Math.sqrt(Math.PI)*q2;
+  let Ebg=-(Math.PI/(2*V*alpha*alpha))*qsum*qsum;
+  return KE*(Ereal+Erec+Eself+Ebg);
+}
+function computeEnergy(st,state,rules){
+  let mode=$("energyMode").value;if(mode==="none")return null;
+  let charges=parseCharges($("chargesText").value),cut=parseFloat($("localCut").value)||0;
+  if(mode==="local")return localEnergy(st,state,rules,charges,cut);
+  return ewaldEnergy(st,state,rules,charges,parseFloat($("ewaldAlpha").value)||0,parseInt($("realN").value),parseInt($("gMax").value));
+}
+
+/* ---------- generation ---------- */
+function enumerateRuleOptions(rule,limit){
+  let out=[],ass=new Array(rule.idx.length).fill(null);
+  function rec(spec,avail){if(out.length>=limit)return;if(spec>=rule.counts.length){out.push(ass.slice());return}let c=rule.counts[spec],n=avail.length,k=c.count;if(k===0){rec(spec+1,avail);return}let cur=[];
+    function choose(start,left){if(out.length>=limit)return;if(left===0){let chosen=new Set(cur);for(let loc of cur)ass[avail[loc]]=c.element;rec(spec+1,avail.filter((_,i)=>!chosen.has(i)));for(let loc of cur)ass[avail[loc]]=null;return}for(let i=start;i<=n-left;i++){cur.push(i);choose(i+1,left-1);cur.pop();if(out.length>=limit)return}}
+    choose(0,k)}
+  rec(0,[...Array(rule.idx.length).keys()]);return out;
+}
+function finalizeResults(st,rules,union,res){
+  for(let r of res)r.energy=computeEnergy(st,r.state,rules);
+  if($("energyMode").value!=="none")res.sort((a,b)=>(a.energy??Infinity)-(b.energy??Infinity));else res.sort((a,b)=>a.score-b.score);
+  return res;
+}
+function generateRandom(st,rules,union,n,seed,minD,symMode,sym){
+  let rng=rng32(seed),res=[],seen=new Set(),attempt=0,max=Math.max(200,n*80);
+  while(res.length<n&&attempt<max){attempt++;let state=makeState(rules,rng),key=canonical(st,union,state,rules,symMode,sym);if(symMode!=="none"&&seen.has(key))continue;seen.add(key);let sc=scoreState(st,state,rules,minD);res.push({name:`random_${String(res.length+1).padStart(3,"0")}`,state,score:sc.score,minDistance:sc.minDistance,key})}
+  return finalizeResults(st,rules,union,res);
+}
+function generateSQS(st,rules,union,n,seed,minD,steps,symMode,sym){
+  let rng=rng32(seed),res=[],seen=new Set(),attempt=0;
+  while(res.length<n&&attempt<Math.max(50,n*20)){attempt++;let state=makeState(rules,rng),cur=scoreState(st,state,rules,minD).score,best=cur,bestState=state.map(a=>a.slice());
+    for(let step=0;step<steps;step++){let ri=Math.floor(rng()*rules.length),ass=state[ri];if(ass.length<2)continue;let i=Math.floor(rng()*ass.length),j=Math.floor(rng()*ass.length);if(i===j)continue;let li=ass[i]??st.atoms[rules[ri].idx[i]].element,lj=ass[j]??st.atoms[rules[ri].idx[j]].element;if(li===lj)continue;[ass[i],ass[j]]=[ass[j],ass[i]];let sc=scoreState(st,state,rules,minD).score,T=1.0*Math.pow(0.001,step/Math.max(1,steps-1));if(sc<cur||rng()<Math.exp((cur-sc)/Math.max(T,1e-12))){cur=sc;if(sc<best){best=sc;bestState=state.map(a=>a.slice())}}else [ass[i],ass[j]]=[ass[j],ass[i]]}
+    let key=canonical(st,union,bestState,rules,symMode,sym);if(symMode!=="none"&&seen.has(key))continue;seen.add(key);let sc=scoreState(st,bestState,rules,minD);res.push({name:`sqs_like_${String(res.length+1).padStart(3,"0")}`,state:bestState,score:sc.score,minDistance:sc.minDistance,key});
+  }
+  return finalizeResults(st,rules,union,res);
+}
+function generateEnum(st,rules,union,n,cap,minD,symMode,sym){
+  let per=Math.max(1,Math.floor(Math.pow(cap,1/Math.max(1,rules.length)))),opts=rules.map(r=>enumerateRuleOptions(r,Math.max(per,n))),res=[],seen=new Set();
+  function dfs(ri,state){if(res.length>=cap)return;if(ri>=rules.length){let key=canonical(st,union,state,rules,symMode,sym);if(symMode==="none"||!seen.has(key)){seen.add(key);let sc=scoreState(st,state,rules,minD);res.push({name:`enum_${String(res.length+1).padStart(4,"0")}`,state:state.map(a=>a.slice()),score:sc.score,minDistance:sc.minDistance,key})}return}for(let o of opts[ri]){state[ri]=o;dfs(ri+1,state);if(res.length>=cap)return}}
+  dfs(0,[]);res=finalizeResults(st,rules,union,res);return res.slice(0,n);
+}
+
+/* ---------- output ---------- */
+function fmtCIF(st,name){let p=latticeParams(st.lattice),s=`data_${name||st.title||"structure"}\n_symmetry_space_group_name_H-M   'P 1'\n_symmetry_Int_Tables_number      1\n_cell_length_a    ${p.a.toFixed(8)}\n_cell_length_b    ${p.b.toFixed(8)}\n_cell_length_c    ${p.c.toFixed(8)}\n_cell_angle_alpha ${p.alpha.toFixed(8)}\n_cell_angle_beta  ${p.beta.toFixed(8)}\n_cell_angle_gamma ${p.gamma.toFixed(8)}\n\nloop_\n_atom_site_label\n_atom_site_type_symbol\n_atom_site_fract_x\n_atom_site_fract_y\n_atom_site_fract_z\n_atom_site_occupancy\n`,m={};for(let a of st.atoms){m[a.element]=(m[a.element]||0)+1;let f=wrapV(a.frac);s+=`${a.element}${m[a.element]} ${a.element} ${f[0].toFixed(8)} ${f[1].toFixed(8)} ${f[2].toFixed(8)} 1.0\n`}return s}
+function fmtPOSCAR(st,name){let c=counts(st),els=c.map(x=>x[0]),atoms=[];for(let e of els)atoms=atoms.concat(st.atoms.filter(a=>a.element===e));let s=`${name||st.title||"Generated"}\n1.0\n`;for(let v of st.lattice)s+=`${v[0].toFixed(10)} ${v[1].toFixed(10)} ${v[2].toFixed(10)}\n`;s+=els.join(" ")+"\n"+c.map(x=>x[1]).join(" ")+"\nDirect\n";for(let a of atoms){let f=wrapV(a.frac);s+=`${f[0].toFixed(10)} ${f[1].toFixed(10)} ${f[2].toFixed(10)}\n`}return s}
+function dlText(fn,txt){let blob=new Blob([txt],{type:"text/plain"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=fn;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},100)}
+function tarHeader(name,size){let b=new Uint8Array(512),enc=new TextEncoder();function w(str,off,len){b.set(enc.encode(str).slice(0,len),off)}function oct(n,l){return n.toString(8).padStart(l-1,"0")+"\0"}w(name,0,100);w("0000644\0",100,8);w("0000000\0",108,8);w("0000000\0",116,8);w(oct(size,12),124,12);w(oct(Math.floor(Date.now()/1000),12),136,12);for(let i=148;i<156;i++)b[i]=32;w("0",156,1);w("ustar\0",257,6);w("00",263,2);let sum=0;for(let x of b)sum+=x;w(sum.toString(8).padStart(6,"0")+"\0 ",148,8);return b}
+function makeTar(files){let enc=new TextEncoder(),parts=[];for(let f of files){let d=enc.encode(f.content);parts.push(tarHeader(f.name,d.length),d);let pad=(512-d.length%512)%512;if(pad)parts.push(new Uint8Array(pad))}parts.push(new Uint8Array(1024));return new Blob(parts,{type:"application/x-tar"})}
+function dlBlob(fn,blob){let url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=fn;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},100)}
+
+/* ---------- UI ---------- */
+let base=null,sup=null,rules=[],union=[],sym=null,results=[],selected=0;
+$("fileInput").addEventListener("change",async e=>{let f=e.target.files[0];if(f)$("inputText").value=await f.text()});
+$("loadPartialBFO").onclick=()=>{$("inputText").value=`data_partial_BaFeCoO
+_cell_length_a 4.000
+_cell_length_b 4.000
+_cell_length_c 4.000
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 90
+
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+Ba1 Ba 0.000000 0.000000 0.000000 1
+Fe1 Fe 0.500000 0.500000 0.500000 0.875
+Co1 Co 0.500000 0.500000 0.500000 0.125
+O1  O  0.500000 0.500000 0.000000 0.958333
+O2  O  0.500000 0.000000 0.500000 0.958333
+O3  O  0.000000 0.500000 0.500000 0.958333
+`;$("targetSpecies").value="P1";$("replaceSpec").value="Fe0.875Co0.125";$("multiRules").value="";$("nx").value=2;$("ny").value=2;$("nz").value=2};
+$("loadBFO").onclick=()=>{$("inputText").value=`data_BaFeO3_cubic
+_cell_length_a 4.000
+_cell_length_b 4.000
+_cell_length_c 4.000
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 90
+
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+Ba1 Ba 0.000000 0.000000 0.000000 1
+Fe1 Fe 0.500000 0.500000 0.500000 1
+O1  O  0.500000 0.500000 0.000000 1
+O2  O  0.500000 0.000000 0.500000 1
+O3  O  0.000000 0.500000 0.500000 1
+`;$("targetSpecies").value="Fe";$("replaceSpec").value="Fe0.875Co0.125";$("multiRules").value="Fe => Fe0.875Co0.125\nO => O0.958333Vac0.041667";$("nx").value=2;$("ny").value=2;$("nz").value=2};
+$("parseBtn").onclick=()=>{try{base=parseStruct($("inputText").value);sup=null;clearResults();$("parseMsg").className="ok";$("parseMsg").textContent=`解析成功：${base.atoms.length} crystallographic sites; partial groups: ${(base.partialGroups||[]).length}`;$("superBtn").disabled=false;$("runBtn").disabled=true;$("previewBtn").disabled=true;$("autoPartialBtn").disabled=!(base.partialGroups&&base.partialGroups.length);updateSummary(base)}catch(e){$("parseMsg").className="warn";$("parseMsg").textContent=e.message}};
+$("superBtn").onclick=()=>{try{sup=supercell(base,parseInt($("nx").value),parseInt($("ny").value),parseInt($("nz").value));clearResults();$("superMsg").className="ok";$("superMsg").textContent=`超胞生成成功：${sup.atoms.length} sites; partial groups: ${(sup.partialGroups||[]).length}`;$("runBtn").disabled=false;$("previewBtn").disabled=false;$("autoPartialBtn").disabled=!(sup.partialGroups&&sup.partialGroups.length);updateSummary(sup)}catch(e){$("superMsg").className="warn";$("superMsg").textContent=e.message}};
+$("autoPartialBtn").onclick=()=>{try{let st=sup||base;let txt=autoPartialRules(st);$("compMsg").className="ok";$("compMsg").textContent="已生成规则：\n"+txt}catch(e){$("compMsg").className="warn";$("compMsg").textContent=e.message}};
+function prepare(){if(!sup)throw Error("请先生成超胞");let br=buildRules(sup);rules=br.rules;union=[...new Set(rules.flatMap(r=>r.idx))].sort((a,b)=>a-b);return br}
+$("previewBtn").onclick=()=>{try{let br=prepare();$("compMsg").className="ok";$("compMsg").textContent=br.summary}catch(e){$("compMsg").className="warn";$("compMsg").textContent=e.message}};
+$("runBtn").onclick=()=>{let t0=performance.now();try{let br=prepare(),mode=$("mode").value,symMode=$("symmetryMode").value,minD=parseFloat($("minDist").value)||0,n=parseInt($("nStruct").value),seed=parseInt($("seed").value),cap=parseInt($("enumCap").value),steps=parseInt($("sqsSteps").value);
+sym=symMode==="light"?buildSym(sup,union):{maps:null,info:symMode==="fingerprint"?"Fingerprint dedup enabled.":""};
+if(mode==="random")results=generateRandom(sup,rules,union,n,seed,minD,symMode,sym);else if(mode==="enumerate")results=generateEnum(sup,rules,union,n,cap,minD,symMode,sym);else results=generateSQS(sup,rules,union,n,seed,minD,steps,symMode,sym);
+selected=0;renderResults();$("runMsg").className="ok";$("runMsg").textContent=`完成：${rules.length} rules, ${union.length} target sites, ${results.length} structures, ${((performance.now()-t0)/1000).toFixed(2)} s.\n${br.summary}`;$("symInfo").textContent=sym.info||"";$("energyInfo").textContent=$("energyMode").value==="none"?"":"Energy sorting enabled: "+$("energyMode").value+". Lower energy is ranked first."}catch(e){$("runMsg").className="warn";$("runMsg").textContent=e.message}};
+$("clearBtn").onclick=clearResults;
+$("downloadCif").onclick=()=>{if(results.length){let st=applyState(sup,results[selected].state,rules);dlText(`${results[selected].name}.cif`,fmtCIF(st,results[selected].name))}};
+$("downloadPoscar").onclick=()=>{if(results.length){let st=applyState(sup,results[selected].state,rules);dlText(`POSCAR_${results[selected].name}`,fmtPOSCAR(st,results[selected].name))}};
+$("downloadTar").onclick=()=>{if(results.length){let files=results.map(r=>({name:`${r.name}.cif`,content:fmtCIF(applyState(sup,r.state,rules),r.name)}));dlBlob("generated_structures_cif.tar",makeTar(files))}};
+
+function updateSummary(st){
+  let p=latticeParams(st.lattice);$("summary").innerHTML=`<b>${st.title}</b><br>Sites: ${st.atoms.length}<br>Cell: a=${p.a.toFixed(4)} Å, b=${p.b.toFixed(4)} Å, c=${p.c.toFixed(4)} Å; α=${p.alpha.toFixed(2)}°, β=${p.beta.toFixed(2)}°, γ=${p.gamma.toFixed(2)}°`;
+  let c=counts(st);$("speciesPills").innerHTML=c.map(([e,n])=>`<span class="pill">${e}: ${n}</span>`).join("");
+  let extra=[];for(let g of (st.partialGroups||[])){let n=st.atoms.filter(a=>a.siteTag===g.siteTag).length;extra.push([g.siteTag,n+" sites"])}
+  $("countTable").querySelector("tbody").innerHTML=c.map(([e,n])=>`<tr><td>${e}</td><td>${n}</td></tr>`).join("")+extra.map(([e,n])=>`<tr><td>${e}</td><td>${n}</td></tr>`).join("");
+  if(st.partialGroups&&st.partialGroups.length){$("partialInfo").innerHTML=st.partialGroups.map(g=>`<div><b>${g.siteTag}</b>: ${g.alts.map(a=>`${a.element} ${a.occ.toFixed(6)}`).join(" / ")}</div>`).join("")}
+  else $("partialInfo").textContent="未检测到 partial occupancy。";
+}
+function clearResults(){results=[];selected=0;$("results").innerHTML=`<div class="small" style="padding:10px">尚无结果。</div>`;$("outputText").value="";$("downloadCif").disabled=true;$("downloadPoscar").disabled=true;$("downloadTar").disabled=true;$("symInfo").textContent="";$("energyInfo").textContent=""}
+function renderResults(){
+  if(!results.length){clearResults();return}
+  $("downloadCif").disabled=false;$("downloadPoscar").disabled=false;$("downloadTar").disabled=false;$("results").innerHTML="";
+  results.forEach((r,i)=>{let div=document.createElement("div");div.className="result-item"+(i===selected?" active":"");let md=r.minDistance==null?"NA":r.minDistance.toFixed(3)+" Å";let en=r.energy==null?"":` | energy=${r.energy.toFixed(6)} eV`;div.innerHTML=`<b>${r.name}</b><br><span class="small">score=${r.score.toFixed(6)}${en} | min special distance=${md}</span><br><span class="mini">key: ${(r.key||"").slice(0,110)}</span>`;div.onclick=()=>{selected=i;renderResults()};$("results").appendChild(div)});
+  $("outputText").value=fmtCIF(applyState(sup,results[selected].state,rules),results[selected].name);
+}
+</script>
+<script>
+
+(function(){
+  const placeholder = {
+    zh: {
+      inputText: "在这里粘贴 CIF 或 POSCAR...",
+      targetSpecies: "例如 Fe、O、P1 或 Fe,Co",
+      replaceSpec: "例如 Co:1 / Co:0.125 / Fe0.875Co0.125 / Vac:0.041667",
+      multiRules: "例如：\nP1 => Fe0.875Co0.125\nP2 => O0.958333Vac0.041667\n或：\nFe => Fe0.875Co0.125\nO  => O0.958333Vac0.041667"
+    },
+    en: {
+      inputText: "Paste CIF or POSCAR here...",
+      targetSpecies: "e.g., Fe, O, P1, or Fe,Co",
+      replaceSpec: "e.g., Co:1 / Co:0.125 / Fe0.875Co0.125 / Vac:0.041667",
+      multiRules: "Examples:\nP1 => Fe0.875Co0.125\nP2 => O0.958333Vac0.041667\nor:\nFe => Fe0.875Co0.125\nO  => O0.958333Vac0.041667"
+    }
+  };
+  function setLang(lang){
+    document.body.setAttribute("data-lang", lang);
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+    document.getElementById("langZh").classList.toggle("active", lang === "zh");
+    document.getElementById("langEn").classList.toggle("active", lang === "en");
+    for(const [id, text] of Object.entries(placeholder[lang])){
+      const el = document.getElementById(id);
+      if(el) el.placeholder = text;
+    }
+    localStorage.setItem("supercell_builder_lang", lang);
+  }
+  document.getElementById("langZh").addEventListener("click", () => setLang("zh"));
+  document.getElementById("langEn").addEventListener("click", () => setLang("en"));
+  setLang(localStorage.getItem("supercell_builder_lang") || "zh");
+  window.addEventListener("error", function(e){
+    const box = document.getElementById("runMsg") || document.getElementById("parseMsg");
+    if(box){
+      box.className = "warn";
+      box.textContent = (document.body.getAttribute("data-lang")==="en" ? "Runtime error: " : "运行错误：") + e.message;
+    }
+  });
+})();
+
+</script>
+</body>
+</html>
