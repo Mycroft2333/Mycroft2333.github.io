@@ -1,16 +1,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
 <!-- saved from url=(0018)http://yuhao.wang/ -->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
 <!-- Meta tags for search engines to crawl -->
-<meta name="robots" content="index,follow">
-<meta name="keywords" content="Yuhao Wang; Research Assistant Professor; RGC Junior Research Fellow; Solid Oxide Fuel Cell; Protonic Ceramic Cell; High Entropy Materials; Electrochemistry; DRTtools; Electrochemical Impedance Spectroscopy; Hong Kong University of Science and Technology; HKUST">
-<script src="./website_elements/jquery.scrolly.min.js.下载"></script>
-<script src="./website_elements/jquery.min.js.下载"></script>
-<link rel="author" href="https://mycroft2333.github.io/"> <!-- Consider updating this if it's not Yuhao's -->
+<meta content="index,follow" name="robots"/>
+<meta content="Yuhao Wang; Research Assistant Professor; RGC Junior Research Fellow; Solid Oxide Fuel Cell; Protonic Ceramic Cell; High Entropy Materials; Electrochemistry; DRTtools; Electrochemical Impedance Spectroscopy; Hong Kong University of Science and Technology; HKUST" name="keywords"/>
 
-	<title>Yuhao Wang's Homepage</title>
-	<style>
+
+<link href="https://yuhao.wang/" rel="author"/> <!-- Consider updating this if it's not Yuhao's -->
+<title>Yuhao Wang's Homepage</title>
+<style>
 
 @media screen and (max-device-width: 480px){
   body{
@@ -75,286 +74,280 @@ a, a:visited { color : #0050e7; }
 }
 ul, ol { padding-left: 40px; /* Consistent list indent */ }
 li { margin-bottom: 10px; /* Spacing for list items */ }
-	</style>
-	<script async="" src="./website_elements/analytics.js.下载"></script>
+	
+/* Minimal functionality fixes; the original desktop design is intentionally unchanged. */
+img { max-width:100%; }
+#me { margin-top: 28px; }
+.container::after { content:""; display:table; clear:both; }
+.external img { object-fit:contain; }
+.publication a.doi { white-space: nowrap; font-size: 13px; }
+@media screen and (max-width: 850px) {
+  .container, .container_title { width: calc(100% - 72px); }
+  .container { max-width: 750px; }
+}
+@media screen and (max-width: 550px) {
+  .container { padding: 18px; width: calc(100% - 56px); }
+  .container_title { padding: 8px 18px; width: calc(100% - 56px); }
+  #sidebar { margin-left:0; margin-right:16px; margin-bottom:12px; }
+  #me { width: 110px; margin-top:6px; margin-bottom:12px; border-radius:7px; }
+  #bio { padding-top:6px; }
+  #bio > br { display:none; }
+  #bio p:not(.external) > br:nth-last-of-type(-n+3) { display:none; }
+  #bio h1 { font-size:28px; }
+  #bio font[size="5"] { font-size: 16px; }
+  #bio font[size="4"] { font-size: 14px; }
+  #bio p { line-height:1.5 !important; }
+  .external { clear:both; justify-content:flex-start; gap:9px 16px; padding-top:6px; }
+  .external a { font-size:13px; }
+  .external img { width:21px; height:21px; margin-right:5px; }
+  .publication ol { padding-left:27px; }
+  .publication li { overflow-wrap:anywhere; }
+}
+@media print {
+  body { background:white; }
+  .container { break-inside:auto; }
+  li { break-inside:avoid; }
+}
+</style>
+
 <!-- Font/Icon styles removed for clarity as they seemed related to browser extensions -->
 </head>
-
 <body>
-
-	<div class="container">
-		<div id="sidebar">
-            <img src="./website_elements/me.png" vspace="50 px" width="180 px" id="me" itemprop="photo">
-        </div>
-		<div id="bio">
-
-            <br>
-
-			<h1>
-				<span itemprop="name">Yuhao Wang</span>
-			</h1>
-
-            <br>
-
-			<p style="line-height:23px;">
-				<font size="5">Research Assistant Professor</font>
-                <br><font size="5">RGC Junior Research Fellow</font>
-				<br>
-                <br><font size="4">Department of Mechanical and Aerospace Engineering</font>
-                <br><font size="4">Hong Kong University of Science and Technology</font><br>
-                <br><font size="4">Email: yuhao.wang (at) connect.ust.hk</font>
-                <br><br>
-                <br>
-			</p>
-
-            <br>
-
-            <p class="external">
-                <a href="https://linkedin.com/in/yuhaowang1994/" class="first" target="_blank">
-                    <img src="./website_elements/linkedin.png" width="25" height="25" alt="LinkedIn icon">
-                    <span>LinkedIn</span>
-                </a>
-                <a href="https://scholar.google.com.hk/citations?user=FuCAUvcAAAAJ&amp;hl=en" target="_blank">
-                    <img src="./website_elements/googleScholar.png" width="25" height="25" alt="Google Scholar icon">
-                    <span>Google Scholar</span>
-                </a>
-                <a href="https://www.researchgate.net/profile/Yuhao-Wang-5" target="_blank">
-                    <img src="./website_elements/researchgate.png" width="25" height="25" alt="ResearchGate icon">
-                    <span>ResearchGate</span>
-                </a>
-                <a href="https://orcid.org/0000-0003-2943-434X" target="_blank">
-                    <img src="./website_elements/orcid.png" width="25" height="25" alt="ORCiD icon">
-                    <span>ORCiD</span>
-                </a>
-                <a href="https://twitter.com/yuhaowang1994" target="_blank">
-                    <img src="./website_elements/x.png" width="25" height="14" alt="X icon">
-                    <span>X (Twitter)</span>
-                </a>
-            </p>
-		</div>
-	</div>
-
-<div class="container_title">
-    <h2>About Me</h2>
+<div class="container">
+<div id="sidebar">
+<img alt="Yuhao Wang" id="me" itemprop="photo" src="data:image/jpeg;base64,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" width="180"/>
 </div>
-
-	<div class="container">
-		<p>
+<div id="bio">
+<br/>
+<h1>
+<span itemprop="name">Yuhao Wang</span>
+</h1>
+<br/>
+<p style="line-height:23px;">
+<font size="5">Research Assistant Professor</font>
+<br/><font size="5">RGC Junior Research Fellow</font>
+<br/>
+<br/><font size="4">Department of Mechanical and Aerospace Engineering</font>
+<br/><font size="4">Hong Kong University of Science and Technology</font><br/>
+<br/><font size="4">Email: yuhao.wang [AT] connect.ust.hk</font>
+<br/><br/>
+<br/>
+</p>
+<br/>
+<p class="external">
+<a class="first" href="https://linkedin.com/in/yuhaowang1994/" rel="noopener noreferrer" target="_blank">
+<img alt="LinkedIn icon" height="25" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0iIzBBNjZDMiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik02LjQgMTJoNC4ydjE0SDYuNHptMi4xLTYuOGEyLjQgMi40IDAgMSAxIDAgNC44IDIuNCAyLjQgMCAwIDEgMC00Ljh6TTE0IDEyaDR2MS45Yy42LTEuMSAyLTIuMyA0LjMtMi4zIDQuNiAwIDUuNCAyLjkgNS40IDYuNlYyNmgtNC4ydi03YzAtMS43LS4xLTMuOC0yLjUtMy44cy0yLjkgMS44LTIuOSAzLjdWMjZIMTR6Ii8+PC9zdmc+" width="25"/>
+<span>LinkedIn</span>
+</a>
+<a href="https://scholar.google.com.hk/citations?user=FuCAUvcAAAAJ&amp;hl=en" rel="noopener noreferrer" target="_blank">
+<img alt="Google Scholar icon" height="25" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNSIgZmlsbD0iI2ZmZiIvPjxwYXRoIGZpbGw9IiM0Mjg1RjQiIGQ9Ik0xNiAyIDEuNiAxMy40IDE2IDI1bDE0LjQtMTEuNnoiLz48cGF0aCBmaWxsPSIjMTc0RUE2IiBkPSJNNiAxNy40VjIzYzIuNSA0IDYuMSA2LjIgMTAgNi4yczcuNS0yLjIgMTAtNi4ydi01LjZsLTEwIDh6Ii8+PGNpcmNsZSBjeD0iMTYiIGN5PSIyMSIgcj0iNi42IiBmaWxsPSIjOEFCNEY4Ii8+PGNpcmNsZSBjeD0iMTYiIGN5PSIyMSIgcj0iMy42IiBmaWxsPSIjZmZmIi8+PC9zdmc+" width="25"/>
+<span>Google Scholar</span>
+</a>
+<a href="https://www.researchgate.net/profile/Yuhao-Wang-5" rel="noopener noreferrer" target="_blank">
+<img alt="ResearchGate icon" height="25" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNSIgZmlsbD0iIzAwQzhBNSIvPjx0ZXh0IHg9IjMuNCIgeT0iMjMuNSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9IjE4Ij5SPC90ZXh0Pjx0ZXh0IHg9IjE3LjUiIHk9IjIzLjUiIGZpbGw9IiNmZmYiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1zaXplPSIxNCI+RzwvdGV4dD48Y2lyY2xlIGN4PSIyNS4zIiBjeT0iNi4yIiByPSIyLjIiIGZpbGw9IiNmZmYiLz48L3N2Zz4=" width="25"/>
+<span>ResearchGate</span>
+</a>
+<a href="https://orcid.org/0000-0003-2943-434X" rel="noopener noreferrer" target="_blank">
+<img alt="ORCiD icon" height="25" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiNBNkNFMzkiLz48dGV4dCB4PSI1LjYiIHk9IjIyLjgiIGZvbnQtc2l6ZT0iMTkiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmZiI+aUQ8L3RleHQ+PC9zdmc+" width="25"/>
+<span>ORCiD</span>
+</a>
+<a href="https://twitter.com/yuhaowang1994" rel="noopener noreferrer" target="_blank">
+<img alt="X icon" height="23" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0iIzEwMTAxMCIvPjxwYXRoIGQ9Ik02IDUuNGg1LjVsNS43IDcuNSA2LjItNy41aDNsLTcuOCA5LjNMMjcgMjYuN2gtNS41bC02LjctOS03LjYgOWgtM2w5LjItMTAuOUw2IDUuNFptNC41IDIuNSAxMi4xIDE2LjNoMUwxMS41IDcuOVoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=" width="23"/>
+<span>X (Twitter)</span>
+</a>
+</p>
+</div>
+</div>
+<div class="container_title">
+<h2>About Me</h2>
+</div>
+<div class="container">
+<p>
             Welcome to my personal webpage!
-            <br><br>
+            <br/><br/>
             I am currently a <b>Research Assistant Professor &amp; RGC Junior Research Fellow</b> in the Department of Mechanical and Aerospace Engineering at the <a href="https://hkust.edu.hk/">Hong Kong University of Science and Technology (HKUST)</a>.
             Before this appointment, I served as <b>Postdoctoral Fellow &amp; RGC Junior Research Fellow</b> at HKUST from 2025.05 to 2026.02, <b>Postdoctoral Fellow</b> at HKUST from 2023.10 to 2025.04 with <a href="http://www.qing-chen.org/">Prof. Qing Chen</a> and <a href="https://www.fc.uni-bayreuth.de/en/index.html">Prof. Francesco Ciucci</a>, and <b>Research Assistant</b> at HKUST from 2019.08 to 2020.08.
-            <br><br>
+            <br/><br/>
             My research investigates low-carbon energy conversion and storage systems. More specifically, my work focuses on <b>Solid Oxide Cells (SOCs)</b>, <b>Protonic Ceramic Cells (PCCs)</b>, <b>high-entropy perovskites</b>, <b>active-flow membraneless electrolyzers for green hydrogen</b>, and <b>electrochemical impedance spectroscopy / distribution of relaxation times (DRT)</b> for electrochemical analysis and diagnostics.
-            <br><br>
+            <br/><br/>
             I obtained my <b>Ph.D.</b> in Mechanical Engineering (Energy Technology Concentration) from HKUST in October 2023, supervised by <a href="https://www.fc.uni-bayreuth.de/en/index.html">Prof. Francesco Ciucci</a>. My doctoral thesis was titled "High-performance and long-term durability protonic ceramic cells".
-			<br>
+			<br/>
             Prior to my Ph.D., I received my <b>M.Sc.</b> degree in Chemical and Biomolecular Engineering from <a href="https://cbe.hkust.edu.hk/">HKUST</a> in June 2019, also under the supervision of <a href="https://www.fc.uni-bayreuth.de/en/index.html">Prof. Francesco Ciucci</a>.
-            <br>
+            <br/>
             I completed my <b>B.Eng.</b> in Chemistry Engineering and Technology in June 2017 at the <a href="https://www.cumtb.edu.cn/">China University of Mining and Technology, Beijing (CUMTB)</a>. During my undergraduate studies, my supervisors were <a href="https://scee.cumtb.edu.cn/info/1017/1118.htm">Prof. Zhibin Yang</a> and <a href="https://www.te.tsinghua.edu.cn/info/1319/1768.htm">Prof. Minfang Han</a>.
-			<br>
+			<br/>
 			In the summer of 2016, I had the opportunity to be a <b>Visiting Student</b> in the Department of Energy Conversion and Storage at the <a href="https://www.dtu.dk/english/">Technical University of Denmark (DTU)</a> and Risø DTU National Laboratory for Sustainable Energy, supervised by <a href="https://orbit.dtu.dk/en/persons/ming-chen">Prof. Ming Chen</a>.
-            <br><br>
-            Please visit my <a href="https://linkedin.com/in/yuhaowang1994/" class="first" target="_blank">LinkedIn</a> for more details on my experiences. You can follow my recent work through my <a href="https://scholar.google.com.hk/citations?user=FuCAUvcAAAAJ&amp;hl=en" target="_blank">Google Scholar</a> profile.
+            <br/><br/>
+            Please visit my <a class="first" href="https://linkedin.com/in/yuhaowang1994/" target="_blank">LinkedIn</a> for more details on my experiences. You can follow my recent work through my <a href="https://scholar.google.com.hk/citations?user=FuCAUvcAAAAJ&amp;hl=en" target="_blank">Google Scholar</a> profile.
 		</p>
-	</div>
-
+</div><div class="container_title"><h2>Honors and Awards</h2></div><div class="container"><ul class="award-list">
+<li>RGC Junior Research Fellow</li>
+<li>National Overseas High-Level Talent Recruitment Program</li>
+<li>IAAM Fellow</li>
+<li>HKRFA Junior Member</li>
+</ul></div>
 <div class="container_title">
-    <h2>Grants/Projects Experience</h2>
+<h2>Grants/Projects Experience</h2>
 </div>
-    <div class="container">
-        <h3>As Principal Investigator</h3>
-        <ul>
-            <li>RGC Junior Research Fellow Scheme (JRFS2526-6S08): Uncovering the mechanisms behind performance and stability in high-entropy perovskite ferrite air electrodes for reversible protonic ceramic cells, Research Grants Council, HK SAR, <b>Principal Investigator</b>. (HK$1,275,000, one of 60 awards worldwide)</li>
-            <li>VPRDO Research Assistant Professors Scheme, HKUST VPRDO, <b>Principal Investigator</b>. (HK$660,000, one of four awardees department-wide)</li>
-            <li>Research Talent Hub for ITF projects (InP/244/19), Hong Kong Innovation and Technology Commission, <b>Principal Investigator</b>. (HK$260,280)</li>
-            <li>National Innovation and Entrepreneurship Training Program for College Students (201511413029): Research on the preparation of needle coke from coal tar pitch, Ministry of Education of the People's Republic of China, <b>Principal Investigator</b>. (RMB 30,000, 3.5% award rate)</li>
-            <li>Green Tech Fund (GTF202410191): Direct seawater electrolysis for green hydrogen with an active-flow membraneless electrolyzer, Environment and Ecology Bureau, HK SAR, <b>Co-Principal Investigator</b>. (HK$2,941,700)</li>
-            <li>Frontier Technology Research for Joint Institutes with Industry Scheme (FTRIS-25-034): Lithium-aluminum alloy anodes for solid polymer electrolyte batteries, HKUST-Kaisa Joint Research Institute, <b>Co-Principal Investigator</b>. (HK$350,000)</li>
-        </ul>
-        <br>
-        <h3>As Participant</h3>
-        <ul>
-            <li>Green Tech Fund (GTF202020131): Green hydrogen production from active flow membraneless electrolyzers, Environment and Ecology Bureau, HK SAR, <b>Participant</b>.</li>
-            <li>General Research Fund (16201622): Unlocking the mechanisms of performance and stability in Co-substituted, Ba-based perovskite air electrodes: a path to high-performance reversible protonic ceramic fuel cells, Research Grants Council, HK SAR, <b>Participant</b>.</li>
-            <li>General Research Fund (16201820): From material study to design: A fundamental investigation of triple conducting oxides for proton ceramic fuel cells using thin films and first-principles calculations, Research Grants Council, HK SAR, <b>Participant</b>.</li>
-            <li>General Research Fund (16206019): Anion substitution to improve perovskite cathodes: understanding the enhanced performance by computation and experiment, Research Grants Council, HK SAR, <b>Participant</b>.</li>
-            <li>Collaborative Research Fund (C7051-17GF): Energy-efficient and environmentally-friendly smart seawater desalination system, Research Grants Council, HK SAR, <b>Participant</b>.</li>
-            <li>General Research Fund (16204517): Chemically and electrochemically driven nanoparticle egress from A-site-deficient perovskites: A computational and experimental study of nanoparticle growth, University Grants Committee, HK SAR, <b>Participant</b>.</li>
-            <li>National Key R&amp;D Program of China (2018YFE0106700): Key technology of Power-to-X for renewable energy power storage, Ministry of Science and Technology of the People's Republic of China, <b>Participant</b>.</li>
-            <li>National Key R&amp;D Program of China (2017YFB0601904): Coal gasification power generation technology with near-zero CO2 emission, Ministry of Science and Technology of the People's Republic of China, <b>Participant</b>.</li>
-            <li>National Basic Research Program of China (973 program, 2012CB215400): Fundamental research on carbon-based solid oxide fuel cell system, Ministry of Science and Technology of the People's Republic of China, <b>Participant</b>.</li>
-            <li>Guangdong Provincial International Science and Technology Cooperation Program (2023A0505050107): Preparation and electrocatalytic application of carbon aerogel supported transition metal single atom catalysts, Guangdong Science and Technology Department, <b>Participant</b>.</li>
-        </ul>
-    </div>
-
-<div class="container_title">
-    <h2>Publications</h2>
-</div>
-
-	<div class="container publication">
-        <h3>Peer-reviewed papers († = co-first author, * = corresponding author)</h3>
-        <p><b><i>Published or Accepted</i></b></p>
-        <p><b>First-/Co-first-author</b></p>
-		<ol>
-            <li><b>Y. Wang</b>, M. Robson, A. Manzotti, F. Ciucci*. High-entropy perovskites materials for next-generation energy applications. Joule. 7(5), 848-854, (2023). (IF=35.4)</li>
-            <li><b>Y. Wang†</b>, Z. Wang†, K. Yang†, J. Liu, Y. Song, J. Li, Z. Hu, M. Robson, Z. Zhang, Y. Tian, S. Xu, Y. Lu, H. Law, F. Liu, Q. Chen, Z. Yang*, F. Ciucci*. Self-recoverable symmetric protonic ceramic fuel cell with smart reversible exsolution/dissolution electrode. Advanced Functional Materials. 2404846. (2024) (IF=19.0) Nature Index Journal</li>
-            <li><b>Y. Wang†</b>, J. Liu†, Y. Song, J. Yu, Y. Tian, M. Robson, J. Wang, Z. Zhang, X. Lin, G. Zhou, Z. Wang, L. Shen, H. Zhao, S. Grasso, F. Ciucci*. High-entropy perovskites for energy conversion and storage: design, synthesis, and potential applications. Small Methods. 2201138. (2023). (IF=9.1)</li>
-            <li><b>Y. Wang</b>, J. Liu, L. Shen, F. Ciucci*. Modeling and design of new, alternative exsolution systems. Journal of Physics: Energy. 5 031501 (2022). (IF=6.3)</li>
-            <li><b>Y. Wang†</b>, Y. Song†, J. Liu†, K. Yang, X. Lin, Z. Yang, F. Ciucci*. Functionalized metal-supported reversible protonic ceramic cells with exceptional performance and durability. Advanced Energy and Sustainability Research. 3(2), 2100171. (2022). (IF=5.7)</li>
-            <li>Z. Wang†, <b>Y. Wang†</b>, J. Wang†, Y. Song†, M. Robson, A. Seong, M. Yang, Z. Zhang, A. Belotti, J. Liu, G. Kim, J. Lim, Z. Shao, F. Ciucci*. Rational design of perovskite ferrites as high-performance proton-conducting fuel cell cathodes. Nature Catalysis. 5(9), 777-787. (2022) (IF=44.6) (Research highlight by Nature Review Materials and AAAS) ESI Highly Cited Paper</li>
-            <li>J. Liu†, J. Kim†, <b>Y. Wang†</b>, H. Kim†, A. Belotti, B. Koo, Z. Wang, W. Jung*, F. Ciucci*. Understanding and mitigating A-site surface enrichment in Ba-containing perovskites: a combined computational and experimental study of BaFeO3. Energy &amp; Environmental Science. 15(10), 4069-4082. (2022) (IF=30.8) (Journal cover)</li>
-            <li>Y. Song†, Y. Song†, <b>Y. Wang†</b>, M. Xu*, J. Zeng, M. Liang, H. Huang, W. Zhou, R. Ran, Z. Shao*. Cation-selective defects engineering in A-site ordered layered perovskites for high-performance reversible protonic ceramic cells. Advanced Materials. 37(44), e11519. (2025) (IF=26.8) Nature Index Journal</li>
-            <li>Y. Song†, J. Liu†, <b>Y. Wang†</b>, D. Guan, A. Seong, M. Liang, M. Robson, X. Xiong, Z. Zhang, G. Kim, Z. Shao*, and F. Ciucci*. Nanocomposites: a new opportunity for developing highly active and durable bifunctional air electrodes for reversible protonic ceramic cells. Advanced Energy Materials. 11(36), 21011899. (2021) (IF=26.0)</li>
-            <li>M. Liang†, <b>Y. Wang†</b>, Y. Song†, D. Guan, J. Wu, P. Chen, A. Marades, M. Xu*, G. Yang, W. Zhou, W. Wang, R. Ran, F. Ciucci*, Z. Shao*. High-temperature water oxidation activity of a perovskite-based nanocomposite towards application as air electrode in reversible protonic ceramic cells. Applied Catalysis B: Environmental. 331, 122682. (2023). (IF=21.1)</li>
-            <li>Z. Zhang†,*, J. Liu†, S. Zhu†, <b>Y. Wang†</b>, J. Wang, M. Xu, J. Zhao, Z. Wang, D. Zeng, J. Zeng, Y. Song, C. Pao, Z. Hu, J. Lim, R. Xiao, M. Shao, F. Ciucci*. Dizygotic atomic platinum and palladium on carbon for high-performance ethanol and methanol electro-oxidation. Angewandte Chemie International Edition. (2025). e202502348. (IF=16.9)</li>
-            <li>C. Yang†, <b>Y. Wang†</b>, Y. Tian*, Z. Wang, J. Pu, F. Ciucci*, B. Chi*. Electrochemical performance of symmetric solid oxide cells employing a Sc-doped SrFeO3-δ-based electrode. Chemical Engineering Journal, 485, 149970. (2024). (IF=13.3)</li>
-            <li>Y. Bi†, <b>Y. Wang†</b>, Y. Song, Q. Chen*, F. Ciucci*. Achieving high-performance OER catalysis with dual-site modulated Fe-based perovskites. Journal of Materials Chemistry A. (2025). Accepted. (IF=9.5)</li>
-            <li>L. Shen†, <b>Y. Wang†</b>, J. Yu†, G. Zhou, J. Liu, M. Robson, Y. Zhou, M. Effat*, F. Ciucci*. Strain engineering of antiperovskite materials for solid-state Li batteries: a computation-guided substitution approach. Journal of Materials Chemistry A. 11(35), 18984-18995. (2023). (IF=9.5)</li>
-            <li>K. Yang†, J. Liu†, <b>Y. Wang†</b>, X. Shi, J. Wang, Q. Lu*, F. Ciucci*, Z. Yang*. Machine-learning-assisted prediction of long-term performance degradation on solid oxide fuel cell cathodes induced by chromium poisoning. Journal of Materials Chemistry A. 10(44), 53683-23690. (2022). (IF=9.5)</li>
-            <li>K. Yang†, <b>Y. Wang†</b>, L. Jiang, Y. Jin*, Z. Yang*. Cobalt-free perovskite Ba0.95La0.05FeO3−δ as efficient and durable oxygen electrode for solid oxide electrolysis cells. International Journal of Hydrogen Energy. 48(71), 27464-27472. (2023). (IF=8.3)</li>
-            <li>H. Ye†, <b>Y. Wang†</b>, Q. Ye, X. Li, H. Lin, B. Zhao, F. Dong*, M. Ni*, Z. Lin. An advanced bifunctional single-element-incorporated ternary perovskite cathode for next-generation fuel cells. Journal of Power Sources. 628, 235875. (2025). (IF=7.9)</li>
-            <li>Z. Wang†, <b>Y. Wang†</b>,*, B. Py, A. Maradesa, J. Liu, T. H. Wan, M. Saccoccio, F. Ciucci*. DRTtools: Freely accessible distribution of relaxation times analysis for electrochemical impedance spectroscopy. ACS Electrochemistry. 1(12), 2680-2689. (2025).</li>
-		</ol>
-        <p><b>Corresponding author</b></p>
-		<ol start="19">
-            <li>A. Tahir, <b>Y. Wang*</b>, J. Li, Y. Tian, F. Ciucci*. Accelerated Discovery of High-Performance PCFC Cathodes: Computational-Experimental Optimization of Cobalt-Substituted Ba0.95La0.05FeO3-δ. Advanced Functional Materials. 2506489. (2025) (IF=19.0) Nature Index Journal</li>
-            <li>Q. Lyu, H. Zhao, J. He, <b>Y. Wang*</b>, Y. Xiang, H. Qu, Q. Zhong, Y. Sun*, T. Zhu*. An in situ hydrothermally self-crystallized dense ceria-based barrier layer for solid oxide fuel cells. Journal of Materials Chemistry A. 12(16), 9778-9786. (2024). (IF=9.5)</li>
-            <li>J. Jing, Z. Lei, Z. Zheng, H. Wang, P. Zhang, Z. Yang, Z. Wei, <b>Y. Wang*</b>, Z. Yang*. Multifunctional nanocomposite active layers synergistically enhance the performance of reversible proton ceramic cell. Renewable Energy. 243, 122551 (2025). (IF=9.1)</li>
-            <li>B. Py, Z. Wang, <b>Y. Wang*</b>, F. Ciucci*. Entropy-based regularized regression for advanced distribution of relaxation times deconvolution. Journal of Power Sources. 644, 236910. (2025). (IF=7.9)</li>
-            <li>H. Zhao, Q. Lyu, <b>Y. Wang*</b>, H. Sun, H. Qu, Q. Zhong, T. Zhu*. Controlled aqueous crystallization of Gadolinia doped Ceria micron-thick ceramic electrolyte for solid oxide fuel cell. Journal of Power Sources. 644, 237114. (2025). (IF=7.9)</li>
-            <li>Q. Lin, L. Hu*, W. Liu, X. Tang, <b>Y. Wang*</b>, Z. Yang*. Sensitivity analysis of a CNN–LSTM prognostic framework for PEMFCs: Effects of sliding window size and training data allocation. International Journal of Minerals, Metallurgy and Materials. (2026) Accepted. (IF=7.2)</li>
-            <li>Z. Wang*, <b>Y. Wang*</b>, F. Ciucci*. Distribution of relaxation times: Foundations, methods, diagnostics, and prognosis for electrochemical systems. Current Opinion in Electrochemistry. 55, 101789. (2025). (IF=6.9)</li>
-            <li>Y. Zhang, <b>Y. Wang*</b>. Review of production status and technology of coal tar based needle coke. Guangdong Chemical Industry. 44(12), 152-154+180. (2017)</li>
-		</ol>
-        <p><b>Co-author</b></p>
-		<ol start="27">
-            <li>X. Zhu†, Z. Wang†, T. Zhang, J. Zhang, A. Ge, Y. Cao, R. Gao, Z. Yu, <b>Y. Wang</b>, S. Xu, H. Law, F. Wang, F. Ciucci*, G. Xu*, M. Zhu. Solvation chemistry tailored via dielectric constant engineering for stable low-temperature aqueous zinc batteries. Nature Communications. (2026) Accepted. (IF=15.7)</li>
-            <li>Y. Bi, <b>Y. Wang</b>, Z. Wang, Y. Song, N. Li, J. Li, A. Kar, Q. Chen*, F. Ciucci*. Compositional tuning and surface restructuring synergistically enhance perovskite ferrite catalysts for hydrogen evolution in a membrane‐less electrolyzer. Advanced Energy Materials. e05486. (2026) (IF=26.0)</li>
-            <li>J. Liu*, L. Li, J. Xiang, L. Xie, <b>Y. Wang</b>, F. Ciucci*. Deep learning for state estimation of commercial sodium-ion batteries using partial charging profiles: Validation with a multi-temperature aging dataset. Journal of Energy Storage. 135, 118357. (2025) (IF=9.8)</li>
-            <li>J. Li, <b>Y. Wang</b>, F. Ciucci*. The path to next-generation air-electrodes for ceramic cells: Decoupling activity and stability. ACS Energy Letters. 10, 4796-4804. (2025) (IF=18.2)</li>
-            <li>H. Law†, Z. Wang†, S. Xu, L. Shen, B. Py, <b>Y. Wang</b>, R. Siegel, J. Senker, Q. Wang*, F. Ciucci*. A weakly solvating solvent-based quasi-solid electrolyte for sodium metal batteries. Energy &amp; Environmental Science. 18(19), 8838-8848. (2025) (IF=30.8)</li>
-            <li>Z. Wang, L. Shen, Y. Ma, H. M. Law, S. Xu, Y. Bi, M. J. Robson, <b>Y. Wang</b>, A. Gröschel, Q. Chen*, F. Ciucci*, Enthalpy-driven molecular engineering enables high-performance quasi-solid-state electrolytes for long life lithium metal batteries. Advanced Materials. 2419335. (2025). (IF=26.8) Nature Index Journal</li>
-            <li>A. Belotti, <b>Y. Wang</b>, Y. Song, A. Curcio, M. Robson, A. Manzotti, J. Li, F. Ciucci*. Fluorinated air electrodes for enhanced Re-PCEC performance through ultrafast sintering method. ACS Applied Energy Materials. 8(5), 2898-2903. (2025). (IF=5.5)</li>
-            <li>R. Deng, F. Liu*, S. Gao, Z. Xia, R. Wu, J. Kong, J. Yang, J. Wen, X. Zhang, C. Lv, <b>Y. Wang</b>, X. Li, Z. Wang*. Rational design of β-MnO2 via Ir/Ru co-substitution for enhanced oxygen evolution reaction in acidic media. ACS Catalysis. 15(3), 1782-1794. (2025). (IF=13.1)</li>
-            <li>J. Zhao, Y. Guo, Z. Zhang, X. Zhang, Q. Ji, H. Zhang, Z. Song, D. Liu, J. Zeng, C. Chuang, E. Zhang, <b>Y. Wang</b>, G. Hu, M. Mushtaq, W. Raza, X. Cai*, F. Ciucci*. Out-of-plane coordination of iridium single atoms with organic molecules and cobalt-iron hydroxides to boost oxygen evolution reaction. Nature Nanotechnology. 20, 57-66. (2025). (IF=34.9)</li>
-            <li>J. Yu, <b>Y. Wang</b>, L. Shen, J. Liu, Z. Wang, S. Xu, H. Law, F. Ciucci*. Fast-charging solid-state li batteries: Materials, strategies, and prospects. Advanced Materials. 2417796. (2024). (IF=26.8)</li>
-            <li>A. Tahir, A. Belotti, Y. Song, <b>Y. Wang</b>, A. Maradesa, J. Li, Y. Tian, F. Ciucci*. Ultrafast sintered composite cathode incorporating a negative thermal expansion material for high-performance protonic ceramic fuel cells. ACS Applied Materials &amp; Interfaces. 16(34), 44645-44654. (2024). (IF=8.2)</li>
-            <li>A. Maradesa, B. Py, J. Huang, Y. Lu, P. Irulli, A. Mrozinski, H. Law, <b>Y. Wang</b>, Z. Wang, J. Li, S. Xu, Q. Meyer, J. Liu, C. Brivio, A. Gavrilyuk, K. Kobayashi, A. Bertei, N. Williams, C. Zhao, M. Danzer, M. Zic, P. Wu, V. Yrjänä, S. Pereverzyev, Y. Chen, A. Weber, S. Kalinin, J. Schmidt, Y. Tsur, B. Boukamp, Q. Zhang, M. Gaberšček, R. O’Hayre, F. Ciucci*. Advancing electrochemical impedance analysis through innovations in the distribution of relaxation times method. Joule. 8(7), 1958-1981. (2024). (IF=35.4)</li>
-            <li>Y. Song, Y. Song, <b>Y. Wang</b>, Y. Tian, J. Li, M. Xu, Z. Shao*, F. Ciucci*. Advances in advanced in situ assembled composite electrode materials for enhanced solid oxide cell performance. Advanced Functional Materials. 2405851. (2024) (IF=19.0)</li>
-            <li>Z. Wang, <b>Y. Wang</b>, L. Shen, Z. Jin, H. Law, A. Wang, W. Wang*, F. Ciucci*. Towards durable practical lithium–metal batteries: Advancing the feasibility of poly-DOL-based quasi-solid-state electrolytes via a novel nitrate-based additive. Energy &amp; Environmental Science. 16(9), 4084-4092. (2023). (IF=30.8)</li>
-            <li>Z. Han*, H. Dong, <b>Y. Wang</b>, Y. Yang, H. Yu, Z. Yang*. Mechanistic insight into catalytic conversion of methane on Sr2Fe1.5Mo0.5O6-δ perovskite anode: A combined EIS-DRT, DFT and TPSR investigation. Journal of Materials Chemistry A. 11(35), 18820-18831. (2023). (IF=9.5)</li>
-            <li>J. Yu, G. Zhou, Y. Li, <b>Y. Wang</b>, D. Chen, F. Ciucci*. Improving room-temperature Li-metal battery performance by in situ creation of fast Li+ transport pathways in a polymer-ceramic electrolyte. Small. 2302691. (2023). (IF=12.1)</li>
-            <li>Y. Tian, A. Manzotti, <b>Y. Wang</b>, Y. Song, X. Fu, B. Chi, F. Ciucci*. Achieving net-zero emissions with solid oxide electrolysis cells: The power-to-X approach. The Journal of Physical Chemistry Letters. 14, 4688-4695. (2023). (IF=4.6)</li>
-            <li>S. Wang, M. Wang, Y. Zhang, H. Wang, H. Fei, R. Liu, H. Kong, R. Gao, S. Zhao, T. Liu, <b>Y. Wang</b>, M. Ni, F. Ciucci, J. Wang*. Metal oxide-supported metal catalysts for electrocatalytic oxygen reduction reaction: Characterization methods, modulation strategies, and recent progress. Small Methods. 2201714. (2023). (IF=9.1)</li>
-            <li>G. Zhou†, Y. Mei†, <b>Y. Wang</b>, S. Zhou, M. Mamtaz, C. Tang*, F. Ciucci*. Recovery of salinity gradient energy with an inorganic sodium superionic conductor. ACS Energy Letters. 7(5), 1806-1813. (2022) (IF=18.2)</li>
-            <li>Y. Song, J. Chen, M. Yang, M. Xu, D. Liu, M. Liang, <b>Y. Wang</b>, R. Ran, W. Wang*, F. Ciucci*, Z. Shao*. Realizing simultaneous detrimental reactions suppression and multiple benefits generation from nickel doping toward improved protonic ceramic fuel cell performance. Small, 18(16), 2200450. (2022) (IF=12.1)</li>
-            <li>Y. Tian, C. Yang, <b>Y. Wang</b>, M. Xu, Y. Ling, J. Pu, F. Ciucci*, J. Irvine, B. Chi*. Phase transition with in situ exsolution nanoparticles in the reduced Pr0.5Ba0.5Fe0.8Ni0.2O3−δ electrode for symmetric solid oxide cells. Journal of Materials Chemistry A. 10(31), 16490-16496. (2022) (IF=10.7)</li>
-            <li>Y. Liu, Y. Tian*, <b>Y. Wang</b>, Y. Li, J. Pu, F. Ciucci, B. Chi*. Nano film Pr2Ni0.8Cu0.2O4+δ decorated La0.6Sr0.4Co0.2Fe0.8O3-δ oxygen electrode for highly efficient and stable reversible solid oxide cells. Electrochimica Acta. 430, 141032. (2022) (IF=5.6)</li>
-            <li>G. Zhou, J. Yu, J. Liu, X. Lin, <b>Y. Wang</b>, H. Law, F. Ciucci*. Quasi-solid electrolytes with tailored lithium solvation for fast-charging lithium metal batteries. Cell Reports Physical Science. 3(2), 100722. (2022) (IF=7.3)</li>
-            <li>A. Belotti, <b>Y. Wang</b>, A. Curcio, J. Liu, E. Quattrocchi, S. Pepe, F. Ciucci*. The influence of A-site deficiency on the electrochemical properties of (Ba0.95La0.05)1-xFeO3-δ as an intermediate temperature solid oxide fuel cell cathode. International Journal of Hydrogen Energy. 47(2), 1229-1240. (2022) (IF=8.3)</li>
-            <li>Y. Zhang, L. Shen, <b>Y. Wang</b>, Z. Du, B. Zhang, F. Ciucci, H. Zhao*. Enhanced oxygen reduction kinetics of IT-SOFC cathode with PrBaCo2O5+δ/Gd0.1Ce0.9O2−δ coherent interface. Journal of Materials Chemistry A. 10(7), 3495-3505. (2022) (IF=9.5)</li>
-            <li>X. Lin†, G. Zhou†, J. Liu†, M. Robson, J. Yu, <b>Y. Wang</b>, Z. Zhang, S. Kwok, F. Ciucci*. Bifunctional Hydrated Gel Electrolyte for Long‐Cycling Zn‐Ion Battery with NASICON‐Type Cathode. Advanced Functional Materials. 31(42), 2105717. (2021) (IF=19.0)</li>
-            <li>Z. Zhang†, J. Liu†, J. Wang†, Q. Wang, <b>Y. Wang</b>, K. Wang, Z. Wang, M. Gu, Z. Tang, J. Lim, T. Zhao, F. Ciucci*. Single-atom catalyst for high-performance methanol oxidation. Nature communications. 12(1), 1-9. (2021) (IF=15.7)</li>
-            <li>Z. Zhang†, J. Liu†, A. Curcio, <b>Y. Wang</b>, J. Wu, G. Zhou, Z. Tang, F. Ciucci*. Atomically dispersed materials for rechargeable batteries. Nano Energy. 76, 105085. (2021) (IF=17.1)</li>
-            <li>K. Yang, <b>Y. Wang</b>, Z. Yang*, <b>Y. Wang</b>, C. Jin*. Effects of humidity on SrTi0.05Co0.95O3-δ cathode properties and durability of solid oxide fuel cells. International Journal of Hydrogen Energy. 46(7), 5604-5611. (2021) (IF=8.3)</li>
-            <li>Y. Yang, <b>Y. Wang</b>, Z. Yang*, Y. Chen*, S. Peng. A highly active and durable electrode with in situ exsolved Co nanoparticles for solid oxide electrolysis cells. Journal of Power Sources. 478, 229082. (2020) (IF=7.9)</li>
-            <li>K. Yang, <b>Y. Wang</b>, Z. Yang*, <b>Y. Wang</b>, C. Jin*. Degradation of cobalt-free Ba0.95La0.05FeO3-δ cathode against CO2–H2O and Ce0.9Gd0.1O2−δ modification. International Journal of Hydrogen Energy. 45(58), 34080-34088. (2020) (IF=8.3)</li>
-            <li>Y. Yang, S. Li, Z. Yang*, Y. Chen*, P. Zhang, <b>Y. Wang</b>, F. Chen, S. Peng. One step synthesis of Sr2Fe1.3Co0.2Mo0.5O6−δ-Gd0.1Ce0.9O2−δ for symmetrical solid oxide fuel cells. Journal of The Electrochemical Society. 167(8), 084503. (2020) (IF=3.3)</li>
-            <li>Y. Yang, <b>Y. Wang</b>, Z. Yang*, Z. Lei, C. Jin*, Y. Liu, <b>Y. Wang</b>, S. Peng. Co-substituted Sr2Fe1.5Mo0.5O6-δ as anode materials for solid oxide fuel cells: Achieving high performance via nanoparticle exsolution. Journal of Power Sources. 438, 226989. (2019) (IF=7.9)</li>
-            <li>Y. Yang, T. Yue, <b>Y. Wang</b>, Z. Yang*, X. Jin*. Effects of morphology on electrocatalytic activity of CeO2 nanomaterials. Microchemical Journal. 148, 42-50. (2019) (IF=5.1)</li>
-            <li>C. Jia, <b>Y. Wang</b>, S. Molin, Y. Zhang, M. Chen*, M. Han*. High temperature oxidation behavior of SUS430 SOFC interconnects with Mn-Co spinel coating in air. Journal of Alloys and Compounds. 787, 1327-1335. (2019) (IF=6.3)</li>
-            <li>Z. Han, <b>Y. Wang</b>, Y. Yang, L. Li, Z. Yang*, M. Han*. High-performance SOFCs with impregnated Sr2Fe1.5Mo0.5O6-δ anodes toward sulfur resistance. Journal of Alloys and Compounds. 703, 258-263. (2017) (IF=6.3)</li>
-            <li>Z. Yang*, J. Wang, <b>Y. Wang</b>, Y. Liu, M. Han*. Effects of H2O and CO2 Corrosion on Ba0.9Co0.7Fe0.2Nb0.1O3-δ Cathode. ECS Meeting Abstracts, 53. (2017)</li>
-            <li>Z. Han, <b>Y. Wang</b>, Z. Yang*, M. Han*. Electrochemical properties of tubular sofc based on a porous ceramic support fabricated by phase-inversion method. Journal of Materials Science &amp; Technology. 07, 681-686. (2016) (IF=14.3)</li>
-            <li>X. Tang, D. Xu*, <b>Y. Wang</b>, X. Wang, L. Cheng. Separation and analysis of nitrogen compounds from low-temperature coal tar. Coal Conversion. 04, 73-78. (2016)</li>
-		</ol>
-		<br>
-    </div>
-
-<div class="container_title">
-    <h2>Patents</h2>
-</div>
-    <div class="container">
-		<ol>
-		    <li>Q. Chen, Y. Bi, <b>Y. Wang</b>, F. Ciucci. A uniform flow distribution structure for modular scale-up of a membraneless electrolyzer, US 63/934407, 2025-12-09.</li>
-		    <li>Z. Wang, F. Ciucci, Q. Chen, <b>Y. Wang</b>. A method of applying in-situ polymerized poly-DOL-based quasi-solid-state electrolytes with LiNO<sub>3</sub> for solid-state batteries, US 63/693676, 2024-09-11.</li>
-		    <li>Z. Yang, Y. Zhang, <b>Y. Wang</b>, X. Jin, B. Ge, C. Liu. A method for preparing solid oxide fuel cell materials, CN111180772B, 2022-05-13.</li>
-		    <li>Y. Yang, Z. Yang, <b>Y. Wang</b>, B. Ge, S. Peng. A composite ceramic powder preparation method for composite solid oxide fuel cells. CN109301297B, 2021-06-22.</li>
-		    <li>Y. Yang, Z. Yang, <b>Y. Wang</b>, B. Ge, S. Peng. A system for energy storage and conversion by solid oxide cells. CN109546190B, 2021-06-22.</li>
-		    <li>L. Peng, J. Xu, L. Fan, S. Li, Y. Li, <b>Y. Wang</b>. A process of supercritical extraction of slurry oil as a raw material to produce coke for negative electrode materials and its application. CN106635102B, 2021-03-23.</li>
-		    <li>L. Peng, J. Xu, L. Fan, S. Li, Y. Li, <b>Y. Wang</b>. A one-step process to produce high-strength oil-based needle coke by supercritical extraction of slurry oil. CN106833705B, 2020-03-31.</li>
-		    <li>Z. Yang, <b>Y. Wang</b>, Y. Zhu, M. Han. An efficient dual-phase CO<sub>2</sub> electrochemical separation membrane preparation method. CN106669437B, 2019-04-05.</li>
-		    <li><b>Y. Wang</b>, <b>Y. Wang</b>. A solid oxide fuel cell-based fire escape indicator lighting device. CN208141761U, 2018-11-23.</li>
-		    <li>Z. Yang, <b>Y. Wang</b>, Y. Zhang, M. Han. A system for energy storage and conversion by solid oxide cells. CN206758560U, 2017-12-15.</li>
-		    <li>Z. Yang, <b>Y. Wang</b>, <b>Y. Wang</b>, M. Han. Method and device for preparation of syngas by low concentration coal bed methane assisted electrolysis of CO<sub>2</sub>/H<sub>2</sub>O. CN107180985A, 2017-09-19.</li>
-		    <li>Z. Yang, <b>Y. Wang</b>, T. Zhu, M. Han. Rapid self-heating start-up method and material for solid oxide fuel cells. CN106602103A, 2017-04-26.</li>
-		    <li><b>Y. Wang</b>. A portable tube type solid oxide fuel cell power generation device. CN105845957A, 2016-08-10.</li>
-		    <li><b>Y. Wang</b>, Z. Han, M. Han. A new portable power generation device. CN205211854U, 2016-05-04.</li>
-		</ol>
-    </div>
-
-<div class="container_title">
-    <h2>National Standards</h2>
-</div>
-    <div class="container">
-		<ol>
-		    <li>Oil-based needle coke, GB/T 37308-2019</li>
-			<li>Oil-based needle coke for graphite electrode joints, YB/T 4910-2021</li>
-        </ol>
-    </div>
-
-<div class="container_title">
-    <h2>Talks and Presentations</h2>
-</div>
-
 <div class="container">
-    <ol>
-	    <li>International Workshop On Impedance Spectroscopy, Villeneuve d’Ascq, France, 2024.05, <b><i>Invited Report</i></b></li>
-	    <li>HKPFS Workshop: Electrochemical Impedance Spectroscopy-Fundamentals, Data Analysis, and Alternative Approaches for Advanced Electrochemical Characterization, Hong Kong SAR, China, 2025.04, <b><i>Invited Report</i></b></li>
-	    <li>The 2nd Sino-European Fuel Cell International Forum, Beijing, China, 2024.04, <b><i>Invited Report</i></b></li>
-	    <li>The International Young Scholars Forum on Materials Science at Peking University, Shenzhen, China, 2023.12, <b><i>Invited Report</i></b></li>
-	    <li>The 15th Pacific Rim Conference of Ceramic Societies (PACRIM15) &amp; the 13th International Conference on High-Performance Ceramics (CICC-13), Shenzhen, China, 2023.11, <b><i>Invited Report &amp; Section Chair</i></b></li>
-	    <li>Sino-European Fuel Cell International Forum, Beijing, China, 2023.07, <b><i>Invited Report</i></b></li>
-	    <li>European Materials Research Society E-MRS Spring 2023, Strasbourg, France, 2023.05</li>
-	    <li>Westlake Solid State Ionics Seminar (WESTON), Hangzhou, China, 2023.04, <b><i>Invited Report</i></b></li>
-	    <li>HKUST- KAIST Joint Seminar, Hong Kong SAR, China, 2023.02</li>
-	</ol>
-</div>
 
+<h3>As Principal Investigator</h3>
+<ul class="simple-list"><li>RGC Junior Research Fellow Scheme (JRFS2526-6S08): Uncovering the mechanisms behind performance and stability in high-entropy perovskite ferrite air electrodes for reversible protonic ceramic cells, Research Grants Council, HK SAR, Principal Investigator. (HK$1,275,000, one of 60 awards worldwide)</li>
+<li>RGC JRFS Research Support Funding (JRFS2526-6S08), Research Grants Council, HK SAR, Principal Investigator. (HK$151,666.67)</li>
+<li>NSFC Young Scientists Fund (Category C) (52602442), National Natural Science Foundation of China, Mechanism-Guided, Data-Driven Inverse Design of High-Entropy Perovskite Cathodes with Suppressed Sr Segregation for Protonic Ceramic Cells, Principal Investigator. (RMB 300,000)</li>
+<li>VPRDO Research Assistant Professors Scheme, HKUST VPRDO, Principal Investigator. (HK$660,000, one of four awardees department-wide)</li>
+<li>Research Talent Hub for ITF projects (InP/244/19), Hong Kong Innovation and Technology Commission, Principal Investigator. (HK$260,280)</li>
+<li>National Innovation and Entrepreneurship Training Program for College Students (201511413029): Research on the preparation of needle coke from coal tar pitch, Ministry of Education of the People's Republic of China, Principal Investigator. (RMB 30,000, 3.5% award rate)</li></ul>
+<h3>As Co-Investigator</h3>
+<ul class="simple-list"><li>Green Tech Fund (GTF202410191): Direct seawater electrolysis for green hydrogen with an active-flow membraneless electrolyzer, Environment and Ecology Bureau, HK SAR, Co-Investigator. (HK$2,941,700)</li>
+<li>Frontier Technology Research for Joint Institutes with Industry Scheme (FTRIS-25-034): Lithium-aluminum alloy anodes for solid polymer electrolyte batteries, HKUST-Kaisa Joint Research Institute, Co-Investigator. (HK$350,000)</li></ul>
+<h3>As Participant</h3>
+<ul class="simple-list"><li>Green Tech Fund (GTF202020131): Green hydrogen production from active flow membraneless electrolyzers, Environment and Ecology Bureau, HK SAR, Participant.</li>
+<li>General Research Fund (16201622): Unlocking the mechanisms of performance and stability in Co-substituted, Ba-based perovskite air electrodes: a path to high-performance reversible protonic ceramic fuel cells, Research Grants Council, HK SAR, Participant.</li>
+<li>General Research Fund (16201820): From material study to design: A fundamental investigation of triple conducting oxides for proton ceramic fuel cells using thin films and first-principles calculations, Research Grants Council, HK SAR, Participant.</li>
+<li>General Research Fund (16206019): Anion substitution to improve perovskite cathodes: understanding the enhanced performance by computation and experiment, Research Grants Council, HK SAR, Participant.</li>
+<li>Collaborative Research Fund (C7051-17GF): Energy-efficient and environmentally-friendly smart seawater desalination system, Research Grants Council, HK SAR, Participant.</li>
+<li>General Research Fund (16204517): Chemically and electrochemically driven nanoparticle egress from A-site-deficient perovskites: A computational and experimental study of nanoparticle growth, University Grants Committee, HK SAR, Participant.</li>
+<li>National Key R&amp;D Program of China (2018YFE0106700): Key technology of Power-to-X for renewable energy power storage, Ministry of Science and Technology of the People's Republic of China, Participant.</li>
+<li>National Key R&amp;D Program of China (2017YFB0601904): Coal gasification power generation technology with near-zero CO2 emission, Ministry of Science and Technology of the People's Republic of China, Participant.</li>
+<li>National Basic Research Program of China (973 program, 2012CB215400): Fundamental research on carbon-based solid oxide fuel cell system, Ministry of Science and Technology of the People´s Republic of China, Participant.</li>
+<li>Guangdong Provincial International Science and Technology Cooperation Program (2023A0505050107): Preparation and electrocatalytic application of carbon aerogel supported transition metal single atom catalysts, Guangdong Science and Technology Department, Participant.</li></ul>
+</div>
 <div class="container_title">
-    <h2>Professional Activities</h2>
+<h2>Publications</h2>
 </div>
-
+<div class="container publication"><h3>Peer-reviewed papers († = co-first author, * = corresponding author)</h3><p><b><i>Published or Accepted</i></b></p><p><b>First / Co-first Author</b></p><ol class="pub-list" start="1"><li>Y. Wang, M. Robson, A. Manzotti, F. Ciucci*. High-entropy perovskites materials for next-generation energy applications. Joule. 7(5), 848-854, (2023). <a class="doi" href="https://doi.org/10.1016/j.joule.2023.03.020" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>Y. Wang<sup>†</sup>, Z. Wang<sup>†</sup>, K. Yang<sup>†</sup>, J. Liu, Y. Song, J. Li, Z. Hu, M. Robson, Z. Zhang, Y. Tian, S. Xu, Y. Lu, H. Law, F. Liu, Q. Chen, Z. Yang*, F. Ciucci*. Self-recoverable symmetric protonic ceramic fuel cell with smart reversible exsolution/dissolution electrode. Advanced Functional Materials, 34(39), 2404846 (2024). <a class="doi" href="https://doi.org/10.1002/adfm.202404846" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li><span class="accent-name">Y. Wang*</span>, J. Liu, Y. Song, X. Tang, F. Matteucci, M. Santarell, F. Smeacetto, Z. Lyu, H. Kim, J. Li, W. Jung, M. Han, Z. Shao, F. Ciucci*. Empowering clean energy for the future through solid oxide cell technology. Nature Reviews Clean Technology. (by invited). Accepted.</li>
+<li>Y. Wang<sup>†</sup>, J. Liu<sup>†</sup>, Y. Song, J. Yu, Y. Tian, M. Robson, J. Wang, Z. Zhang, X. Lin, G. Zhou, Z. Wang, L. Shen, H. Zhao, S. Grasso, F. Ciucci*. High-entropy perovskites for energy conversion and storage: design, synthesis, and potential applications. Small Methods, 7(4), 2201138 (2023).</li>
+<li>Y. Wang, J. Liu, L. Shen, F. Ciucci. Modeling and design of new, alternative exsolution systems (Section 3 contribution to “Roadmap on exsolution for energy applications”). Journal of Physics: Energy, 5(3), 031501 (2023). <a class="doi" href="https://doi.org/10.1088/2515-7655/acd146" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>Y. Wang<sup>†</sup>, Y. Song<sup>†</sup>, J. Liu<sup>†</sup>, K. Yang, X. Lin, Z. Yang, F. Ciucci*. Functionalized metal-supported reversible protonic ceramic cells with exceptional performance and durability. Advanced Energy and Sustainability Research. 3(2), 2100171. (2022).</li>
+<li>Z. Wang<sup>†</sup>, Y. Wang<sup>†</sup>, J. Wang<sup>†</sup>, Y. Song<sup>†</sup>, M. Robson, A. Seong, M. Yang, Z. Zhang, A. Belotti, J. Liu, G. Kim, J. Lim, Z. Shao, F. Ciucci*. Rational design of perovskite ferrites as high-performance proton-conducting fuel cell cathodes. Nature Catalysis. 5(9), 777-787. (2022) <a class="doi" href="https://doi.org/10.1038/s41929-022-00829-9" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>J. Liu<sup>†</sup>, J. Kim<sup>†</sup>, Y. Wang<sup>†</sup>, H. Kim<sup>†</sup>, A. Belotti, B. Koo, Z. Wang, W. Jung*, F. Ciucci*. Understanding and mitigating A-site surface enrichment in Ba-containing perovskites: a combined computational and experimental study of BaFeO3. Energy &amp; Environmental Science. 15(10), 4069-4082. (2022)</li>
+<li>Y. Song<sup>†</sup>, Y. Song<sup>†</sup>, Y. Wang<sup>†</sup>, M. Xu*, J. Zeng, M. Liang, H. Huang, W. Zhou, R. Ran, Z. Shao*. Cation-selective defects engineering in A-site ordered layered perovskites for high-performance reversible protonic ceramic cells. Advanced Materials. 37(44), e11519. (2025)</li>
+<li>Y. Song<sup>†</sup>, J. Liu<sup>†</sup>, Y. Wang<sup>†</sup>, D. Guan, A. Seong, M. Liang, M. Robson, X. Xiong, Z. Zhang, G. Kim, Z. Shao*, F. Ciucci*. Nanocomposites: A New Opportunity for Developing Highly Active and Durable Bifunctional Air Electrodes for Reversible Protonic Ceramic Cells. Advanced Energy Materials, 11(36), 2101899 (2021). <a class="doi" href="https://doi.org/10.1002/aenm.202101899" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>M. Liang<sup>†</sup>, Y. Wang<sup>†</sup>, Y. Song<sup>†</sup>, D. Guan, J. Wu, P. Chen, A. Marades, M. Xu*, G. Yang, W. Zhou, W. Wang, R. Ran, F. Ciucci*, Z. Shao*. High-temperature water oxidation activity of a perovskite-based nanocomposite towards application as air electrode in reversible protonic ceramic cells. Applied Catalysis B: Environmental. 331, 122682. (2023).</li>
+<li>Z. Zhang<sup>†</sup>,*, J. Liu<sup>†</sup>, S. Zhu<sup>†</sup>, Y. Wang<sup>†</sup>, J. Wang, M. Xu, J. Zhao, Z. Wang, D. Zeng, J. Zeng, Y. Song, C. Pao, Z. Hu, J. Lim, R. Xiao, M. Shao, F. Ciucci*. Dizygotic atomic platinum and palladium on carbon for high-performance ethanol and methanol electro-oxidation. Angewandte Chemie International Edition. (2025). e202502348.</li>
+<li>C. Yang<sup>†</sup>, Y. Wang<sup>†</sup>, Y. Tian*, Z. Wang, J. Pu, F. Ciucci*, B. Chi*. Electrochemical performance of symmetric solid oxide cells employing a Sc-doped SrFeO3-δ-based electrode. Chemical Engineering Journal, 485, 149970. (2024).</li>
+<li>Y. Bi<sup>†</sup>, Y. Wang<sup>†</sup>, Y. Song, Q. Chen*, F. Ciucci*. Achieving high-performance OER catalysis with dual-site modulated Fe-based perovskites. Journal of Materials Chemistry A, 13, 21898–21907 (2025). <a class="doi" href="https://doi.org/10.1039/D5TA01754H" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>L. Shen<sup>†</sup>, Y. Wang<sup>†</sup>, J. Yu<sup>†</sup>, G. Zhou, J. Liu, M. Robson, Y. Zhou, M. Effat*, F. Ciucci*. Strain engineering of antiperovskite materials for solid-state Li batteries: a computation-guided substitution approach. Journal of Materials Chemistry A. 11(35), 18984-18995. (2023).</li>
+<li>K. Yang<sup>†</sup>, J. Liu<sup>†</sup>, Y. Wang<sup>†</sup>, X. Shi, J. Wang, Q. Lu*, F. Ciucci*, Z. Yang*. Machine-learning-assisted prediction of long-term performance degradation on solid oxide fuel cell cathodes induced by chromium poisoning. Journal of Materials Chemistry A, 10(44), 23683–23690 (2022).</li>
+<li>K. Yang<sup>†</sup>, Y. Wang<sup>†</sup>, L. Jiang, Y. Jin*, Z. Yang*. Cobalt-free perovskite Ba0.95La0.05FeO3−δ as efficient and durable oxygen electrode for solid oxide electrolysis cells. International Journal of Hydrogen Energy. 48(71), 27464-27472. (2023).</li>
+<li>H. Ye<sup>†</sup>, Y. Wang<sup>†</sup>, Q. Ye, X. Li, H. Lin, B. Zhao, F. Dong*, M. Ni*, Z. Lin. An advanced bifunctional single-element-incorporated ternary perovskite cathode for next-generation fuel cells. Journal of Power Sources. 628, 235875. (2025).</li>
+<li>Z. Wang<sup>†</sup>, Y. Wang<sup>†</sup>,*, B. Py, A. Maradesa, J. Liu, T. H. Wan, M. Saccoccio, F. Ciucci*. DRTtools: Freely accessible distribution of relaxation times analysis for electrochemical impedance spectroscopy. ACS Electrochemistry. 1(12), 2680-2689. (2025).</li></ol><p><b>Corresponding Author</b></p><ol class="pub-list" start="20"><li>Z. Zhang*, Z. Teng, L. Zhang, C. Hao, Y. Hou, <span class="accent-name">Y. Wang*</span>, F. Ciucci*, M. Ni*. SnOx-Embedded Pt Single Atoms on Carbon for Direct-Pathway Methanol Electrooxidation. Science China Materials. (2026). Accepted</li>
+<li>Y. Liu, T. Wang, Z. Du*, <span class="accent-name">Y. Wang*</span>, Y. Gong, K. Świerczek, H. Zhao*. Coherent Exsolution of Ultrafine Ru Nanoparticles on Double Perovskite Boosts CO2 and H2O Electrolysis via Strong Metal-Support Interactions. Advanced Energy Materials, 16(34), e71314 (2026). <a class="doi" href="https://doi.org/10.1002/aenm.71314" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>N. Li, Y. Bi, Y. Sang, <span class="accent-name">Y. Wang*</span>, Q. Chen*. Flow-resilient hierarchical nanoporous electrodes for durable active-flow membraneless electrolysis. Journal of Power Sources, 689, 240758 (2026). <a class="doi" href="https://doi.org/10.1016/j.jpowsour.2026.240758" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>A. Tahir, <span class="accent-name">Y. Wang*</span>, J. Li, Y. Tian, F. Ciucci*. Accelerated Discovery of High-Performance PCFC Cathodes: Computational-Experimental Optimization of Cobalt-Substituted Ba0.95La0.05FeO3−δ. Advanced Functional Materials, 35(40), 2506489 (2025). <a class="doi" href="https://doi.org/10.1002/adfm.202506489" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>Q. Lyu, H. Zhao, J. He, <span class="accent-name">Y. Wang*</span>, Y. Xiang, H. Qu, Q. Zhong, Y. Sun*, T. Zhu*. An in situ hydrothermally self-crystallized dense ceria-based barrier layer for solid oxide fuel cells. Journal of Materials Chemistry A. 12(16), 9778-9786. (2024).</li>
+<li>J. Jing, Z. Lei, Z. Zheng, H. Wang, P. Zhang, Z. Yang, Z. Wei, <span class="accent-name">Y. Wang*</span>, Z. Yang*. Multifunctional nanocomposite active layers synergistically enhance the performance of reversible proton ceramic cell. Renewable Energy. 243, 122551 (2025).</li>
+<li>B. Py, Z. Wang, <span class="accent-name">Y. Wang*</span>, F. Ciucci*. Entropy-based regularized regression for advanced distribution of relaxation times deconvolution. Journal of Power Sources. 644, 236910. (2025).</li>
+<li>H. Zhao, Q. Lyu, <span class="accent-name">Y. Wang*</span>, H. Sun, H. Qu, Q. Zhong, T. Zhu*. Controlled aqueous crystallization of Gadolinia doped Ceria micron-thick ceramic electrolyte for solid oxide fuel cell. Journal of Power Sources. 644, 237114. (2025).</li>
+<li>Q. Lin, L. Hu*, W. Liu, X. Tang, <span class="accent-name">Y. Wang*</span>, Z. Yang*. Sensitivity analysis of a CNN–LSTM prognostic framework for proton exchange membrane fuel cells: Effects of sliding window size and training data allocation. International Journal of Minerals, Metallurgy and Materials, 33(6), 2069–2081 (2026). <a class="doi" href="https://doi.org/10.1007/s12613-026-3395-8" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>Z. Wang*, <span class="accent-name">Y. Wang*</span>, F. Ciucci*. Distribution of relaxation times: Foundations, methods, diagnostics, and prognosis for electrochemical systems. Current Opinion in Electrochemistry. 55, 101789. (2026). <a class="doi" href="https://doi.org/10.1016/j.coelec.2025.101789" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>Y. Zhang, <span class="accent-name">Y. Wang*</span>. Review of production status and technology of coal tar based needle coke. Guangdong Chemical Industry. 44(12), 152-154+180. (2017)</li></ol><p><b>Co-author</b></p><ol class="pub-list" start="31"><li>J. Liu*, Y. Wang, F. Ciucci*. Data-Driven Pathways to a Self-Improving Battery Health Ecosystem: A Perspective on State of Health and Remaining Useful Life Prediction. ACS Applied Energy Materials, 9(8), 4599–4609 (2026). <a class="doi" href="https://doi.org/10.1021/acsaem.6c00644" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>X. Zhu<sup>†</sup>, Z. Wang<sup>†</sup>, T. Zhang, J. Zhang, A. Ge, Y. Cao, R. Gao, Z. Yu, Y. Wang, S. Xu, H. Law, F. Wang, F. Ciucci*, G. Xu*, M. Zhu. Solvation chemistry tailored via dielectric constant engineering for stable low-temperature aqueous zinc batteries. Nature Communications, 17, 3170 (2026). <a class="doi" href="https://doi.org/10.1038/s41467-026-69740-2" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>Y. Bi, Y. Wang, Z. Wang, Y. Song, N. Li, J. Li, A. Kar, Q. Chen*, F. Ciucci*. Compositional tuning and surface restructuring synergistically enhance perovskite ferrite catalysts for hydrogen evolution in a membrane-less electrolyzer. Advanced Energy Materials, 16(14), e05486 (2026). <a class="doi" href="https://doi.org/10.1002/aenm.202505486" rel="noopener noreferrer" target="_blank">[DOI]</a></li>
+<li>J. Liu*, L. Li, J. Xiang, L. Xie, Y. Wang, F. Ciucci*. Deep learning for state estimation of commercial sodium-ion batteries using partial charging profiles: Validation with a multi-temperature aging dataset. Journal of Energy Storage. 135, 118357. (2025)</li>
+<li>J. Li, Y. Wang, F. Ciucci*. The path to next-generation air-electrodes for ceramic cells: Decoupling activity and stability. ACS Energy Letters. 10, 4796-4804. (2025)</li>
+<li>H. Law<sup>†</sup>, Z. Wang<sup>†</sup>, S. Xu, L. Shen, B. Py, Y. Wang, R. Siegel, J. Senker, Q. Wang*, F. Ciucci*. A weakly solvating solvent-based quasi-solid electrolyte for sodium metal batteries. Energy &amp; Environmental Science. 18(19), 8838-8848. (2025)</li>
+<li>Z. Wang, L. Shen, Y. Ma, H. M. Law, S. Xu, Y. Bi, M. J. Robson, Y. Wang, A. Gröschel, Q. Chen*, F. Ciucci*. Enthalpy-driven molecular engineering enables high-performance quasi-solid-state electrolytes for long life lithium metal batteries. Advanced Materials, 37(24), 2419335 (2025).</li>
+<li>A. Belotti, Y. Wang, Y. Song, A. Curcio, M. Robson, A. Manzotti, J. Li, F. Ciucci*. Fluorinated air electrodes for enhanced Re-PCEC performance through ultrafast sintering method. ACS Applied Energy Materials. 8(5), 2898-2903. (2025).</li>
+<li>R. Deng, F. Liu*, S. Gao, Z. Xia, R. Wu, J. Kong, J. Yang, J. Wen, X. Zhang, C. Lv, Y. Wang, X. Li, Z. Wang*. Rational design of β-MnO2 via Ir/Ru co-substitution for enhanced oxygen evolution reaction in acidic media. ACS Catalysis. 15(3), 1782-1794. (2025).</li>
+<li>J. Zhao, Y. Guo, Z. Zhang, X. Zhang, Q. Ji, H. Zhang, Z. Song, D. Liu, J. Zeng, C. Chuang, E. Zhang, Y. Wang, G. Hu, M. Mushtaq, W. Raza, X. Cai*, F. Ciucci*. Out-of-plane coordination of iridium single atoms with organic molecules and cobalt-iron hydroxides to boost oxygen evolution reaction. Nature Nanotechnology. 20, 57-66. (2025).</li>
+<li>J. Yu, Y. Wang, L. Shen, J. Liu, Z. Wang, S. Xu, H. Law, F. Ciucci*. Fast-charging solid-state li batteries: Materials, strategies, and prospects. Advanced Materials. 37(23), 2417796 (2025).</li>
+<li>A. Tahir, A. Belotti, Y. Song, Y. Wang, A. Maradesa, J. Li, Y. Tian, F. Ciucci*. Ultrafast sintered composite cathode incorporating a negative thermal expansion material for high-performance protonic ceramic fuel cells. ACS Applied Materials &amp; Interfaces. 16(34), 44645-44654. (2024).</li>
+<li>A. Maradesa, B. Py, J. Huang, Y. Lu, P. Irulli, A. Mrozinski, H. Law, Y. Wang, Z. Wang, J. Li, S. Xu, Q. Meyer, J. Liu, C. Brivio, A. Gavrilyuk, K. Kobayashi, A. Bertei, N. Williams, C. Zhao, M. Danzer, M. Zic, P. Wu, V. Yrjänä, S. Pereverzyev, Y. Chen, A. Weber, S. Kalinin, J. Schmidt, Y. Tsur, B. Boukamp, Q. Zhang, M. Gaberšček, R. O’Hayre, F. Ciucci*. Advancing electrochemical impedance analysis through innovations in the distribution of relaxation times method. Joule. 8(7), 1958-1981. (2024).</li>
+<li>Y. Song, Y. Song, Y. Wang, Y. Tian, J. Li, M. Xu, Z. Shao*, F. Ciucci*. Advances in advanced in situ assembled composite electrode materials for enhanced solid oxide cell performance. Advanced Functional Materials. 2405851. (2024)</li>
+<li>Z. Wang, Y. Wang, L. Shen, Z. Jin, H. Law, A. Wang, W. Wang*, F. Ciucci*. Towards durable practical lithium–metal batteries: Advancing the feasibility of poly-DOL-based quasi-solid-state electrolytes via a novel nitrate-based additive. Energy &amp; Environmental Science. 16(9), 4084-4092. (2023).</li>
+<li>Z. Han*, H. Dong, Y. Wang, Y. Yang, H. Yu, Z. Yang*. Mechanistic insight into catalytic conversion of methane on Sr2Fe1.5Mo0.5O6-δ perovskite anode: A combined EIS-DRT, DFT and TPSR investigation. Journal of Materials Chemistry A. 11(35), 18820-18831. (2023).</li>
+<li>J. Yu, G. Zhou, Y. Li, Y. Wang, D. Chen, F. Ciucci*. Improving room-temperature Li-metal battery performance by in situ creation of fast Li+ transport pathways in a polymer-ceramic electrolyte. Small. 2302691. (2023).</li>
+<li>Y. Tian, A. Manzotti, Y. Wang, Y. Song, X. Fu, B. Chi, F. Ciucci*. Achieving net-zero emissions with solid oxide electrolysis cells: The power-to-X approach. The Journal of Physical Chemistry Letters. 14, 4688-4695. (2023).</li>
+<li>S. Wang, M. Wang, Y. Zhang, H. Wang, H. Fei, R. Liu, H. Kong, R. Gao, S. Zhao, T. Liu, Y. Wang, M. Ni, F. Ciucci, J. Wang*. Metal oxide-supported metal catalysts for electrocatalytic oxygen reduction reaction: Characterization methods, modulation strategies, and recent progress. Small Methods. 2201714. (2023).</li>
+<li>G. Zhou<sup>†</sup>, Y. Mei<sup>†</sup>, Y. Wang, S. Zhou, M. Mamtaz, C. Tang*, F. Ciucci*. Recovery of salinity gradient energy with an inorganic sodium superionic conductor. ACS Energy Letters. 7(5), 1806-1813. (2022)</li>
+<li>Y. Song, J. Chen, M. Yang, M. Xu, D. Liu, M. Liang, Y. Wang, R. Ran, W. Wang*, F. Ciucci*, Z. Shao*. Realizing simultaneous detrimental reactions suppression and multiple benefits generation from nickel doping toward improved protonic ceramic fuel cell performance. Small, 18(16), 2200450. (2022)</li>
+<li>Y. Tian, C. Yang, Y. Wang, M. Xu, Y. Ling, J. Pu, F. Ciucci*, J. Irvine, B. Chi*. Phase transition with in situ exsolution nanoparticles in the reduced Pr0.5Ba0.5Fe0.8Ni0.2O3−δ electrode for symmetric solid oxide cells. Journal of Materials Chemistry A. 10(31), 16490-16496. (2022)</li>
+<li>Y. Liu, Y. Tian*, Y. Wang, Y. Li, J. Pu, F. Ciucci, B. Chi*. Nano film Pr2Ni0.8Cu0.2O4+δ decorated La0.6Sr0.4Co0.2Fe0.8O3-δ oxygen electrode for highly efficient and stable reversible solid oxide cells. Electrochimica Acta. 430, 141032. (2022)</li>
+<li>G. Zhou, J. Yu, J. Liu, X. Lin, Y. Wang, H. Law, F. Ciucci*. Quasi-solid electrolytes with tailored lithium solvation for fast-charging lithium metal batteries. Cell Reports Physical Science. 3(2), 100722. (2022)</li>
+<li>A. Belotti, Y. Wang, A. Curcio, J. Liu, E. Quattrocchi, S. Pepe, F. Ciucci*. The influence of A-site deficiency on the electrochemical properties of (Ba0.95La0.05)1-xFeO3-δ as an intermediate temperature solid oxide fuel cell cathode. International Journal of Hydrogen Energy. 47(2), 1229-1240. (2022)</li>
+<li>Y. Zhang, L. Shen, Y. Wang, Z. Du, B. Zhang, F. Ciucci, H. Zhao*. Enhanced oxygen reduction kinetics of IT-SOFC cathode with PrBaCo2O5+δ/Gd0.1Ce0.9O2−δ coherent interface. Journal of Materials Chemistry A. 10(7), 3495-3505. (2022)</li>
+<li>X. Lin<sup>†</sup>, G. Zhou<sup>†</sup>, J. Liu<sup>†</sup>, M. Robson, J. Yu, Y. Wang, Z. Zhang, S. Kwok, F. Ciucci*. Bifunctional Hydrated Gel Electrolyte for Long‐Cycling Zn‐Ion Battery with NASICON‐Type Cathode. Advanced Functional Materials. 31(42), 2105717. (2021)</li>
+<li>Z. Zhang<sup>†</sup>, J. Liu<sup>†</sup>, J. Wang<sup>†</sup>, Q. Wang, Y. Wang, K. Wang, Z. Wang, M. Gu, Z. Tang, J. Lim, T. Zhao, F. Ciucci*. Single-atom catalyst for high-performance methanol oxidation. Nature communications. 12(1), 1-9. (2021)</li>
+<li>Z. Zhang<sup>†</sup>, J. Liu<sup>†</sup>, A. Curcio, Y. Wang, J. Wu, G. Zhou, Z. Tang, F. Ciucci*. Atomically dispersed materials for rechargeable batteries. Nano Energy. 76, 105085. (2020)</li>
+<li>K. Yang, Y. Wang, Z. Yang*, Y. Wang, C. Jin*. Effects of humidity on SrTi0.05Co0.95O3-δ cathode properties and durability of solid oxide fuel cells. International Journal of Hydrogen Energy. 46(7), 5604-5611. (2021)</li>
+<li>Y. Yang, Y. Wang, Z. Yang*, Y. Chen*, S. Peng. A highly active and durable electrode with in situ exsolved Co nanoparticles for solid oxide electrolysis cells. Journal of Power Sources. 478, 229082. (2020)</li>
+<li>K. Yang, Y. Wang, Z. Yang*, Y. Wang, C. Jin*. Degradation of cobalt-free Ba0.95La0.05FeO3-δ cathode against CO2–H2O and Ce0.9Gd0.1O2−δ modification. International Journal of Hydrogen Energy. 45(58), 34080-34088. (2020)</li>
+<li>Y. Yang, S. Li, Z. Yang*, Y. Chen*, P. Zhang, Y. Wang, F. Chen, S. Peng. One step synthesis of Sr2Fe1.3Co0.2Mo0.5O6−δ-Gd0.1Ce0.9O2−δ for symmetrical solid oxide fuel cells. Journal of The Electrochemical Society. 167(8), 084503. (2020)</li>
+<li>Y. Yang, Y. Wang, Z. Yang*, Z. Lei, C. Jin*, Y. Liu, Y. Wang, S. Peng. Co-substituted Sr2Fe1.5Mo0.5O6-δ as anode materials for solid oxide fuel cells: Achieving high performance via nanoparticle exsolution. Journal of Power Sources. 438, 226989. (2019)</li>
+<li>Y. Yang, T. Yue, Y. Wang, Z. Yang*, X. Jin*. Effects of morphology on electrocatalytic activity of CeO2 nanomaterials. Microchemical Journal. 148, 42-50. (2019)</li>
+<li>C. Jia, Y. Wang, S. Molin, Y. Zhang, M. Chen*, M. Han*. High temperature oxidation behavior of SUS430 SOFC interconnects with Mn-Co spinel coating in air. Journal of Alloys and Compounds. 787, 1327-1335. (2019)</li>
+<li>Z. Han, Y. Wang, Y. Yang, L. Li, Z. Yang*, M. Han*. High-performance SOFCs with impregnated Sr2Fe1.5Mo0.5O6-δ anodes toward sulfur resistance. Journal of Alloys and Compounds. 703, 258-263. (2017)</li>
+<li>Z. Han, Y. Wang, Z. Yang*, M. Han*. Electrochemical properties of tubular sofc based on a porous ceramic support fabricated by phase-inversion method. Journal of Materials Science &amp; Technology. 07, 681-686. (2016)</li>
+<li>X. Tang, D. Xu*, Y. Wang, X. Wang, L. Cheng. Separation and analysis of nitrogen compounds from low-temperature coal tar. Coal Conversion. 04, 73-78. (2016)</li></ol><p><b>Conference Abstract</b></p><ul class="simple-list"><li>Z. Yang*, J. Wang, Y. Wang, Y. Liu, M. Han*. Effects of H2O and CO2 Corrosion on Ba0.9Co0.7Fe0.2Nb0.1O3-δ Cathode. ECS Meeting Abstracts, 53. (2017)</li></ul><p><b>Google Scholar: </b>3,800 citations; h-index 32 (October 2026).</p></div>
+<div class="container_title">
+<h2>Patents and Patent Applications</h2>
+</div>
 <div class="container">
-    <p><b>Youth/Early Career Editorial Board Member for Journals:</b> Nano-Micro Letters, Chemical Engineering Journal, Engineering, Journal of Materials Science &amp; Technology, Materials Reports: Energy, Nano Materials Science, Materials Futures.</p>
-    <p><b>Reviewer for Journals:</b> Energy &amp; Environmental Science, Advanced Materials, Advanced Energy Materials, Journal of Materials Chemistry A, Energy Conversion and Management, Journal of Power Sources, International Journal of Hydrogen Energy, Journal of Electroanalytical Chemistry, Ceramics International, <i>etc</i>.</p>
-</div>
 
+<ol class="simple-number"><li>Q. Chen, Y. Bi, Y. Wang, F. Ciucci. A uniform flow distribution structure for modular scale-up of a membraneless electrolyzer, US 63/934407, 2025-12-09. (U.S. provisional patent application)</li>
+<li>Z. Wang, F. Ciucci, Q. Chen, Y. Wang. A method of applying in-situ polymerized poly-DOL-based quasi-solid-state electrolytes with LiNO3 for solid-state batteries, US 63/693676, 2024-09-11. (U.S. provisional patent application)</li>
+<li>Z. Yang, Y. Zhang, Y. Wang, X. Jin, B. Ge, C. Liu. A method for preparing solid oxide fuel cell materials, CN111180772B, 2022-05-13.</li>
+<li>Y. Yang, Z. Yang, Y. Wang, B. Ge, S. Peng. A composite ceramic powder preparation method for composite solid oxide fuel cells. CN109301297B, 2021-06-22.</li>
+<li>Y. Yang, Z. Yang, Y. Wang, B. Ge, S. Peng. A system for energy storage and conversion by solid oxide cells. CN109546190B, 2021-06-22.</li>
+<li>L. Peng, J. Xu, L. Fan, S. Li, Y. Li, Y. Wang. A process of supercritical extraction of slurry oil as a raw material to produce coke for negative electrode materials and its application. CN106635102B, 2021-03-23.</li>
+<li>L. Peng, J. Xu, L. Fan, S. Li, Y. Li, Y. Wang. A one-step process to produce high-strength oil-based needle coke by supercritical extraction of slurry oil. CN106833705B, 2020-03-31.</li>
+<li>Z. Yang, Y. Wang, Y. Zhu, M. Han. An efficient dual-phase CO2 electrochemical separation membrane preparation method. CN106669437B, 2019-04-05.</li>
+<li>Y. Wang, Y. Wang. A solid oxide fuel cell-based fire escape indicator lighting device. CN208141761U, 2018-11-23.</li>
+<li>Z. Yang, Y. Wang, Y. Zhang, M. Han. A system for energy storage and conversion by solid oxide cells. CN206758560U, 2017-12-15.</li>
+<li>Z. Yang, Y. Wang, Y. Wang, M. Han. Method and device for preparation of syngas by low concentration coal bed methane assisted electrolysis of CO2/H2O. CN107180985A, 2017-09-19.</li>
+<li>Z. Yang, Y. Wang, T. Zhu, M. Han. Rapid self-heating start-up method and material for solid oxide fuel cells. CN106602103A, 2017-04-26.</li>
+<li>Y. Wang. A portable tube type solid oxide fuel cell power generation device. CN105845957A, 2016-08-10.</li>
+<li>Y. Wang, Z. Han, M. Han. A new portable power generation device. CN205211854U, 2016-05-04.</li></ol>
+</div>
 <div class="container_title">
-    <h2>Teaching &amp; Tutoring Experience</h2>
+<h2>National and Industry Standards</h2>
 </div>
-
 <div class="container">
-    <ul>
-        <li>MECH 1902, Energy systems in a sustainable world, The Hong Kong University of Science and Technology, 2022, <b><i>Teaching Assistant</i></b></li>
-        <li>MECH 1902, Energy systems in a sustainable world, The Hong Kong University of Science and Technology, 2021, <b><i>Teaching Assistant</i></b></li>
-        <li>PDEV6800, Introduction to teaching and learning in higher education, The Hong Kong University of Science and Technology, 2020.</li>
-    </ul>
-</div>
 
+<ol class="simple-number">
+<li>Oil-based needle coke — GB/T 37308-2019 (Chinese national standard)</li>
+<li>Oil-based needle coke for graphite electrode joints — YB/T 4910-2021 (Chinese industry standard)</li>
+</ol>
+</div>
 <div class="container_title">
-    <p style="margin-bottom: 4px"><strong>Last updated: March 2026 </strong></p> <!-- Updated Date -->
+<h2>Talks and Presentations</h2>
 </div>
+<div class="container">
 
+<ol class="simple-number">
+<li>HKPFS Workshop: Electrochemical Impedance Spectroscopy-Fundamentals, Data Analysis, and Alternative Approaches for Advanced Electrochemical Characterization, Hong Kong SAR, China, 2025.04, Invited Talk</li><li>International Workshop On Impedance Spectroscopy, Villeneuve d’Ascq, France, 2024.05, Invited Talk</li><li>The 2nd Sino-European Fuel Cell International Forum, Beijing, China, 2024.04, Invited Talk</li><li>The International Young Scholars Forum on Materials Science at Peking University, Shenzhen, China, 2023.12, Invited Talk</li><li>The 15th Pacific Rim Conference of Ceramic Societies (PACRIM15) &amp; the 13th International Conference on High-Performance Ceramics (CICC-13), Shenzhen, China, 2023.11, Invited Talk &amp; Session Chair</li><li>Sino-European Fuel Cell International Forum, Beijing, China, 2023.07, Invited Talk</li><li>European Materials Research Society E-MRS Spring 2023, Strasbourg, France, 2023.05</li><li>WEstlake Solid STate IONics Seminar (WESTON), Hang Zhou, China, 2023.04, Invited Talk</li><li>HKUST- KAIST Joint Seminar, Hong Kong SAR, China, 2023.02</li>
+</ol>
+</div>
 <div class="container_title">
-    <p style="margin-bottom: 4px"><strong>Visitors</strong></p>
-    <div style="max-width: 300px; margin: 0px auto;">
-    <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=ZBNcb8mC58tyogjb_wBiUEVqG6v96qcfcIcgrhv6qoE"></script>
-    </div>
+<h2>Professional Activities</h2>
 </div>
+<div class="container">
 
+<p>Youth/Early Career Editorial Board Member for Journals: Nano-Micro Letters, Chemical Engineering Journal, Engineering, Journal of Materials Science &amp; Technology, Materials Reports: Energy, Nano Materials Science, Materials Futures</p>
+<p>Reviewer for Journals: Energy &amp; Environmental Science, Advanced Materials, Advanced Energy Materials, Journal of Materials Chemistry A, Energy Conversion and Management, Journal of Power Sources, International Journal of Hydrogen Energy, Journal of Electroanalytical Chemistry, Ceramics International, etc.</p>
+</div>
+<div class="container_title">
+<h2>Teaching &amp; Tutoring Experience</h2>
+</div>
+<div class="container">
+
+<ul class="simple-list"><li>MECH 1902, Energy systems in a sustainable world, HKUST, 2022, Teaching assistant</li>
+<li>MECH 1902, Energy systems in a sustainable world, HKUST, 2021, Teaching assistant</li>
+<li>PDEV6800, Introduction to teaching and learning in higher education, HKUST, 2020.</li></ul>
+</div>
+<div class="container_title">
+<p style="margin-bottom: 4px"><strong>Last updated: October 2026</strong></p> <!-- Updated Date -->
+</div>
+<div class="container_title">
+<p style="margin-bottom: 4px"><strong>Visitors</strong></p>
+<div style="max-width: 300px; margin: 0px auto;">
+<script id="clstr_globe" src="//clustrmaps.com/globe.js?d=ZBNcb8mC58tyogjb_wBiUEVqG6v96qcfcIcgrhv6qoE" type="text/javascript"></script>
+</div>
+</div>
 <!-- Removed browser extension related divs (fatkun-drop-panel, transmart-crx-shadow-root) -->
-
 </body>
 </html>
